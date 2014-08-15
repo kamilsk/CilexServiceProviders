@@ -2,12 +2,14 @@
     "name": "kamilsk/cilex-service-providers",
     "type": "library",
     "description": "The revised set of service providers for Cilex.",
+    "homepage": "http://kamilsk.github.io/CilexServiceProviders/",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "OctoLab\\Cilex\\": "src/"
+    "authors": [
+        {
+            "name": "Kamil Samigullin",
+            "email": "kamil@samigullin.info"
         }
-    },
+    ],
     "require": {
         "php": ">=5.5",
         "cilex/cilex": "~1.0"
@@ -15,5 +17,10 @@
     "require-dev": {
         "phpunit/phpunit": "~4.0",
         "igorw/config-service-provider": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OctoLab\\Cilex\\": "src/"
+        }
     }
 }
