@@ -1,0 +1,3 @@
+parameters:
+  parameter: "component's parameter will be overwritten"
+  prefixed_parameter: "component's parameter will not be overwritten"

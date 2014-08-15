@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.0/phpunit.xsd"
+        backupGlobals="true"
+        backupStaticAttributes="false"
+        cacheTokens="false"
+        colors="false"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        forceCoversAnnotation="false"
+        mapTestClassNameToCoveredClassName="false"
+        printerClass="PHPUnit_TextUI_ResultPrinter"
+        printerFile="vendor/phpunit/phpunit/src/TextUI/ResultPrinter.php"
+        processIsolation="false"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+        testSuiteLoaderFile="vendor/phpunit/phpunit/src/Runner/StandardTestSuiteLoader.php"
+        timeoutForSmallTests="1"
+        timeoutForMediumTests="10"
+        timeoutForLargeTests="60"
+        strict="false"
+        verbose="false">
+    <testsuites>
+        <testsuite name="config">
+            <file>src/Test/ConfigServiceProviderTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>

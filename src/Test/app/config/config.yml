@@ -1,0 +1,8 @@
+imports:
+  - { resource: component/config.yml }
+  - { resource: parameters.yml }
+
+component:
+  parameter: "base component's parameter will be overwritten by root config"
+  placeholder_parameter: %placeholder%
+  internal_parameter: %prefixed_parameter%
