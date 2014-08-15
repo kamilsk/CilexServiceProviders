@@ -7,7 +7,7 @@
 ### Git
 
 ```bash
-$ git clone
+$ git clone git@github.com:kamilsk/CilexServiceProviders.git
 $ cd CilexServiceProvider && composer install
 ```
 
