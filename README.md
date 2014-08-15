@@ -17,3 +17,14 @@ $ cd CilexServiceProvider && composer install
 $ composer require kamilsk/cilex-service-providers:*
 $ composer update
 ```
+
+## Тестирование
+
+```bash
+$ vendor/bin/phpunit
+$ # или индивидуальные тест-кейсы
+$ vendor/bin/phpunit --testsuite config
+$ vendor/bin/phpunit --testsuite doctrine
+$ vendor/bin/phpunit --testsuite monolog
+$ vendor/bin/phpunit --testsuite validator
+```
