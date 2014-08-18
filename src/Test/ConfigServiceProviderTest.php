@@ -18,7 +18,7 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testComplexBehavior()
     {
         $app = new Application('Test');
-        $app->register(new ConfigServiceProvider(__DIR__ . '/config/config.yml', ['placeholder' => 'placeholder']));
+        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config.yml', ['placeholder' => 'placeholder']));
         $expected = [
             'component' => [
                 'base_parameter' => 'base parameter will not be overwritten',

@@ -9,6 +9,8 @@ namespace OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
+use OctoLab\Cilex\Config\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -26,10 +28,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
     protected $filename;
     /** @var array */
     protected $placeholders;
-    /** @var array */
-    protected $imports = [];
-    /** @var array */
-    protected $parameters = [];
 
     /**
      * @param string $filename
@@ -46,5 +44,21 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $that = $this;
+        $app['config'] = $app->share(function () use ($app, $that) {
+            if (!is_file($that->filename) or !is_readable($that->filename)) {
+                throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $that->filename));
+            }
+            $info = pathinfo($that->filename);
+            switch (strtolower($info['extension'])) {
+                case 'yml':
+                    $fileLoader = new YamlFileLoader(new FileLocator());
+                    $fileLoader->load($that->filename);
+                    break;
+                default:
+                    throw new \RuntimeException(sprintf('Extension "%s" is not supported.', $info['extension']));
+            }
+            return $fileLoader->getContent();
+        });
     }
 }
