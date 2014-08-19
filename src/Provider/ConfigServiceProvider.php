@@ -16,11 +16,6 @@ use Symfony\Component\Config\FileLocator;
  * @author Kamil Samigullin <kamil@samigullin.info>
  *
  * @see \Cilex\Provider\ConfigServiceProvider
- * @see \Igorw\Silex\ConfigServiceProvider
- * @todo roadmap:
- * @todo - imports
- * @todo - parameters
- * @todo - placeholders
  */
 class ConfigServiceProvider implements ServiceProviderInterface
 {
@@ -44,21 +39,31 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $that = $this;
-        $app['config'] = $app->share(function () use ($app, $that) {
-            if (!is_file($that->filename) or !is_readable($that->filename)) {
-                throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $that->filename));
-            }
-            $info = pathinfo($that->filename);
-            switch (strtolower($info['extension'])) {
-                case 'yml':
-                    $fileLoader = new YamlFileLoader(new FileLocator());
-                    $fileLoader->load($that->filename);
+        $file = $this->filename;
+        $placeholders = $this->placeholders;
+        $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
+            $loader = new YamlFileLoader(new FileLocator());
+            switch (true) {
+                case $loader->supports($file):
+                    $loader->load($file);
                     break;
                 default:
-                    throw new \RuntimeException(sprintf('Extension "%s" is not supported.', $info['extension']));
+                    throw new \RuntimeException(sprintf('File "%s" is not supported.', $file));
             }
-            return $fileLoader->getContent();
+            $content = $loader->getContent();
+            if (isset($content['parameters'])) {
+                $placeholders = array_merge($content['parameters'], $placeholders);
+                unset($content['parameters']);
+                array_walk_recursive($content, function (&$param) use ($placeholders) {
+                    if (preg_match('/^%(.+)%$/', $param, $matches)) {
+                        $placeholder = $matches[1];
+                        if (isset($placeholders[$placeholder])) {
+                            $param = $placeholders[$placeholder];
+                        }
+                    }
+                });
+            }
+            return $content;
         });
     }
 }

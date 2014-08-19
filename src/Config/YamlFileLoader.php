@@ -14,6 +14,10 @@ use Symfony\Component\Yaml\Parser as YamlParser;
  * @author Kamil Samigullin <kamil@samigullin.info>
  *
  * @see \Symfony\Component\DependencyInjection\Loader\YamlFileLoader
+ * @todo roadmap:
+ * @todo - imports
+ * @todo - parameters
+ * @todo - placeholders
  */
 class YamlFileLoader extends FileLoader
 {
@@ -38,20 +42,10 @@ class YamlFileLoader extends FileLoader
     {
         $path = $this->locator->locate($resource);
         $content = $this->loadFile($path);
-        //$this->container->addResource(new FileResource($path));
         if (null === $content) {
             return;
         }
-
-        // imports
         $this->parseImports($content, $path);
-
-        // parameters
-        if (isset($content['parameters'])) {
-            foreach ($content['parameters'] as $key => $value) {
-            }
-        }
-
         $this->content = $content;
     }
 
@@ -63,21 +57,24 @@ class YamlFileLoader extends FileLoader
      */
     public function supports($resource, $type = null)
     {
-        return is_string($resource) && 'yml' === pathinfo($resource, PATHINFO_EXTENSION);
+        return is_string($resource) && !strcasecmp('yml', pathinfo($resource, PATHINFO_EXTENSION));
     }
 
     /**
      * @param array $content
-     * @param string $file
+     * @param string $sourceResource
      */
-    private function parseImports($content, $file)
+    private function parseImports($content, $sourceResource)
     {
         if (!isset($content['imports'])) {
             return;
         }
+        $this->setCurrentDir(dirname($sourceResource));
         foreach ($content['imports'] as $import) {
-            $this->setCurrentDir(dirname($file));
-            $this->import($import['resource'], null, isset($import['ignore_errors']) ? (bool) $import['ignore_errors'] : false, $file);
+            if (isset($import['resource'])) {
+                $ignoreErrors = isset($import['ignore_errors']) ? boolval($import['ignore_errors']) : false;
+                $this->import($import['resource'], null, $ignoreErrors, $sourceResource);
+            }
         }
     }
 
@@ -93,14 +90,15 @@ class YamlFileLoader extends FileLoader
         if (!stream_is_local($file)) {
             throw new \InvalidArgumentException(sprintf('This is not a local file "%s".', $file));
         }
-        if (!file_exists($file)) {
-            throw new \InvalidArgumentException(sprintf('The service file "%s" is not valid.', $file));
+        if (!is_file($file)) {
+            throw new \InvalidArgumentException(sprintf('"%s" is not a regular file.', $file));
+        }
+        if (!is_readable($file)) {
+            throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $file));
         }
         if (null === $this->yamlParser) {
             $this->yamlParser = new YamlParser();
         }
-        // TODO добавить валидацию
         return $this->yamlParser->parse(file_get_contents($file));
     }
 }
- 
