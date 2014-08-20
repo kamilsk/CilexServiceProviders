@@ -14,10 +14,6 @@ use Symfony\Component\Yaml\Parser as YamlParser;
  * @author Kamil Samigullin <kamil@samigullin.info>
  *
  * @see \Symfony\Component\DependencyInjection\Loader\YamlFileLoader
- * @todo roadmap:
- * @todo - imports
- * @todo - parameters
- * @todo - placeholders
  */
 class YamlFileLoader extends FileLoader
 {
@@ -45,8 +41,8 @@ class YamlFileLoader extends FileLoader
         if (null === $content) {
             return;
         }
+        $this->content[] = $content;
         $this->parseImports($content, $path);
-        $this->content = $content;
     }
 
     /**

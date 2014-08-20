@@ -64,6 +64,7 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
      * @dataProvider applicationProvider
      *
      * @param Application $app
@@ -76,7 +77,6 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
                 'base_parameter' => 'base parameter will not be overwritten',
                 'parameter' => "base component's parameter will be overwritten by root config",
                 'placeholder_parameter' => 'placeholder',
-                'internal_parameter' => "component's parameter will not be overwritten",
             ],
         ];
         $this->assertEquals($expected, $app['config']);
