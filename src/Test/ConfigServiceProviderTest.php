@@ -15,9 +15,61 @@ use OctoLab\Cilex\Provider\ConfigServiceProvider;
  */
 class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testComplexBehavior()
+    /**
+     * @return Application[]
+     */
+    public function applicationProvider()
     {
-        $app = new Application('Test');
+        return [
+            [new Application('Test')],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function parametersBehavior(Application $app)
+    {
+        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_parameters.yml'));
+        $expected = [
+            'component' => [
+                'parameter' => 'test_parameter',
+                'another_parameter' => 'test_another_parameter',
+            ],
+        ];
+        $this->assertEquals($expected, $app['config']);
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function placeholdersBehavior(Application $app)
+    {
+        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_placeholders.yml', [
+            'another_parameter' => 'test_placeholder',
+        ]));
+        $expected = [
+            'component' => [
+                'parameter' => 'test_parameter',
+                'another_parameter' => 'test_placeholder',
+            ],
+        ];
+        $this->assertEquals($expected, $app['config']);
+    }
+
+    /**
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function complexBehavior(Application $app)
+    {
         $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config.yml', ['placeholder' => 'placeholder']));
         $expected = [
             'component' => [

@@ -1,0 +1,7 @@
+component:
+  parameter: %parameter%
+  another_parameter: %another_parameter%
+
+parameters:
+  parameter: test_parameter
+  another_parameter: test_another_parameter
