@@ -26,7 +26,7 @@ $ composer update
 
 ### Пример использования
 
-`app/console`:
+##### `app/console`:
 
 ```php
 use Cilex\Application;
@@ -36,18 +36,25 @@ use OctoLab\Cilex\Provider\MonologServiceProvider;
 use OctoLab\Cilex\Provider\ValidatorServiceProvider;
 
 $app = new Application('ApplicationName');
+
 // регистрируем конфигурацию
-$app->register(new ConfigServiceProvider('app/config/config.yml', ['placeholder' => 'top level parameter']));
-// регистрируем Doctrine DBAL и Monolog, которые подхватят настройки из $app['config']
+$app->register(
+    new ConfigServiceProvider(
+        'app/config/config.yml',
+        ['placeholder' => 'top level parameter']
+    )
+);
+// регистрируем сервисы, которые подхватят настройки из $app['config']
 $app->register(new DoctrineServiceProvider());
 $app->register(new MonologServiceProvider());
+$app->register(new ValidatorServiceProvider());
 
 // добавляем команды и инициализируем приложение
-$app->command();
+$app->command(new ExampleCommand());
 $app->run();
 ```
 
-`app/config/config.yml`:
+##### `app/config/config.yml`:
 
 ```yaml
 imports:
@@ -55,27 +62,70 @@ imports:
     - { resource: doctrine/config.yml }
     - { resource: monolog/config.yml }
     - { resource: validator/config.yml }
+
+top_level_options:
+    top_level_option: top_level_option_value
 ```
 
-`app/config/parameters.yml.dist` -> `app/config/parameters.yml`
+##### `app/config/parameters.yml.dist` -> `app/config/parameters.yml`
 
 ```yaml
-...
+parameters:
+    kernel:
+        debug: true
 ```
 
-`app/config/doctrine/config.yml`
+##### `app/config/doctrine/config.yml`
+
+> Пример из документации [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html)
 
 ```yaml
-...
+doctrine:
+    dbal:
+        auto_connect: true
+        default_connection: mysql
+        connections:
+            mysql:
+                host:     localhost
+                driver:   mysql
+                username: user
+                password: pass
+            sqlite:
+                host:     localhost
+                driver:   sqlite
+                memory:   true
+                username: user
+                password: pass
 ```
 
-`app/config/monolog/config.yml`
+##### `app/config/monolog/config.yml`
+
+> Пример из документации [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html)
 
 ```yaml
-...
+monolog:
+    handlers:
+        syslog:
+            type:         stream
+            path:         /var/log/cilex.log
+            level:        ERROR
+            bubble:       false
+            formatter:    my_formatter
+        main:
+            type:         fingers_crossed
+            action_level: WARNING
+            buffer_size:  30
+            handler:      custom
+        console:
+            type:         console
+            verbosity_levels:
+                VERBOSITY_NORMAL:       WARNING
+                VERBOSITY_VERBOSE:      NOTICE
+                VERBOSITY_VERY_VERBOSE: INFO
+                VERBOSITY_DEBUG:        DEBUG
 ```
 
-`app/config/validator/config.yml`
+##### `app/config/validator/config.yml`
 
 ```yml
 ...
