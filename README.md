@@ -77,12 +77,11 @@ parameters:
 
 ##### `app/config/doctrine/config.yml`
 
-> Пример из документации [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html)
+> Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) для Silex.
 
 ```yaml
 doctrine:
     dbal:
-        auto_connect: true
         default_connection: mysql
         connections:
             mysql:

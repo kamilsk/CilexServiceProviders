@@ -17,10 +17,10 @@ use Symfony\Component\Yaml\Parser as YamlParser;
  */
 class YamlFileLoader extends FileLoader
 {
+    /** @var array */
+    private $content = [];
     /** @var YamlParser */
     private $yamlParser;
-    /** @var array */
-    private $content;
 
     /**
      * @return array
