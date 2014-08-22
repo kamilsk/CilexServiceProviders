@@ -35,24 +35,26 @@ class ConfigServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param Application $app
      */
     public function register(Application $app)
     {
         $file = $this->filename;
         $placeholders = $this->placeholders;
-        $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
-            // TODO возможно не лучшее решение -> посмотреть в сторону $app
-            $arrayMergeRecursive = function (array $base, array $mixtures) use (&$arrayMergeRecursive) {
-                foreach ($mixtures as $key => $value) {
+        $app['array_merge_recursive'] = $app->protect(function (array $base) use ($app) {
+            $mixtures = array_slice(func_get_args(), 1);
+            foreach ($mixtures as $mixture) {
+                foreach ($mixture as $key => $value) {
                     if (isset($base[$key]) && is_array($base[$key]) && is_array($value)) {
-                        $base[$key] = $arrayMergeRecursive($base[$key], $value);
+                        $base[$key] = $app['array_merge_recursive']($base[$key], $value);
                     } else {
                         $base[$key] = $value;
                     }
                 }
-                return $base;
-            };
+            }
+            return $base;
+        });
+        $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
             $loader = new YamlFileLoader(new FileLocator());
             switch (true) {
                 case $loader->supports($file):
@@ -63,7 +65,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
             }
             $config = [];
             foreach (array_reverse($loader->getContent()) as $data) {
-                $config = $arrayMergeRecursive($config, $data);
+                $config = $app['array_merge_recursive']($config, $data);
             }
             if (isset($config['parameters'])) {
                 $placeholders = array_merge($config['parameters'], $placeholders);
