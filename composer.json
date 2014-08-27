@@ -21,6 +21,10 @@
         "monolog/monolog": "~1.0",
         "phpunit/phpunit": "~4.0"
     },
+    "suggest": {
+        "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
+        "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)"
+    },
     "autoload": {
         "psr-4": {
             "OctoLab\\Cilex\\": "src/"
