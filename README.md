@@ -14,7 +14,7 @@ $ cd CilexServiceProvider && composer install
 ### Composer
 
 ```bash
-$ composer require kamilsk/cilex-service-providers:~0.1
+$ composer require kamilsk/cilex-service-providers:~0.3
 $ composer update
 ```
 
@@ -22,7 +22,35 @@ $ composer update
 
 ### Связка `config.yml + parameters.yml.dist`
 
-...
+Используйте `config.yml` для хранения настроек, не зависящих от окружения, и `parameters.yml` для их переопределения
+в зависимости от конкретного окружения.
+
+1. Добавьте зависимость от [Composer ParameterHandler](https://github.com/Incenteev/ParameterHandler):
+```bash
+$ composer require incenteev/composer-parameter-handler:~2.0
+```
+2. Настройте `composer.json`:
+```json
+"extra": {
+    "incenteev-parameters": {
+        "file": "path/to/parameters.yml"
+    }
+}
+```
+3. Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые настройки настройки:
+```yaml
+parameters:
+    some_parameter: some_value
+```
+4. Исключите `path/to/parameters.yml` из vcs (например, git):
+```bash
+$ echo 'path/to/parameters.yml' >> .gitignore
+```
+5. Используйте эти параметры в `config.yml`:
+```yaml
+component:
+    component_option: %some_parameter%
+```
 
 ### Пример использования
 
@@ -33,7 +61,6 @@ use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
-use OctoLab\Cilex\Provider\ValidatorServiceProvider;
 
 $app = new Application('ApplicationName');
 
@@ -47,7 +74,6 @@ $app->register(
 // регистрируем сервисы, которые подхватят настройки из $app['config']
 $app->register(new DoctrineServiceProvider());
 $app->register(new MonologServiceProvider());
-$app->register(new ValidatorServiceProvider());
 
 // добавляем команды и инициализируем приложение
 $app->command(new ExampleCommand());
@@ -61,7 +87,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: doctrine/config.yml }
     - { resource: monolog/config.yml }
-    - { resource: validator/config.yml }
 
 top_level_options:
     top_level_option: top_level_option_value
@@ -77,7 +102,8 @@ parameters:
 
 ##### `app/config/doctrine/config.yml`
 
-> Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) для Silex.
+> Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) Silex.
+> Пример из документации [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html) Symfony.
 
 ```yaml
 doctrine:
@@ -99,35 +125,17 @@ doctrine:
 
 ##### `app/config/monolog/config.yml`
 
-> Пример из документации [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html)
+> Пример из документации [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) Silex.
+> Пример из документации [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html) Symfony.
 
 ```yaml
 monolog:
     handlers:
         syslog:
-            type:         stream
-            path:         /var/log/cilex.log
-            level:        ERROR
-            bubble:       false
-            formatter:    my_formatter
-        main:
-            type:         fingers_crossed
-            action_level: WARNING
-            buffer_size:  30
-            handler:      custom
-        console:
-            type:         console
-            verbosity_levels:
-                VERBOSITY_NORMAL:       WARNING
-                VERBOSITY_VERBOSE:      NOTICE
-                VERBOSITY_VERY_VERBOSE: INFO
-                VERBOSITY_DEBUG:        DEBUG
-```
-
-##### `app/config/validator/config.yml`
-
-```yml
-...
+            type:   stream
+            path:   /var/log/cilex.log
+            level:  ERROR
+            bubble: false
 ```
 
 ## Тестирование
@@ -138,5 +146,4 @@ $ # или индивидуальные тест-кейсы
 $ vendor/bin/phpunit --testsuite config
 $ vendor/bin/phpunit --testsuite doctrine
 $ vendor/bin/phpunit --testsuite monolog
-$ vendor/bin/phpunit --testsuite validator
 ```

@@ -8,21 +8,21 @@
 namespace OctoLab\Cilex\Provider;
 
 use Cilex\Application;
-use Cilex\ServiceProviderInterface;
+use Cilex\Provider as Cilex;
+use Monolog\Logger;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  *
  * @see \Cilex\Provider\MonologServiceProvider
- * @todo roadmap:
- * @todo - config namespace support [monolog \ handlers]
  */
-class MonologServiceProvider implements ServiceProviderInterface
+class MonologServiceProvider extends Cilex\MonologServiceProvider
 {
     /**
-     * {@inheritdoc}
+     * @param Application $app
      */
     public function register(Application $app)
     {
+        parent::register($app);
     }
 }
