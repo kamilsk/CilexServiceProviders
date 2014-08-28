@@ -69,6 +69,25 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @param Application $app
      */
+    public function overrideParameterBehavior(Application $app)
+    {
+        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_override.yml', [
+            'root_dir' => __DIR__,
+        ]));
+        $expected = [
+            'component' => [
+                'parameter' => __DIR__,
+            ],
+        ];
+        $this->assertEquals($expected, $app['config']);
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
     public function complexBehavior(Application $app)
     {
         $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config.yml', ['placeholder' => 'placeholder']));

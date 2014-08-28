@@ -54,6 +54,16 @@ class ConfigServiceProvider implements ServiceProviderInterface
             }
             return $base;
         });
+        $app['array_transform_recursive'] = $app->protect(function (array & $array, array $placeholders) {
+            array_walk_recursive($array, function (&$param) use ($placeholders) {
+                if (preg_match('/^%(.+)%$/', $param, $matches)) {
+                    $placeholder = $matches[1];
+                    if (isset($placeholders[$placeholder])) {
+                        $param = $placeholders[$placeholder];
+                    }
+                }
+            });
+        });
         $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
             $loader = new YamlFileLoader(new FileLocator());
             switch (true) {
@@ -68,16 +78,10 @@ class ConfigServiceProvider implements ServiceProviderInterface
                 $config = $app['array_merge_recursive']($config, $data);
             }
             if (isset($config['parameters'])) {
+                $app['array_transform_recursive']($config['parameters'], $placeholders);
                 $placeholders = array_merge($config['parameters'], $placeholders);
             }
-            array_walk_recursive($config, function (&$param) use ($placeholders) {
-                if (preg_match('/^%(.+)%$/', $param, $matches)) {
-                    $placeholder = $matches[1];
-                    if (isset($placeholders[$placeholder])) {
-                        $param = $placeholders[$placeholder];
-                    }
-                }
-            });
+            $app['array_transform_recursive']($config, $placeholders);
             unset($config['parameters'], $config['imports']);
             return $config;
         });
