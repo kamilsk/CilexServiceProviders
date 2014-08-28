@@ -37,7 +37,7 @@ $ composer require incenteev/composer-parameter-handler:~2.0
     }
 }
 ```
-3. Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые настройки настройки:
+3. Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые настройки:
 ```yaml
 parameters:
     some_parameter: some_value
@@ -62,7 +62,7 @@ use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
 
-$app = new Application('ApplicationName');
+$app = new Application('Name');
 
 // регистрируем конфигурацию
 $app->register(
@@ -77,6 +77,7 @@ $app->register(new MonologServiceProvider());
 
 // добавляем команды и инициализируем приложение
 $app->command(new ExampleCommand());
+...
 $app->run();
 ```
 
@@ -103,6 +104,7 @@ parameters:
 ##### `app/config/doctrine/config.yml`
 
 > Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) Silex.
+
 > Пример из документации [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html) Symfony.
 
 ```yaml
@@ -126,6 +128,7 @@ doctrine:
 ##### `app/config/monolog/config.yml`
 
 > Пример из документации [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) Silex.
+
 > Пример из документации [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html) Symfony.
 
 ```yaml

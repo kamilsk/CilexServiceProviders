@@ -9,6 +9,7 @@ namespace OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use Cilex\Provider as Cilex;
+use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -17,6 +18,18 @@ use Cilex\Provider as Cilex;
  */
 class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
 {
+    /** @var bool */
+    private $setupHelper;
+
+    /**
+     * @param bool $setupHelper для установки <code>\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper</code>
+     * например, для <code>\Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand</code>
+     */
+    public function __construct($setupHelper = false)
+    {
+        $this->setupHelper = $setupHelper;
+    }
+
     /**
      * @param Application $app
      */
@@ -32,6 +45,13 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
                 }
             }
             $app['dbs.options'] = $connections;
+        }
+        if ($this->setupHelper) {
+            $app
+                ->offsetGet('console')
+                ->getHelperSet()
+                ->set(new ConnectionHelper($app->offsetGet('db')), 'connection')
+            ;
         }
     }
 }
