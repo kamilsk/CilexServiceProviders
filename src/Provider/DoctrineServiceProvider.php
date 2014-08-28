@@ -22,7 +22,7 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
     private $setupHelper;
 
     /**
-     * @param bool $setupHelper для установки <code>\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper</code>
+     * @param bool $setupHelper для установки <code>\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper</code>,
      * например, для <code>\Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand</code>
      */
     public function __construct($setupHelper = false)
