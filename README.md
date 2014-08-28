@@ -25,11 +25,11 @@ $ composer update
 Используйте `config.yml` для хранения настроек, не зависящих от окружения, и `parameters.yml` для их переопределения
 в зависимости от конкретного окружения.
 
-1. Добавьте зависимость от [Composer ParameterHandler](https://github.com/Incenteev/ParameterHandler):
+1) Добавьте зависимость от [Composer ParameterHandler](https://github.com/Incenteev/ParameterHandler):
 ```bash
 $ composer require incenteev/composer-parameter-handler:~2.0
 ```
-2. Настройте `composer.json`:
+2) Настройте `composer.json`:
 ```json
 "extra": {
     "incenteev-parameters": {
@@ -37,16 +37,16 @@ $ composer require incenteev/composer-parameter-handler:~2.0
     }
 }
 ```
-3. Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые настройки:
+3) Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые настройки:
 ```yaml
 parameters:
     some_parameter: some_value
 ```
-4. Исключите `path/to/parameters.yml` из vcs (например, git):
+4) Исключите `path/to/parameters.yml` из vcs (например, git):
 ```bash
 $ echo 'path/to/parameters.yml' >> .gitignore
 ```
-5. Используйте эти параметры в `config.yml`:
+5) Используйте эти параметры в `config.yml`:
 ```yaml
 component:
     component_option: %some_parameter%
