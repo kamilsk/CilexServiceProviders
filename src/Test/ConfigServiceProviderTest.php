@@ -73,10 +73,11 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_override.yml', [
             'root_dir' => __DIR__,
+            'file' => 'test.txt',
         ]));
         $expected = [
             'component' => [
-                'parameter' => __DIR__,
+                'parameter' => sprintf('%s/path/to/%s', __DIR__, 'test.txt'),
             ],
         ];
         $this->assertEquals($expected, $app['config']);

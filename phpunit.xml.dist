@@ -35,8 +35,5 @@
         <testsuite name="monolog">
             <file>src/Test/MonologServiceProviderTest.php</file>
         </testsuite>
-        <testsuite name="validator">
-            <file>src/Test/ValidatorServiceProviderTest.php</file>
-        </testsuite>
     </testsuites>
 </phpunit>

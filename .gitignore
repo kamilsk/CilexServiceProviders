@@ -1,1 +1,3 @@
+/src/Test/app/logs/*
+!src/Test/app/logs/.gitkeep
 /vendor/

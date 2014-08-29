@@ -54,13 +54,14 @@ class ConfigServiceProvider implements ServiceProviderInterface
             }
             return $base;
         });
-        $app['array_transform_recursive'] = $app->protect(function (array & $array, array $placeholders) {
-            array_walk_recursive($array, function (&$param) use ($placeholders) {
-                if (preg_match('/^%(.+)%$/', $param, $matches)) {
-                    $placeholder = $matches[1];
-                    if (isset($placeholders[$placeholder])) {
-                        $param = $placeholders[$placeholder];
-                    }
+        $app['array_transform_recursive'] = $app->protect(function (array &$array, array $placeholders) {
+            $quote = function (&$value) { $value = sprintf('/%s/', $value); };
+            array_walk_recursive($array, function (&$param) use ($quote, $placeholders) {
+                if (preg_match_all('/%([^%]+)%/', $param, $matches)) {
+                    array_walk($matches[0], $quote);
+                    $pattern = $matches[0];
+                    $replacement = array_intersect_key($placeholders, array_flip($matches[1]));
+                    $param = preg_replace($pattern, $replacement, $param);
                 }
             });
         });

@@ -2,4 +2,4 @@ component:
   parameter: %parameter_with_placeholder%
 
 parameters:
-  parameter_with_placeholder: %root_dir%
+  parameter_with_placeholder: '%root_dir%/path/to/%file%'

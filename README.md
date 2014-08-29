@@ -14,7 +14,7 @@ $ cd CilexServiceProvider && composer install
 ### Composer
 
 ```bash
-$ composer require kamilsk/cilex-service-providers:~0.3
+$ composer require kamilsk/cilex-service-providers:~1.0
 $ composer update
 ```
 
@@ -25,7 +25,7 @@ $ composer update
 Используйте `config.yml` для хранения настроек, не зависящих от окружения, и `parameters.yml` для их переопределения
 в зависимости от конкретного окружения.
 
-1) Добавьте зависимость от [Composer ParameterHandler](https://github.com/Incenteev/ParameterHandler):
+1) Добавьте зависимость от [ParameterHandler](https://github.com/Incenteev/ParameterHandler):
 ```bash
 $ composer require incenteev/composer-parameter-handler:~2.0
 ```
@@ -97,8 +97,7 @@ top_level_options:
 
 ```yaml
 parameters:
-    kernel:
-        debug: true
+    kernel.debug: true
 ```
 
 ##### `app/config/doctrine/config.yml`
@@ -134,11 +133,25 @@ doctrine:
 ```yaml
 monolog:
     handlers:
-        syslog:
+        error:
             type:   stream
             path:   /var/log/cilex.log
             level:  ERROR
             bubble: false
+            formatter: error_formatter
+```
+
+Если для handler указан formatter, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`, например:
+
+```php
+use Monolog\Formatter\JsonFormatter;
+
+$app['error_formatter.batch_mode'] = JsonFormatter::BATCH_MODE_JSON;
+$app['error_formatter'] = function ($app) {
+    return new JsonFormatter($app['error_formatter.batch_mode']);
+};
+...
+$app['monolog']->addError('Some error occurred.');
 ```
 
 ## Тестирование
