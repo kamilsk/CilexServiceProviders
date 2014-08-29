@@ -31,13 +31,21 @@ $ composer require incenteev/composer-parameter-handler:~2.0
 ```
 2) Настройте `composer.json`:
 ```json
+"scripts": {
+    "post-install-cmd": [
+        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+    ],
+    "post-update-cmd": [
+        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+    ]
+},
 "extra": {
     "incenteev-parameters": {
         "file": "path/to/parameters.yml"
     }
 }
 ```
-3) Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые настройки:
+3) Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые параметры:
 ```yaml
 parameters:
     some_parameter: some_value
@@ -50,6 +58,10 @@ $ echo 'path/to/parameters.yml' >> .gitignore
 ```yaml
 component:
     component_option: %some_parameter%
+```
+6) Обновите проект:
+```bash
+$ composer update
 ```
 
 ### Пример использования
@@ -90,14 +102,14 @@ imports:
     - { resource: monolog/config.yml }
 
 top_level_options:
-    top_level_option: top_level_option_value
+    top_level_option: %some_parameter%
 ```
 
 ##### `app/config/parameters.yml.dist` -> `app/config/parameters.yml`
 
 ```yaml
 parameters:
-    kernel.debug: true
+    some_parameter: %placeholder%
 ```
 
 ##### `app/config/doctrine/config.yml`
@@ -133,7 +145,7 @@ doctrine:
 ```yaml
 monolog:
     handlers:
-        error:
+        syslog:
             type:   stream
             path:   /var/log/cilex.log
             level:  ERROR
@@ -141,7 +153,7 @@ monolog:
             formatter: error_formatter
 ```
 
-Если для handler указан formatter, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`, например:
+Если для handler указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`, например:
 
 ```php
 use Monolog\Formatter\JsonFormatter;
