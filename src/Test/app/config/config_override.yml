@@ -1,5 +1,7 @@
 component:
   parameter: %parameter_with_placeholder%
+  options: %parameter_with_array%
 
 parameters:
   parameter_with_placeholder: '%root_dir%/path/to/%file%'
+  parameter_with_array: [1, 2, 3]

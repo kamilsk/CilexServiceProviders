@@ -78,6 +78,7 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'component' => [
                 'parameter' => sprintf('%s/path/to/%s', __DIR__, 'test.txt'),
+                'options' => [1, 2, 3]
             ],
         ];
         $this->assertEquals($expected, $app['config']);
