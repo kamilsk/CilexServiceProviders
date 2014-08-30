@@ -2,6 +2,8 @@
 >
 > Набор переработанных провайдеров для Cilex.
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/fde7b27e-7f5c-452e-a289-5614f83246c9/big.png)](https://insight.sensiolabs.com/projects/fde7b27e-7f5c-452e-a289-5614f83246c9)
+
 ## Установка
 
 ### Git
@@ -175,5 +177,3 @@ $ vendor/bin/phpunit --testsuite config
 $ vendor/bin/phpunit --testsuite doctrine
 $ vendor/bin/phpunit --testsuite monolog
 ```
-
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/fde7b27e-7f5c-452e-a289-5614f83246c9/big.png)](https://insight.sensiolabs.com/projects/fde7b27e-7f5c-452e-a289-5614f83246c9)
