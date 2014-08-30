@@ -146,10 +146,10 @@ doctrine:
 monolog:
     handlers:
         syslog:
-            type:   stream
-            path:   /var/log/cilex.log
-            level:  ERROR
-            bubble: false
+            type:      stream
+            path:      /var/log/cilex.log
+            level:     ERROR
+            bubble:    false
             formatter: error_formatter
 ```
 
