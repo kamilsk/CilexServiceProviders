@@ -2,7 +2,7 @@
 >
 > Набор переработанных провайдеров для Cilex.
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/fde7b27e-7f5c-452e-a289-5614f83246c9/big.png)](https://insight.sensiolabs.com/projects/fde7b27e-7f5c-452e-a289-5614f83246c9)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/big.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
 
 ## Установка
 
