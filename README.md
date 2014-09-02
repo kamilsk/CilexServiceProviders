@@ -7,6 +7,7 @@
 [![Всего загрузок](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Последняя стабильная версия](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Количество ссылок](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
+[![Статус сборки](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
 
 ## Установка
 
