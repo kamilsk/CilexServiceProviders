@@ -3,7 +3,7 @@
 > Набор переработанных провайдеров для Cilex.
 
 [![Статус сборки](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
-[![Качество кода](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
+[![Оценка качества кода](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
 [![Всего загрузок](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Последняя стабильная версия](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Количество ссылок](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
