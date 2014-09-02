@@ -37,9 +37,9 @@ class Command extends Cilex\Command
      */
     public function setName($name)
     {
-        if ($this->namespace === null) {
+        if (null === $this->namespace) {
             return parent::setName($name);
         }
-        return parent::setName($this->namespace . ':' . $name);
+        return parent::setName(sprintf('%s:%s', $this->namespace, $name));
     }
 }

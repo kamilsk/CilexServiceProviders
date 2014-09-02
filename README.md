@@ -4,6 +4,10 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/big.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
 
+[![Всего загрузок](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
+[![Последняя стабильная версия](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
+[![Количество ссылок](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
+
 ## Установка
 
 ### Git
@@ -138,6 +142,14 @@ doctrine:
                 password: pass
 ```
 
+Теперь доступ к `\Doctrine\DBAL\Connection` можно получить следующим образом:
+
+```php
+$defaultConnection = $app['db']; // в данном случае эквивалентно $app['dbs']['mysql']
+$mysql = $app['dbs']['mysql'];
+$sqlite = $app['dbs']['sqlite'];
+```
+
 ##### `app/config/monolog/config.yml`
 
 > Пример из документации [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) Silex.
@@ -155,14 +167,13 @@ monolog:
             formatter: error_formatter
 ```
 
-Если для handler указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`, например:
+Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`, например:
 
 ```php
 use Monolog\Formatter\JsonFormatter;
 
-$app['error_formatter.batch_mode'] = JsonFormatter::BATCH_MODE_JSON;
 $app['error_formatter'] = function ($app) {
-    return new JsonFormatter($app['error_formatter.batch_mode']);
+    return new JsonFormatter(JsonFormatter::BATCH_MODE_JSON);
 };
 ...
 $app['monolog']->addError('Some error occurred.');
@@ -172,7 +183,9 @@ $app['monolog']->addError('Some error occurred.');
 
 ```bash
 $ vendor/bin/phpunit
-$ # или индивидуальные тест-кейсы
+
+# или индивидуальные тест-кейсы
+
 $ vendor/bin/phpunit --testsuite config
 $ vendor/bin/phpunit --testsuite doctrine
 $ vendor/bin/phpunit --testsuite monolog

@@ -2,11 +2,11 @@ monolog:
   handlers:
     access:
       type: stream
-      path: '%root_dir%/app/logs/access.log'
+      path: "%root_dir%/app/logs/access.log"
       level: INFO
       bubble: false
     error:
       type: stream
-      path: '%root_dir%/app/logs/error.log'
+      path: "%root_dir%/app/logs/error.log"
       level: ERROR
       bubble: false

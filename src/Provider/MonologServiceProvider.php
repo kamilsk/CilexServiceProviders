@@ -27,7 +27,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         parent::register($app);
         if (!empty($app['config']['monolog']['handlers'])) {
             $handlers = $app['config']['monolog']['handlers'];
-            $app['monolog.factory'] = $app->protect(function (array $config) use ($app) {
+            $app['monolog.factory'] = $app->protect(function ($name, array $config) use ($app) {
                 if (isset($config['type'])) {
                     $level = Logger::DEBUG;
                     $levels = Logger::getLevels();
@@ -49,13 +49,15 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
                                 return $handler;
                             }
                             break;
+                        default:
+                            throw new \DomainException(sprintf('Handler type %s is not supported.', $config['type']));
                     }
                 }
-                throw new \InvalidArgumentException('Invalid config were transferred.');
+                throw new \InvalidArgumentException(sprintf('Invalid configuration %s for handler "%s".', json_encode($config), $name));
             });
             $app['monolog.configure'] = $app->protect(function (Logger $log) use ($app, $handlers) {
-                foreach ($handlers as $handler) {
-                    $log->pushHandler($app['monolog.factory']($handler));
+                foreach ($handlers as $name => $handler) {
+                    $log->pushHandler($app['monolog.factory']($name, $handler));
                 }
             });
         }
