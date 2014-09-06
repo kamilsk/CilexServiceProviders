@@ -6,7 +6,6 @@ php:
 
 install:
   - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
-  - php vendor/autoload.php
 
 script:
   - phpunit
