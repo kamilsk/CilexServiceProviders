@@ -5,7 +5,7 @@
  * @license http://www.octolab.org/license
  */
 
-namespace OctoLab\Cilex\Test;
+namespace OctoLab\Cilex\Tests\Provider;
 
 use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
@@ -34,7 +34,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function configSupportBehavior(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/app/monolog/config.yml', ['root_dir' => __DIR__]));
+        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/../']));
         $app->register(new MonologServiceProvider());
         $logs = [
             $app['config']['monolog']['handlers']['access']['path'],

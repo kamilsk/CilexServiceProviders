@@ -39,8 +39,37 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $this->registerHelpers($app);
         $file = $this->filename;
         $placeholders = $this->placeholders;
+        $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
+            $loader = new YamlFileLoader(new FileLocator());
+            switch (true) {
+                case $loader->supports($file):
+                    $loader->load($file);
+                    break;
+                default:
+                    throw new \RuntimeException(sprintf('File "%s" is not supported.', $file));
+            }
+            $config = [];
+            foreach (array_reverse($loader->getContent()) as $data) {
+                $config = $app['array_merge_recursive']($config, $data);
+            }
+            if (isset($config['parameters'])) {
+                $app['array_transform_recursive']($config['parameters'], $placeholders);
+                $placeholders = array_merge($config['parameters'], $placeholders);
+            }
+            $app['array_transform_recursive']($config, $placeholders);
+            unset($config['parameters'], $config['imports']);
+            return $config;
+        });
+    }
+
+    /**
+     * @param Application $app
+     */
+    private function registerHelpers(Application $app)
+    {
         $app['array_merge_recursive'] = $app->protect(function (array $base) use ($app) {
             $mixtures = array_slice(func_get_args(), 1);
             foreach ($mixtures as $mixture) {
@@ -69,27 +98,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
                     $param = preg_replace($pattern, $replacement, $param);
                 }
             });
-        });
-        $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
-            $loader = new YamlFileLoader(new FileLocator());
-            switch (true) {
-                case $loader->supports($file):
-                    $loader->load($file);
-                    break;
-                default:
-                    throw new \RuntimeException(sprintf('File "%s" is not supported.', $file));
-            }
-            $config = [];
-            foreach (array_reverse($loader->getContent()) as $data) {
-                $config = $app['array_merge_recursive']($config, $data);
-            }
-            if (isset($config['parameters'])) {
-                $app['array_transform_recursive']($config['parameters'], $placeholders);
-                $placeholders = array_merge($config['parameters'], $placeholders);
-            }
-            $app['array_transform_recursive']($config, $placeholders);
-            unset($config['parameters'], $config['imports']);
-            return $config;
         });
     }
 }

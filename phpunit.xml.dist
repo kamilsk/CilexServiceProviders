@@ -27,14 +27,10 @@
         strict="false"
         verbose="false">
     <testsuites>
-        <testsuite name="config">
-            <file>src/Test/ConfigServiceProviderTest.php</file>
-        </testsuite>
-        <testsuite name="doctrine">
-            <file>src/Test/DoctrineServiceProviderTest.php</file>
-        </testsuite>
-        <testsuite name="monolog">
-            <file>src/Test/MonologServiceProviderTest.php</file>
+        <testsuite name="provider">
+            <file>src/Tests/Provider/ConfigServiceProviderTest.php</file>
+            <file>src/Tests/Provider/DoctrineServiceProviderTest.php</file>
+            <file>src/Tests/Provider/MonologServiceProviderTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

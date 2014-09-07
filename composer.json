@@ -26,7 +26,8 @@
         "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
         "doctrine/migrations": "optional for DoctrineServiceProvider (1.0.x-dev#4256449 is recommended)",
         "incenteev/composer-parameter-handler": "to handle parameters.yml (~2.0 is recommended)",
-        "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)"
+        "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)",
+        "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.5 is recommended)"
     },
     "autoload": {
         "psr-4": {

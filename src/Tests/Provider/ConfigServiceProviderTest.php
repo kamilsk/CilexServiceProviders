@@ -5,7 +5,7 @@
  * @license http://www.octolab.org/license
  */
 
-namespace OctoLab\Cilex\Test;
+namespace OctoLab\Cilex\Tests\Provider;
 
 use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
@@ -33,7 +33,7 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function parametersBehavior(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_parameters.yml'));
+        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config_parameters.yml'));
         $expected = [
             'component' => [
                 'parameter' => 'test_parameter',
@@ -51,7 +51,7 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function placeholdersBehavior(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_placeholders.yml', [
+        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config_placeholders.yml', [
             'another_parameter' => 'test_placeholder',
         ]));
         $expected = [
@@ -71,13 +71,13 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function overrideParameterBehavior(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config_override.yml', [
-            'root_dir' => __DIR__,
+        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config_override.yml', [
+            'root_dir' => __DIR__ . '/../',
             'file' => 'test.txt',
         ]));
         $expected = [
             'component' => [
-                'parameter' => sprintf('%s/path/to/%s', __DIR__, 'test.txt'),
+                'parameter' => sprintf('%s/path/to/%s', __DIR__ . '/../', 'test.txt'),
                 'options' => [1, 2, 3]
             ],
         ];
@@ -92,7 +92,7 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function complexBehavior(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/app/config/config.yml', ['placeholder' => 'placeholder']));
+        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config.yml', ['placeholder' => 'placeholder']));
         $expected = [
             'component' => [
                 'base_parameter' => 'base parameter will not be overwritten',

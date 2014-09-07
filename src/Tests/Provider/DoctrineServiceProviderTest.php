@@ -5,7 +5,7 @@
  * @license http://www.octolab.org/license
  */
 
-namespace OctoLab\Cilex\Test;
+namespace OctoLab\Cilex\Tests\Provider;
 
 use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
@@ -34,7 +34,7 @@ class DoctrineServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function configSupportBehavior(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/app/doctrine/config.yml'));
+        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/doctrine/config.yml'));
         $app->register(new DoctrineServiceProvider());
         $this->assertEquals($app['config']['doctrine']['dbal']['connections'], $app['dbs.options']);
         $this->assertEquals($app['config']['doctrine']['dbal']['default_connection'], $app['dbs.default']);

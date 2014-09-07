@@ -186,7 +186,9 @@ $ vendor/bin/phpunit
 
 # или индивидуальные тест-кейсы
 
-$ vendor/bin/phpunit --testsuite config
-$ vendor/bin/phpunit --testsuite doctrine
-$ vendor/bin/phpunit --testsuite monolog
+$ vendor/bin/phpunit --testsuite provider
+
+# или индивидуальный запуск тестов
+
+$ vendor/bin/phpunit src/Tests/Provider/ConfigServiceProviderTest
 ```
