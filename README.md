@@ -190,5 +190,5 @@ $ vendor/bin/phpunit --testsuite provider
 
 # или индивидуальный запуск тестов
 
-$ vendor/bin/phpunit src/Tests/Provider/ConfigServiceProviderTest
+$ vendor/bin/phpunit src/Tests/Provider/ConfigServiceProviderTest.php
 ```

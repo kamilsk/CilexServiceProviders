@@ -28,10 +28,10 @@
         verbose="false">
     <testsuites>
         <testsuite name="command">
-            <file>src/Tests/Command/Command.php</file>
+            <file>src/Tests/Command/CommandTest.php</file>
         </testsuite>
         <testsuite name="config">
-            <file>src/Tests/Config/YamlFileLoader.php</file>
+            <file>src/Tests/Config/YamlFileLoaderTest.php</file>
         </testsuite>
         <testsuite name="provider">
             <file>src/Tests/Provider/ConfigServiceProviderTest.php</file>
