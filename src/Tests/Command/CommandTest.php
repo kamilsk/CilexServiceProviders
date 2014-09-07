@@ -12,4 +12,11 @@ namespace OctoLab\Cilex\Tests\Command;
  */
 class CommandTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @test
+     */
+    public function notImplementedYet()
+    {
+        $this->assertTrue(true);
+    }
 }

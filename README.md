@@ -184,7 +184,7 @@ $app['monolog']->addError('Some error occurred.');
 ```bash
 $ vendor/bin/phpunit
 
-# или индивидуальные тест-кейсы
+# или индивидуальный тест-кейс
 
 $ vendor/bin/phpunit --testsuite provider
 
