@@ -145,8 +145,9 @@ doctrine:
 Теперь доступ к `\Doctrine\DBAL\Connection` можно получить следующим образом:
 
 ```php
-$defaultConnection = $app['db']; // в данном случае эквивалентно $app['dbs']['mysql']
+$defaultConnection = $app['db'];
 $mysql = $app['dbs']['mysql'];
+// в данном случае $defaultConnection === $mysql
 $sqlite = $app['dbs']['sqlite'];
 ```
 
