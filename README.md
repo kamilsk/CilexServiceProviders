@@ -10,14 +10,14 @@
 
 ## Установка
 
-### Git
+### Git (для участия в разработке)
 
 ```bash
 $ git clone git@github.com:kamilsk/CilexServiceProviders.git
 $ cd CilexServiceProvider && composer install
 ```
 
-### Composer
+### Composer (для использования в проекте)
 
 ```bash
 $ composer require kamilsk/cilex-service-providers:~1.0
