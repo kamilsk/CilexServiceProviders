@@ -130,14 +130,14 @@ doctrine:
         default_connection: mysql
         connections:
             mysql:
-                driver:   mysql
+                driver:   pdo_mysql
                 host:     localhost
                 port:     3306
                 dbname:   database
                 username: user
                 password: pass
             sqlite:
-                driver:   sqlite
+                driver:   pdo_sqlite
                 memory:   true
                 dbname:   database
                 username: user

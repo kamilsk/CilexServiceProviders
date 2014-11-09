@@ -19,15 +19,15 @@ use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
 class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
 {
     /** @var bool */
-    private $setupHelper;
+    private $helperConnection;
 
     /**
-     * @param bool $setupHelper для установки <code>\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper</code>,
+     * @param string $helperConnection для установки <code>\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper</code>,
      * например, для <code>\Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand</code>
      */
-    public function __construct($setupHelper = false)
+    public function __construct($helperConnection = null)
     {
-        $this->setupHelper = $setupHelper;
+        $this->helperConnection = $helperConnection;
     }
 
     /**
@@ -46,11 +46,17 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
             }
             $app['dbs.options'] = $connections;
         }
-        if ($this->setupHelper) {
+        if ($this->helperConnection) {
+            $dbs = $app->offsetGet('dbs');
+            if (!is_bool($this->helperConnection) && isset($dbs[$this->helperConnection])) {
+                $connection = $dbs[$this->helperConnection];
+            } else {
+                $connection = $app->offsetGet('db');
+            }
             $app
                 ->offsetGet('console')
                 ->getHelperSet()
-                ->set(new ConnectionHelper($app->offsetGet('db')), 'connection')
+                ->set(new ConnectionHelper($connection), 'connection')
             ;
         }
     }

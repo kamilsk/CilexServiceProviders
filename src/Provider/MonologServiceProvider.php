@@ -60,7 +60,9 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
                             throw new \DomainException(sprintf('Handler type %s is not supported.', $config['type']));
                     }
                 }
-                throw new \InvalidArgumentException(sprintf('Invalid configuration %s for handler "%s".', json_encode($config), $name));
+                throw new \InvalidArgumentException(
+                    sprintf('Invalid configuration %s for handler "%s".', json_encode($config), $name)
+                );
             });
             $app['monolog.configure'] = $app->protect(function (Logger $log) use ($app, $handlers) {
                 foreach ($handlers as $name => $handler) {
