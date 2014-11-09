@@ -20,6 +20,27 @@ use Monolog\Logger;
 class MonologServiceProvider extends Cilex\MonologServiceProvider
 {
     /**
+     * @param string $name
+     *
+     * @return int
+     * @see \Silex\Provider\MonologServiceProvider::translateLevel
+     */
+    public static function translateLevel($name)
+    {
+        if (is_int($name)) {
+            return $name;
+        }
+        $levels = Logger::getLevels();
+        $upper = strtoupper($name);
+        if (!isset($levels[$upper])) {
+            throw new \InvalidArgumentException(
+                sprintf('Provided logging level "%s" does not exist. Must be a valid monolog logging level.', $name)
+            );
+        }
+        return $levels[$upper];
+    }
+
+    /**
      * @param Application $app
      */
     public function register(Application $app)
@@ -37,12 +58,11 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
             $app['monolog.factory'] = $app->protect(function ($name, array $config) use ($app) {
                 if (isset($config['type'])) {
                     $level = Logger::DEBUG;
-                    $levels = Logger::getLevels();
                     switch ($config['type']) {
                         case 'stream':
                             if (isset($config['path'])) {
-                                if (isset($config['level'], $levels[strtoupper($config['level'])])) {
-                                    $level = $levels[strtoupper($config['level'])];
+                                if (isset($config['level'])) {
+                                    $level = static::translateLevel($config['level']);
                                 }
                                 $handler = new StreamHandler(
                                     $config['path'],

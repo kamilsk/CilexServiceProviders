@@ -179,19 +179,19 @@ $app['error_formatter'] = function ($app) {
     return new JsonFormatter(JsonFormatter::BATCH_MODE_JSON);
 };
 ...
-$app['monolog']->addError('Some error occurred.');
+$app['monolog']->error('Some error occurred.');
 ```
 
 ## Тестирование
 
 ```bash
-$ vendor/bin/phpunit
+$ phpunit
 
 # или конкретный тест-кейс
 
-$ vendor/bin/phpunit --testsuite provider
+$ phpunit --testsuite provider
 
 # или конкретный тест
 
-$ vendor/bin/phpunit src/Tests/Provider/ConfigServiceProviderTest.php
+$ phpunit src/Tests/Provider/ConfigServiceProviderTest.php
 ```

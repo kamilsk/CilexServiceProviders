@@ -27,7 +27,7 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
      */
     public function __construct($helperConnection = null)
     {
-        $this->helperConnection = $helperConnection;
+        $this->helperConnection = (string) $helperConnection;
     }
 
     /**
@@ -48,7 +48,7 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
         }
         if ($this->helperConnection) {
             $dbs = $app->offsetGet('dbs');
-            if (!is_bool($this->helperConnection) && isset($dbs[$this->helperConnection])) {
+            if (isset($dbs[$this->helperConnection])) {
                 $connection = $dbs[$this->helperConnection];
             } else {
                 $connection = $app->offsetGet('db');
