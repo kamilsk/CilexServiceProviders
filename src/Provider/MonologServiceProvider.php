@@ -25,6 +25,13 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
     public function register(Application $app)
     {
         parent::register($app);
+        if (empty($app['monolog.name'])) {
+            if (empty($app['config']['monolog']['name'])) {
+                $app['monolog.name'] = $app['console.name'];
+            } else {
+                $app['monolog.name'] = $app['config']['monolog']['name'];
+            }
+        }
         if (!empty($app['config']['monolog']['handlers'])) {
             $handlers = $app['config']['monolog']['handlers'];
             $app['monolog.factory'] = $app->protect(function ($name, array $config) use ($app) {
