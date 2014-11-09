@@ -11,6 +11,7 @@ use Cilex\Application;
 use Cilex\Provider as Cilex;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -88,6 +89,9 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
                 $registry = new \Pimple();
                 foreach ($handlers as $name => $handler) {
                     $registry[$name] = $app['monolog.factory']($handler);
+                }
+                if (class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')) {
+                    $registry['console'] = new ConsoleHandler();
                 }
                 return $registry;
             });

@@ -8,6 +8,7 @@
 namespace OctoLab\Cilex\Command;
 
 use Cilex\Command as Cilex;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -41,5 +42,24 @@ class Command extends Cilex\Command
             return parent::setName($name);
         }
         return parent::setName(sprintf('%s:%s', $this->namespace, $name));
+    }
+
+    /**
+     * Устанавливает интерфейс вывода для ConsoleHandler.
+     *
+     * @param OutputInterface $outputInterface
+     *
+     * @return $this
+     */
+    public function setOutputInterface(OutputInterface $outputInterface)
+    {
+        $outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+        $this
+            ->getContainer()
+            ->offsetGet('monolog.handlers')
+            ->offsetGet('console')
+            ->setOutput($outputInterface)
+        ;
+        return $this;
     }
 }

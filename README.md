@@ -170,7 +170,8 @@ monolog:
             formatter: error_formatter
 ```
 
-Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`, например:
+Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`,
+например:
 
 ```php
 use Monolog\Formatter\JsonFormatter;
@@ -181,6 +182,22 @@ $app['error_formatter'] = function ($app) {
 ...
 $app['monolog']->error('Some error occurred.');
 ```
+
+__ВАЖНО:__ если в приложении добавлена зависимость `symfony/monolog-bridge`, то необходимо дополнительно добавить
+`symfony/event-dispatcher`, т.к. в этом случае к слушателям добавляется `Symfony\Bridge\Monolog\Handler\ConsoleHandler`.
+
+Чтобы логи выводились в консоль, необходимо передать слушателю интерфейс вывода:
+
+```php
+$outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+$app
+    ->offsetGet('monolog.handlers')
+    ->offsetGet('console')
+    ->setOutput($outputInterface)
+;
+```
+
+или вызвать `\OctoLab\Cilex\Command\Command::setOutputInterface`, передав в метод этот интерфейс.
 
 ## Тестирование
 
