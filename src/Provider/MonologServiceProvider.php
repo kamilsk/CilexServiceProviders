@@ -55,7 +55,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         }
         if (!empty($app['config']['monolog']['handlers'])) {
             $handlers = $app['config']['monolog']['handlers'];
-            $app['monolog.factory'] = $app->protect(function ($name, array $config) use ($app) {
+            $app['monolog.factory'] = $app->protect(function (array $config) use ($app) {
                 if (isset($config['type'])) {
                     $level = Logger::DEBUG;
                     switch ($config['type']) {
@@ -81,12 +81,20 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
                     }
                 }
                 throw new \InvalidArgumentException(
-                    sprintf('Invalid configuration %s for handler "%s".', json_encode($config), $name)
+                    sprintf('Invalid configuration %s for handler.', json_encode($config))
                 );
             });
-            $app['monolog.configure'] = $app->protect(function (Logger $log) use ($app, $handlers) {
+            $app['monolog.handlers'] = $app->share(function () use ($app, $handlers) {
+                $registry = new \Pimple();
                 foreach ($handlers as $name => $handler) {
-                    $log->pushHandler($app['monolog.factory']($name, $handler));
+                    $registry[$name] = $app['monolog.factory']($handler);
+                }
+                return $registry;
+            });
+            $app['monolog.configure'] = $app->protect(function (Logger $logger) use ($app) {
+                $handlers = $app->offsetGet('monolog.handlers');
+                foreach ($handlers->keys() as $handler) {
+                    $logger->pushHandler($handlers->offsetGet($handler));
                 }
             });
         }

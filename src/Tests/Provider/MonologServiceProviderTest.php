@@ -23,7 +23,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application('Test');
         $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/../'])
+            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
         );
         $app->register(new MonologServiceProvider());
         $logs = [
@@ -54,7 +54,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         // set name by default way
         $app = new Application($appName);
         $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/../'])
+            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
         );
         $log = $app['config']['monolog']['handlers']['access']['path'];
         $app['monolog.name'] = 'MONOLOG';
@@ -68,7 +68,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         // set name by Application
         $app = new Application($appName);
         $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/../'])
+            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
         );
         $app->register(new MonologServiceProvider());
         $monolog = $app['monolog'];
@@ -78,7 +78,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         // set name by config
         $app = new Application($appName);
         $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/../'])
+            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
         );
         $config = $app['config'];
         $config['monolog']['name'] = 'CONFIG';
