@@ -170,21 +170,18 @@ monolog:
             formatter: error_formatter
 ```
 
-Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`,
-например:
+Теперь доступ к `\Monolog\Handler\AbstractProcessingHandler` можно получить следующим образом:
 
 ```php
-use Monolog\Formatter\JsonFormatter;
-
-$app['error_formatter'] = function ($app) {
-    return new JsonFormatter(JsonFormatter::BATCH_MODE_JSON);
-};
-...
-$app['monolog']->error('Some error occurred.');
+$syslog = $app['monolog.handlers']['syslog'];
 ```
 
-__ВАЖНО:__ если в приложении добавлена зависимость `symfony/monolog-bridge`, то необходимо дополнительно добавить
-`symfony/event-dispatcher`, т.к. в этом случае к слушателям добавляется `Symfony\Bridge\Monolog\Handler\ConsoleHandler`.
+Если в приложении добавлены зависимости `symfony/monolog-bridge` и `symfony/event-dispatcher`, то можно получить
+доступ к `\Symfony\Bridge\Monolog\Handler\ConsoleHandler`:
+
+```php
+$console = $app['monolog.handlers']['console'];
+```
 
 Чтобы логи выводились в консоль, необходимо передать слушателю интерфейс вывода:
 
@@ -198,6 +195,19 @@ $app
 ```
 
 или вызвать `\OctoLab\Cilex\Command\Command::setOutputInterface`, передав в метод этот интерфейс.
+
+Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`,
+например:
+
+```php
+use Monolog\Formatter\JsonFormatter;
+
+$app['error_formatter'] = function ($app) {
+    return new JsonFormatter(JsonFormatter::BATCH_MODE_JSON);
+};
+...
+$app['monolog']->error('Some error occurred.');
+```
 
 ## Тестирование
 

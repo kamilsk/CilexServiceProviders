@@ -84,7 +84,9 @@ class ConfigServiceProvider implements ServiceProviderInterface
             return $base;
         });
         $app['array_transform_recursive'] = $app->protect(function (array &$array, array $placeholders) {
-            $wrap = function (&$value) { $value = sprintf('/%s/', $value); };
+            $wrap = function (&$value) {
+                $value = sprintf('/%s/', $value);
+            };
             array_walk_recursive($array, function (&$param) use ($wrap, $placeholders) {
                 if (preg_match('/^%([^%]+)%$/', $param, $matches)) {
                     $placeholder = $matches[1];

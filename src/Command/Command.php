@@ -50,6 +50,8 @@ class Command extends Cilex\Command
      * @param OutputInterface $outputInterface
      *
      * @return $this
+     *
+     * @uses \Symfony\Bridge\Monolog\Handler\ConsoleHandler
      */
     public function setOutputInterface(OutputInterface $outputInterface)
     {

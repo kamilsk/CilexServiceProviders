@@ -41,6 +41,20 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         return $levels[$upper];
     }
 
+    /** @var bool */
+    private $initConsoleHandler;
+
+    /**
+     * @param bool $initConsoleHandler для инициализации <code>\Symfony\Bridge\Monolog\Handler\ConsoleHandler</code>,
+     * в случае если все зависимости разрешены
+     */
+    public function __construct($initConsoleHandler = true)
+    {
+        $this->initConsoleHandler = $initConsoleHandler
+            && class_exists('\Symfony\Bridge\Monolog\Handler\ConsoleHandler', false)
+            && interface_exists('\Symfony\Component\EventDispatcher\EventSubscriberInterface', false);
+    }
+
     /**
      * @param Application $app
      */
@@ -90,7 +104,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
                 foreach ($handlers as $name => $handler) {
                     $registry[$name] = $app['monolog.factory']($handler);
                 }
-                if (class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')) {
+                if ($this->initConsoleHandler) {
                     $registry['console'] = new ConsoleHandler();
                 }
                 return $registry;
