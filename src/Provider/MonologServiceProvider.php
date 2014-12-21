@@ -77,7 +77,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
                         case 'stream':
                             if (isset($config['path'])) {
                                 $default = [
-                                    'level' => Logger::DEBUG,
+                                    'level' => $app['monolog.level'],
                                     'bubble' => true,
                                     'permission' => null,
                                 ];
