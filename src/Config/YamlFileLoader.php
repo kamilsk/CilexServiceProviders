@@ -57,24 +57,6 @@ class YamlFileLoader extends FileLoader
     }
 
     /**
-     * @param array $content
-     * @param string $sourceResource
-     */
-    private function parseImports($content, $sourceResource)
-    {
-        if (!isset($content['imports'])) {
-            return;
-        }
-        $this->setCurrentDir(dirname($sourceResource));
-        foreach ($content['imports'] as $import) {
-            if (isset($import['resource'])) {
-                $ignoreErrors = isset($import['ignore_errors']) ? boolval($import['ignore_errors']) : false;
-                $this->import($import['resource'], null, $ignoreErrors, $sourceResource);
-            }
-        }
-    }
-
-    /**
      * @param string $file
      *
      * @return array
@@ -96,5 +78,23 @@ class YamlFileLoader extends FileLoader
             $this->yamlParser = new YamlParser();
         }
         return $this->yamlParser->parse(file_get_contents($file));
+    }
+
+    /**
+     * @param array $content
+     * @param string $sourceResource
+     */
+    protected function parseImports($content, $sourceResource)
+    {
+        if (!isset($content['imports'])) {
+            return;
+        }
+        $this->setCurrentDir(dirname($sourceResource));
+        foreach ($content['imports'] as $import) {
+            if (isset($import['resource'])) {
+                $ignoreErrors = isset($import['ignore_errors']) ? boolval($import['ignore_errors']) : false;
+                $this->import($import['resource'], null, $ignoreErrors, $sourceResource);
+            }
+        }
     }
 }

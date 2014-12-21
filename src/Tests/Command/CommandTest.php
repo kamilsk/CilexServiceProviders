@@ -7,6 +7,8 @@
 
 namespace OctoLab\Cilex\Tests\Command;
 
+use OctoLab\Cilex\Command\Command;
+
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
@@ -15,8 +17,22 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function notImplementedYet()
+    public function commandNamespace()
     {
-        $this->assertTrue(true);
+        $command = new MockCommand();
+        $this->assertEquals('test', $command->getName());
+        $command = new MockCommand('mock');
+        $this->assertEquals('mock:test', $command->getName());
+    }
+}
+
+/**
+ * @author Kamil Samigullin <kamil@samigullin.info>
+ */
+class MockCommand extends Command
+{
+    protected function configure()
+    {
+        $this->setName('test');
     }
 }
