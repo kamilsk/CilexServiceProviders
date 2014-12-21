@@ -84,7 +84,7 @@ class YamlFileLoader extends FileLoader
     protected function loadFile($file)
     {
         if (!stream_is_local($file)) {
-            throw new \InvalidArgumentException(sprintf('This is not a local file "%s".', $file));
+            throw new \InvalidArgumentException(sprintf('"%s" is not a local file.', $file));
         }
         if (!is_file($file)) {
             throw new \InvalidArgumentException(sprintf('"%s" is not a regular file.', $file));

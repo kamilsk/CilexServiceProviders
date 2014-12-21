@@ -12,15 +12,15 @@
     ],
     "require": {
         "php": ">=5.5",
-        "symfony/config": "~2.5",
-        "symfony/yaml": "~2.5"
+        "symfony/config": "~2.0",
+        "symfony/yaml": "~2.0"
     },
     "require-dev": {
         "cilex/cilex": "~1.0",
         "doctrine/dbal": "~2.0",
         "monolog/monolog": "~1.0",
-        "symfony/event-dispatcher": "~2.2",
-        "symfony/monolog-bridge": "~2.4"
+        "symfony/event-dispatcher": "~2.0",
+        "symfony/monolog-bridge": "~2.0"
     },
     "suggest": {
         "cilex/cilex": "~1.0 is recommended",
@@ -28,8 +28,8 @@
         "doctrine/migrations": "optional for DoctrineServiceProvider (1.0.x-dev#4256449 is recommended)",
         "incenteev/composer-parameter-handler": "to handle parameters.yml (~2.0 is recommended)",
         "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)",
-        "symfony/event-dispatcher": "needed when using log messages in console commands (~2.2 is recommended)",
-        "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.5 is recommended)"
+        "symfony/event-dispatcher": "needed when using log messages in console commands (~2.0 is recommended)",
+        "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.0 is recommended)"
     },
     "autoload": {
         "psr-4": {
