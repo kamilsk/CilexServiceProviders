@@ -33,6 +33,8 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
 
     /**
      * @param Application $app
+     *
+     * @throws \InvalidArgumentException
      */
     public function register(Application $app)
     {
