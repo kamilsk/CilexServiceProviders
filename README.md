@@ -161,6 +161,7 @@ $sqlite = $app['dbs']['sqlite'];
 
 ```yaml
 monolog:
+    name: MyApplicationName
     handlers:
         syslog:
             type:      stream
