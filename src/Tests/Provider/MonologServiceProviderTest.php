@@ -17,14 +17,25 @@ use OctoLab\Cilex\Provider\MonologServiceProvider;
 class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @test
+     * @return ConfigServiceProvider[]
      */
-    public function configSupportBehavior()
+    public function configProvider()
+    {
+        return [
+            [new ConfigServiceProvider($this->getConfigPath('config'), ['root_dir' => dirname(__DIR__)])],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider configProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function configSupportBehavior(ConfigServiceProvider $config)
     {
         $app = new Application('Test');
-        $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
-        );
+        $app->register($config);
         $app->register(new MonologServiceProvider());
         $logs = [
             $app['config']['monolog']['handlers']['access']['path'],
@@ -34,7 +45,6 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
             'Info level message.',
             'Error level message.',
         ];
-        /** @var \Psr\Log\LoggerInterface $monolog */
         $monolog = $app['monolog'];
         $monolog->info($messages[0]);
         $monolog->error($messages[1]);
@@ -47,19 +57,19 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @dataProvider configProvider
+     *
+     * @param ConfigServiceProvider $config
      */
-    public function nameSupportBehavior()
+    public function nameSupportBehavior(ConfigServiceProvider $config)
     {
         $appName = 'TEST';
         // set name by default way
         $app = new Application($appName);
-        $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
-        );
+        $app->register($config);
         $log = $app['config']['monolog']['handlers']['access']['path'];
         $app['monolog.name'] = 'MONOLOG';
         $app->register(new MonologServiceProvider());
-        /** @var \Psr\Log\LoggerInterface $monolog */
         $monolog = $app['monolog'];
         $monolog->info('message');
         $this->assertNotContains($appName, file_get_contents($log));
@@ -67,9 +77,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         unlink($log);
         // set name by Application
         $app = new Application($appName);
-        $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
-        );
+        $app->register($config);
         $app->register(new MonologServiceProvider());
         $monolog = $app['monolog'];
         $monolog->info('message');
@@ -77,9 +85,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         unlink($log);
         // set name by config
         $app = new Application($appName);
-        $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/monolog/config.yml', ['root_dir' => __DIR__ . '/..'])
-        );
+        $app->register($config);
         $config = $app['config'];
         $config['monolog']['name'] = 'CONFIG';
         $app['config'] = $config;
@@ -89,5 +95,15 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotContains($appName, file_get_contents($log));
         $this->assertContains($app['config']['monolog']['name'], file_get_contents($log));
         unlink($log);
+    }
+
+    /**
+     * @param string $config
+     *
+     * @return string
+     */
+    private function getConfigPath($config)
+    {
+        return sprintf('%s/app/monolog/%s.yml', dirname(__DIR__), $config);
     }
 }

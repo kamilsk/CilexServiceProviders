@@ -24,6 +24,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
      * @param string $name
      *
      * @return int
+     *
      * @see \Silex\Provider\MonologServiceProvider::translateLevel
      */
     public static function translateLevel($name)
@@ -72,32 +73,32 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
             $handlers = $app['config']['monolog']['handlers'];
             $app['monolog.factory'] = $app->protect(function (array $config) use ($app) {
                 if (isset($config['type'])) {
-                    $level = Logger::DEBUG;
                     switch ($config['type']) {
                         case 'stream':
                             if (isset($config['path'])) {
-                                if (isset($config['level'])) {
-                                    $level = static::translateLevel($config['level']);
-                                }
+                                $default = [
+                                    'level' => Logger::DEBUG,
+                                    'bubble' => true,
+                                    'permission' => null,
+                                ];
+                                $config = array_merge($default, $config);
                                 $handler = new StreamHandler(
                                     $config['path'],
-                                    $level,
-                                    isset($config['bubble']) ? $config['bubble'] : true,
-                                    isset($config['permission']) ? $config['permission'] : null
+                                    static::translateLevel($config['level']),
+                                    $config['bubble'],
+                                    $config['permission']
                                 );
                                 if (isset($config['formatter'])) {
                                     $handler->setFormatter($app->offsetGet($config['formatter']));
                                 }
                                 return $handler;
                             }
-                            break;
+                            throw new \InvalidArgumentException('Invalid configuration for handler: path is required.');
                         default:
                             throw new \DomainException(sprintf('Handler type %s is not supported.', $config['type']));
                     }
                 }
-                throw new \InvalidArgumentException(
-                    sprintf('Invalid configuration %s for handler.', json_encode($config))
-                );
+                throw new \InvalidArgumentException('Invalid configuration for handler: type is required.');
             });
             $app['monolog.handlers'] = $app->share(function () use ($app, $handlers) {
                 $registry = new \Pimple();
