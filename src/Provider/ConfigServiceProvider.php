@@ -20,9 +20,9 @@ use Symfony\Component\Config\FileLocator;
 class ConfigServiceProvider implements ServiceProviderInterface
 {
     /** @var string */
-    protected $filename;
+    private $filename;
     /** @var array */
-    protected $placeholders;
+    private $placeholders;
 
     /**
      * @param string $filename
@@ -44,12 +44,10 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $placeholders = $this->placeholders;
         $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
             $loader = new YamlFileLoader(new FileLocator());
-            switch (true) {
-                case $loader->supports($file):
-                    $loader->load($file);
-                    break;
-                default:
-                    throw new \RuntimeException(sprintf('File "%s" is not supported.', $file));
+            if ($loader->supports($file)) {
+                $loader->load($file);
+            } else {
+                throw new \RuntimeException(sprintf('File "%s" is not supported.', $file));
             }
             $config = [];
             foreach (array_reverse($loader->getContent()) as $data) {

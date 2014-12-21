@@ -63,7 +63,7 @@ class YamlFileLoader extends FileLoader
      *
      * @throws \InvalidArgumentException
      */
-    protected function loadFile($file)
+    private function loadFile($file)
     {
         if (!stream_is_local($file)) {
             throw new \InvalidArgumentException(sprintf('"%s" is not a local file.', $file));
@@ -84,7 +84,7 @@ class YamlFileLoader extends FileLoader
      * @param array $content
      * @param string $sourceResource
      */
-    protected function parseImports($content, $sourceResource)
+    private function parseImports($content, $sourceResource)
     {
         if (!isset($content['imports'])) {
             return;

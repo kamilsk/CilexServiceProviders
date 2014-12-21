@@ -31,9 +31,9 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @param Application $app
      */
-    public function parametersBehavior(Application $app)
+    public function substituteParameters(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config_parameters.yml'));
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config_parameters')));
         $expected = [
             'component' => [
                 'parameter' => 'test_parameter',
@@ -49,9 +49,9 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @param Application $app
      */
-    public function placeholdersBehavior(Application $app)
+    public function substitutePlaceholders(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config_placeholders.yml', [
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config_placeholders'), [
             'another_parameter' => 'test_placeholder',
         ]));
         $expected = [
@@ -69,16 +69,16 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @param Application $app
      */
-    public function overrideParameterBehavior(Application $app)
+    public function overrideParameters(Application $app)
     {
-        $app->register(new ConfigServiceProvider(__DIR__ . '/../app/config/config_override.yml', [
-            'root_dir' => __DIR__ . '/..',
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config_override'), [
+            'root_dir' => dirname(__DIR__),
             'file' => 'test.txt',
         ]));
         $expected = [
             'component' => [
-                'parameter' => sprintf('%s/path/to/%s', __DIR__ . '/..', 'test.txt'),
-                'options' => [1, 2, 3]
+                'parameter' => sprintf('%s/path/to/%s', dirname(__DIR__), 'test.txt'),
+                'options' => [1, 2, 3],
             ],
         ];
         $this->assertEquals($expected, $app['config']);
@@ -90,11 +90,9 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      *
      * @param Application $app
      */
-    public function complexBehavior(Application $app)
+    public function combineParametersAndPlaceholders(Application $app)
     {
-        $app->register(
-            new ConfigServiceProvider(__DIR__ . '/../app/config/config.yml', ['placeholder' => 'placeholder'])
-        );
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config'), ['placeholder' => 'placeholder']));
         $expected = [
             'component' => [
                 'base_parameter' => 'base parameter will not be overwritten',
@@ -103,5 +101,15 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
             ],
         ];
         $this->assertEquals($expected, $app['config']);
+    }
+
+    /**
+     * @param string $config
+     *
+     * @return string
+     */
+    private function getConfigPath($config)
+    {
+        return sprintf('%s/app/config/%s.yml', dirname(__DIR__), $config);
     }
 }
