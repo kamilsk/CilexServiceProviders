@@ -72,12 +72,12 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function overrideParameters(Application $app)
     {
         $app->register(new ConfigServiceProvider($this->getConfigPath('config_override'), [
-            'root_dir' => dirname(__DIR__),
+            'root_dir' => realpath(dirname(__DIR__)),
             'file' => 'test.txt',
         ]));
         $expected = [
             'component' => [
-                'parameter' => sprintf('%s/path/to/%s', dirname(__DIR__), 'test.txt'),
+                'parameter' => sprintf('%s/path/to/%s', realpath(dirname(__DIR__)), 'test.txt'),
                 'options' => [1, 2, 3],
             ],
         ];
@@ -110,6 +110,6 @@ class ConfigServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfigPath($config)
     {
-        return sprintf('%s/app/config/%s.yml', dirname(__DIR__), $config);
+        return sprintf('%s/app/config/%s.yml', realpath(dirname(__DIR__)), $config);
     }
 }

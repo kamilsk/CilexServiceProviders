@@ -8,6 +8,14 @@
 [![Последняя стабильная версия](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Количество ссылок](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
 
+## Что внутри
+
+### ConfigServiceProvider
+
+### DoctrineServiceProvider
+
+### MonologServiceProvider
+
 ## Установка
 
 ### Git (для участия в разработке)

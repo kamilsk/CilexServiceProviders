@@ -79,6 +79,6 @@ class DoctrineServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfigPath($config)
     {
-        return sprintf('%s/app/doctrine/%s.yml', dirname(__DIR__), $config);
+        return sprintf('%s/app/doctrine/%s.yml', realpath(dirname(__DIR__)), $config);
     }
 }

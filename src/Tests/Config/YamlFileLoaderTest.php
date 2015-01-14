@@ -55,7 +55,7 @@ class YamlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function content(YamlFileLoader $loader)
     {
-        $config = sprintf('%s/app/config/config.yml', dirname(__DIR__));
+        $config = sprintf('%s/app/config/config.yml', realpath(dirname(__DIR__)));
         $loader->load($config);
         $expected = [
             [

@@ -22,7 +22,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function configProvider()
     {
         return [
-            [new ConfigServiceProvider($this->getConfigPath('config'), ['root_dir' => dirname(__DIR__)])],
+            [new ConfigServiceProvider($this->getConfigPath('config'), ['root_dir' => realpath(dirname(__DIR__))])],
         ];
     }
 
@@ -104,6 +104,6 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfigPath($config)
     {
-        return sprintf('%s/app/monolog/%s.yml', dirname(__DIR__), $config);
+        return sprintf('%s/app/monolog/%s.yml', realpath(dirname(__DIR__)), $config);
     }
 }
