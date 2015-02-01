@@ -28,6 +28,24 @@ class Command extends Cilex\Command
     }
 
     /**
+     * @return \Doctrine\DBAL\Connection
+     * @throws \InvalidArgumentException if doctrine service is not defined
+     */
+    public function getDbConnection()
+    {
+        return $this->getService('db');
+    }
+
+    /**
+     * @return \Monolog\Logger
+     * @throws \InvalidArgumentException if monolog service is not defined
+     */
+    public function getLogger()
+    {
+        return $this->getService('monolog');
+    }
+
+    /**
      * Дополняет название команды своим пространством имен.
      *
      * @param string $name
@@ -35,6 +53,7 @@ class Command extends Cilex\Command
      * @return \Symfony\Component\Console\Command\Command
      *
      * @throws \InvalidArgumentException
+     *  {@link \Symfony\Component\Console\Command\Command::setName}
      */
     public function setName($name)
     {
