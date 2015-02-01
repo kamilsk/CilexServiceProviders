@@ -14,13 +14,13 @@ doctrine:
                 host:     localhost
                 port:     3306
                 dbname:   database
-                username: user
+                user:     username
                 password: pass
             sqlite:
                 driver:   pdo_sqlite
                 memory:   true
                 dbname:   database
-                username: user
+                user:     username
                 password: pass
 ```
 
