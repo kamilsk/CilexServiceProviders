@@ -1,233 +1,51 @@
 > # Cilex Service Providers
 >
-> Набор переработанных провайдеров для Cilex.
+> The revised set of providers for Cilex.
 
-[![Статус сборки](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
-[![Оценка качества кода](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
-[![Всего загрузок](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
-[![Последняя стабильная версия](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
-[![Количество ссылок](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
+[![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
+[![Code quality](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
+[![Total downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
+[![Latest stable version](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
+[![Total references](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
 
-## Что внутри
+## What's inside
 
-### ConfigServiceProvider
+### [ConfigServiceProvider](docs/ConfigServiceProvider.md)
 
-### DoctrineServiceProvider
+### [DoctrineServiceProvider](docs/DoctrineServiceProvider.md)
 
-### MonologServiceProvider
+### [MonologServiceProvider](docs/MonologServiceProvider.md)
 
-## Установка
+## Installation
 
-### Git (для участия в разработке)
+### Git (to participate in development)
 
 ```bash
 $ git clone git@github.com:kamilsk/CilexServiceProviders.git
 $ cd CilexServiceProvider && composer install
 ```
 
-### Composer (для использования в проекте)
+### Composer (for use in project)
 
 ```bash
 $ composer require kamilsk/cilex-service-providers:~1.0
 $ composer update
 ```
 
-## Рекомендации
+## [Example of usage](docs/Usage.md)
 
-### Связка `config.yml + parameters.yml.dist`
+## [Best practice](docs/BestPractice.md)
 
-Используйте `config.yml` для хранения настроек, не зависящих от окружения, и `parameters.yml` для их переопределения
-в зависимости от конкретного окружения.
-
-1) Добавьте зависимость от [ParameterHandler](https://github.com/Incenteev/ParameterHandler):
-```bash
-$ composer require incenteev/composer-parameter-handler:~2.0
-```
-2) Настройте `composer.json`:
-```json
-"scripts": {
-    "post-install-cmd": [
-        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
-    ],
-    "post-update-cmd": [
-        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
-    ]
-},
-"extra": {
-    "incenteev-parameters": {
-        "file": "path/to/parameters.yml"
-    }
-}
-```
-3) Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые параметры:
-```yaml
-parameters:
-    some_parameter: some_value
-```
-4) Исключите `path/to/parameters.yml` из vcs (например, git):
-```bash
-$ echo 'path/to/parameters.yml' >> .gitignore
-```
-5) Используйте эти параметры в `config.yml`:
-```yaml
-component:
-    component_option: %some_parameter%
-```
-6) Обновите проект:
-```bash
-$ composer update
-```
-
-### Пример использования
-
-##### `app/console`:
-
-```php
-use Cilex\Application;
-use OctoLab\Cilex\Provider\ConfigServiceProvider;
-use OctoLab\Cilex\Provider\DoctrineServiceProvider;
-use OctoLab\Cilex\Provider\MonologServiceProvider;
-
-$app = new Application('Name');
-
-// регистрируем конфигурацию
-$app->register(
-    new ConfigServiceProvider(
-        'app/config/config.yml',
-        ['placeholder' => 'top level parameter']
-    )
-);
-// регистрируем сервисы, которые подхватят настройки из $app['config']
-$app->register(new DoctrineServiceProvider());
-$app->register(new MonologServiceProvider());
-
-// добавляем команды и инициализируем приложение
-$app->command(new ExampleCommand());
-...
-$app->run();
-```
-
-##### `app/config/config.yml`:
-
-```yaml
-imports:
-    - { resource: parameters.yml }
-    - { resource: doctrine/config.yml }
-    - { resource: monolog/config.yml }
-
-top_level_options:
-    top_level_option: %some_parameter%
-```
-
-##### `app/config/parameters.yml.dist` -> `app/config/parameters.yml`
-
-```yaml
-parameters:
-    some_parameter: %placeholder%
-```
-
-##### `app/config/doctrine/config.yml`
-
-> Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) Silex.
-
-> Пример из документации [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html) Symfony.
-
-```yaml
-doctrine:
-    dbal:
-        default_connection: mysql
-        connections:
-            mysql:
-                driver:   pdo_mysql
-                host:     localhost
-                port:     3306
-                dbname:   database
-                username: user
-                password: pass
-            sqlite:
-                driver:   pdo_sqlite
-                memory:   true
-                dbname:   database
-                username: user
-                password: pass
-```
-
-Теперь доступ к `\Doctrine\DBAL\Connection` можно получить следующим образом:
-
-```php
-$defaultConnection = $app['db'];
-$mysql = $app['dbs']['mysql'];
-// в данном случае $defaultConnection === $mysql
-$sqlite = $app['dbs']['sqlite'];
-```
-
-##### `app/config/monolog/config.yml`
-
-> Пример из документации [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) Silex.
-
-> Пример из документации [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html) Symfony.
-
-```yaml
-monolog:
-    name: MyApplicationName
-    handlers:
-        syslog:
-            type:      stream
-            path:      /var/log/cilex.log
-            level:     ERROR
-            bubble:    false
-            formatter: error_formatter
-```
-
-Теперь доступ к `\Monolog\Handler\AbstractProcessingHandler` можно получить следующим образом:
-
-```php
-$syslog = $app['monolog.handlers']['syslog'];
-```
-
-Если в приложении добавлены зависимости `symfony/monolog-bridge` и `symfony/event-dispatcher`, то можно получить
-доступ к `\Symfony\Bridge\Monolog\Handler\ConsoleHandler`:
-
-```php
-$console = $app['monolog.handlers']['console'];
-```
-
-Чтобы логи выводились в консоль, необходимо передать слушателю интерфейс вывода:
-
-```php
-$outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-$app
-    ->offsetGet('monolog.handlers')
-    ->offsetGet('console')
-    ->setOutput($outputInterface)
-;
-```
-
-или вызвать `\OctoLab\Cilex\Command\Command::setOutputInterface`, передав в метод этот интерфейс.
-
-Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`,
-например:
-
-```php
-use Monolog\Formatter\JsonFormatter;
-
-$app['error_formatter'] = function ($app) {
-    return new JsonFormatter(JsonFormatter::BATCH_MODE_JSON);
-};
-...
-$app['monolog']->error('Some error occurred.');
-```
-
-## Тестирование
+## Testing
 
 ```bash
 $ phpunit
 
-# или конкретный тест-кейс
+# or a particular test-case
 
 $ phpunit --testsuite provider
 
-# или конкретный тест
+# or a particular test
 
 $ phpunit src/Tests/Provider/ConfigServiceProviderTest.php
 ```
