@@ -1,3 +1,5 @@
+# Managing your ignored parameters with Composer
+
 `config.yml + parameters.yml.dist`
 
 Используйте `config.yml` для хранения настроек, не зависящих от окружения, и `parameters.yml` для их переопределения
@@ -41,3 +43,13 @@ component:
 ```bash
 $ composer update
 ```
+
+# Extended OctoLab\Cilex\Command\Command for access useful methods
+
+## Command namespace
+
+## `Command::getDbConnection`
+
+## `Command::getLogger`
+
+### `Command::setOutputInterface`

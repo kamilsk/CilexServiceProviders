@@ -1,3 +1,5 @@
+# MonologServiceProvider
+
 `app/config/monolog/config.yml`
 
 > Пример из документации [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) Silex.

@@ -1,4 +1,14 @@
-`app/config/config.yml`:
+# ConfigServiceProvider
+
+## `$app['config']`
+
+## `$app['array_merge_recursive']`
+
+## `$app['array_transform_recursive']`
+
+## Power of YamlFileLoader
+
+`app/config/config.yml`
 
 ```yaml
 imports:
@@ -10,7 +20,7 @@ top_level_options:
     top_level_option: %some_parameter%
 ```
 
-##### `app/config/parameters.yml.dist` -> `app/config/parameters.yml`
+`app/config/parameters.yml.dist` -> `app/config/parameters.yml`
 
 ```yaml
 parameters:

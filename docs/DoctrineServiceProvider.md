@@ -1,3 +1,5 @@
+# DoctrineServiceProvider
+
 `app/config/doctrine/config.yml`
 
 > Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) Silex.
