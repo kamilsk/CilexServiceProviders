@@ -10,25 +10,16 @@ namespace OctoLab\Cilex\Tests\Provider;
 use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
+use OctoLab\Cilex\Tests\TestCase;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
+class MonologServiceProviderTest extends TestCase
 {
     /**
-     * @return ConfigServiceProvider[]
-     */
-    public function configProvider()
-    {
-        return [
-            [new ConfigServiceProvider($this->getConfigPath('config'), ['root_dir' => realpath(dirname(__DIR__))])],
-        ];
-    }
-
-    /**
      * @test
-     * @dataProvider configProvider
+     * @dataProvider monologConfigProvider
      *
      * @param ConfigServiceProvider $config
      */
@@ -57,7 +48,7 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider configProvider
+     * @dataProvider monologConfigProvider
      *
      * @param ConfigServiceProvider $config
      */
@@ -95,15 +86,5 @@ class MonologServiceProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertNotContains($appName, file_get_contents($log));
         $this->assertContains($app['config']['monolog']['name'], file_get_contents($log));
         unlink($log);
-    }
-
-    /**
-     * @param string $config
-     *
-     * @return string
-     */
-    private function getConfigPath($config)
-    {
-        return sprintf('%s/app/monolog/%s.yml', realpath(dirname(__DIR__)), $config);
     }
 }

@@ -29,20 +29,28 @@ class Command extends Cilex\Command
 
     /**
      * @return \Doctrine\DBAL\Connection
-     * @throws \InvalidArgumentException if doctrine service is not defined
+     * @throws \RuntimeException if doctrine service is not defined
      */
     public function getDbConnection()
     {
-        return $this->getService('db');
+        $connection = $this->getService('db');
+        if ($connection) {
+            return $connection;
+        }
+        throw new \RuntimeException('DoctrineServiceProvider is not registered.');
     }
 
     /**
      * @return \Monolog\Logger
-     * @throws \InvalidArgumentException if monolog service is not defined
+     * @throws \RuntimeException if monolog service is not defined
      */
     public function getLogger()
     {
-        return $this->getService('monolog');
+        $logger = $this->getService('monolog');
+        if ($logger) {
+            return $logger;
+        }
+        throw new \RuntimeException('MonologServiceProvider is not registered.');
     }
 
     /**

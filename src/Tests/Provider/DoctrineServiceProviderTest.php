@@ -10,25 +10,16 @@ namespace OctoLab\Cilex\Tests\Provider;
 use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
+use OctoLab\Cilex\Tests\TestCase;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class DoctrineServiceProviderTest extends \PHPUnit_Framework_TestCase
+class DoctrineServiceProviderTest extends TestCase
 {
     /**
-     * @return ConfigServiceProvider[]
-     */
-    public function configProvider()
-    {
-        return [
-            [new ConfigServiceProvider($this->getConfigPath('config'))],
-        ];
-    }
-
-    /**
      * @test
-     * @dataProvider configProvider
+     * @dataProvider doctrineConfigProvider
      *
      * @param ConfigServiceProvider $config
      */
@@ -43,7 +34,7 @@ class DoctrineServiceProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @dataProvider configProvider
+     * @dataProvider doctrineConfigProvider
      *
      * @param ConfigServiceProvider $config
      */
@@ -70,15 +61,5 @@ class DoctrineServiceProviderTest extends \PHPUnit_Framework_TestCase
             $app->offsetGet('dbs')['sqlite'],
             $app->offsetGet('console')->getHelperSet()->get('connection')->getConnection()
         );
-    }
-
-    /**
-     * @param string $config
-     *
-     * @return string
-     */
-    private function getConfigPath($config)
-    {
-        return sprintf('%s/app/doctrine/%s.yml', realpath(dirname(__DIR__)), $config);
     }
 }

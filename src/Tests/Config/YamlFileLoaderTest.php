@@ -8,12 +8,13 @@
 namespace OctoLab\Cilex\Tests\Config;
 
 use OctoLab\Cilex\Config\YamlFileLoader;
+use OctoLab\Cilex\Tests\TestCase;
 use Symfony\Component\Config\FileLocator;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class YamlFileLoaderTest extends \PHPUnit_Framework_TestCase
+class YamlFileLoaderTest extends TestCase
 {
     /**
      * @return YamlFileLoader[]
@@ -55,7 +56,7 @@ class YamlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function content(YamlFileLoader $loader)
     {
-        $config = sprintf('%s/app/config/config.yml', realpath(dirname(__DIR__)));
+        $config = $this->getConfigPath('config/config');
         $loader->load($config);
         $expected = [
             [
