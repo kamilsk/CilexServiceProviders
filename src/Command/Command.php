@@ -29,6 +29,7 @@ class Command extends Cilex\Command
 
     /**
      * @return \Doctrine\DBAL\Connection
+     *
      * @throws \RuntimeException if doctrine service is not defined
      */
     public function getDbConnection()
@@ -42,6 +43,7 @@ class Command extends Cilex\Command
 
     /**
      * @return \Monolog\Logger
+     *
      * @throws \RuntimeException if monolog service is not defined
      */
     public function getLogger()
@@ -72,7 +74,7 @@ class Command extends Cilex\Command
     }
 
     /**
-     * Устанавливает интерфейс вывода для ConsoleHandler.
+     * Set OutputInterface for ConsoleHandler.
      *
      * @param OutputInterface $outputInterface
      *
@@ -80,7 +82,7 @@ class Command extends Cilex\Command
      *
      * @uses \Symfony\Bridge\Monolog\Handler\ConsoleHandler
      */
-    public function setOutputInterface(OutputInterface $outputInterface)
+    public function initConsoleHandler(OutputInterface $outputInterface)
     {
         $outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
         $this
@@ -90,5 +92,17 @@ class Command extends Cilex\Command
             ->setOutput($outputInterface)
         ;
         return $this;
+    }
+
+    /**
+     * @deprecated use {@link initConsoleHandler} instead.
+     *
+     * @param OutputInterface $outputInterface
+     *
+     * @return $this
+     */
+    public function setOutputInterface(OutputInterface $outputInterface)
+    {
+        return $this->initConsoleHandler($outputInterface);
     }
 }
