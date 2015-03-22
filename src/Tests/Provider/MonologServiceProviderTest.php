@@ -39,8 +39,8 @@ class MonologServiceProviderTest extends TestCase
         $monolog = $app['monolog'];
         $monolog->info($messages[0]);
         $monolog->error($messages[1]);
-        $this->assertContains($messages[0], file_get_contents($logs[0]));
-        $this->assertContains($messages[1], file_get_contents($logs[1]));
+        self::assertContains($messages[0], file_get_contents($logs[0]));
+        self::assertContains($messages[1], file_get_contents($logs[1]));
         foreach ($logs as $log) {
             unlink($log);
         }
@@ -63,8 +63,8 @@ class MonologServiceProviderTest extends TestCase
         $app->register(new MonologServiceProvider());
         $monolog = $app['monolog'];
         $monolog->info('message');
-        $this->assertNotContains($appName, file_get_contents($log));
-        $this->assertContains($app['monolog.name'], file_get_contents($log));
+        self::assertNotContains($appName, file_get_contents($log));
+        self::assertContains($app['monolog.name'], file_get_contents($log));
         unlink($log);
         // set name by Application
         $app = new Application($appName);
@@ -72,7 +72,7 @@ class MonologServiceProviderTest extends TestCase
         $app->register(new MonologServiceProvider());
         $monolog = $app['monolog'];
         $monolog->info('message');
-        $this->assertContains($appName, file_get_contents($log));
+        self::assertContains($appName, file_get_contents($log));
         unlink($log);
         // set name by config
         $app = new Application($appName);
@@ -83,8 +83,8 @@ class MonologServiceProviderTest extends TestCase
         $app->register(new MonologServiceProvider());
         $monolog = $app['monolog'];
         $monolog->info('message');
-        $this->assertNotContains($appName, file_get_contents($log));
-        $this->assertContains($app['config']['monolog']['name'], file_get_contents($log));
+        self::assertNotContains($appName, file_get_contents($log));
+        self::assertContains($app['config']['monolog']['name'], file_get_contents($log));
         unlink($log);
     }
 }

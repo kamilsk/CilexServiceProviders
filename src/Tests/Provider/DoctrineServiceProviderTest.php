@@ -28,8 +28,8 @@ class DoctrineServiceProviderTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new DoctrineServiceProvider());
-        $this->assertEquals($app['config']['doctrine']['dbal']['connections'], $app['dbs.options']);
-        $this->assertEquals($app['config']['doctrine']['dbal']['default_connection'], $app['dbs.default']);
+        self::assertEquals($app['config']['doctrine']['dbal']['connections'], $app['dbs.options']);
+        self::assertEquals($app['config']['doctrine']['dbal']['default_connection'], $app['dbs.default']);
     }
 
     /**
@@ -44,12 +44,12 @@ class DoctrineServiceProviderTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new DoctrineServiceProvider());
-        $this->assertFalse($app->offsetGet('console')->getHelperSet()->has('connection'));
+        self::assertFalse($app->offsetGet('console')->getHelperSet()->has('connection'));
         // default connection
         $app = new Application('Test');
         $app->register($config);
         $app->register(new DoctrineServiceProvider(true));
-        $this->assertEquals(
+        self::assertEquals(
             $app->offsetGet('db'),
             $app->offsetGet('console')->getHelperSet()->get('connection')->getConnection()
         );
@@ -57,7 +57,7 @@ class DoctrineServiceProviderTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new DoctrineServiceProvider('sqlite'));
-        $this->assertEquals(
+        self::assertEquals(
             $app->offsetGet('dbs')['sqlite'],
             $app->offsetGet('console')->getHelperSet()->get('connection')->getConnection()
         );

@@ -8,10 +8,10 @@
 namespace OctoLab\Cilex\Tests\Command;
 
 use Cilex\Application;
-use OctoLab\Cilex\Command\Command;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
+use OctoLab\Cilex\Tests\Mock\CommandMock;
 use OctoLab\Cilex\Tests\TestCase;
 
 /**
@@ -24,10 +24,10 @@ class CommandTest extends TestCase
      */
     public function commandNamespace()
     {
-        $command = new MockCommand();
-        $this->assertEquals('test', $command->getName());
-        $command = new MockCommand('mock');
-        $this->assertEquals('mock:test', $command->getName());
+        $command = new CommandMock();
+        self::assertEquals('test', $command->getName());
+        $command = new CommandMock('mock');
+        self::assertEquals('mock:test', $command->getName());
     }
 
     /**
@@ -37,9 +37,9 @@ class CommandTest extends TestCase
     public function getDbConnectionFail()
     {
         $app = new Application('Test');
-        $command = new MockCommand();
+        $command = new CommandMock();
         $app->command($command);
-        $this->assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
+        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
     }
 
     /**
@@ -53,9 +53,9 @@ class CommandTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new DoctrineServiceProvider());
-        $command = new MockCommand();
+        $command = new CommandMock();
         $app->command($command);
-        $this->assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
+        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
     }
 
     /**
@@ -65,9 +65,9 @@ class CommandTest extends TestCase
     public function getLoggerFail()
     {
         $app = new Application('Test');
-        $command = new MockCommand();
+        $command = new CommandMock();
         $app->command($command);
-        $this->assertInstanceOf('\Monolog\Logger', $command->getLogger());
+        self::assertInstanceOf('\Monolog\Logger', $command->getLogger());
     }
 
     /**
@@ -81,19 +81,8 @@ class CommandTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new MonologServiceProvider());
-        $command = new MockCommand();
+        $command = new CommandMock();
         $app->command($command);
-        $this->assertInstanceOf('\Monolog\Logger', $command->getLogger());
-    }
-}
-
-/**
- * @author Kamil Samigullin <kamil@samigullin.info>
- */
-class MockCommand extends Command
-{
-    protected function configure()
-    {
-        $this->setName('test');
+        self::assertInstanceOf('\Monolog\Logger', $command->getLogger());
     }
 }

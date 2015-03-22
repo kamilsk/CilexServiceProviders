@@ -34,7 +34,7 @@ class YamlFileLoaderTest extends TestCase
      */
     public function supported(YamlFileLoader $loader)
     {
-        $this->assertTrue($loader->supports('/some/path/to/supported.yml'));
+        self::assertTrue($loader->supports('/some/path/to/supported.yml'));
     }
 
     /**
@@ -45,7 +45,7 @@ class YamlFileLoaderTest extends TestCase
      */
     public function unsupported(YamlFileLoader $loader)
     {
-        $this->assertFalse($loader->supports('/some/path/to/unsupported.xml'));
+        self::assertFalse($loader->supports('/some/path/to/unsupported.xml'));
     }
 
     /**
@@ -69,7 +69,7 @@ class YamlFileLoaderTest extends TestCase
                     ],
                 ],
                 'component' => [
-                    'parameter' => "base component's parameter will be overwritten by root config",
+                    'parameter' => 'base component\'s parameter will be overwritten by root config',
                     'placeholder_parameter' => '%placeholder%',
                 ],
             ],
@@ -85,7 +85,7 @@ class YamlFileLoaderTest extends TestCase
                     ],
                 ],
                 'component' => [
-                    'parameter' => "base component's parameter will be overwritten by component config",
+                    'parameter' => 'base component\'s parameter will be overwritten by component config',
                 ],
             ],
             [
@@ -95,6 +95,6 @@ class YamlFileLoaderTest extends TestCase
                 ],
             ],
         ];
-        $this->assertEquals($expected, $loader->getContent());
+        self::assertEquals($expected, $loader->getContent());
     }
 }

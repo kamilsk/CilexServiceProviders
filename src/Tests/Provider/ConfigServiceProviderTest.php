@@ -41,7 +41,7 @@ class ConfigServiceProviderTest extends TestCase
                 'another_parameter' => 'test_another_parameter',
             ],
         ];
-        $this->assertEquals($expected, $app['config']);
+        self::assertEquals($expected, $app['config']);
     }
 
     /**
@@ -61,7 +61,7 @@ class ConfigServiceProviderTest extends TestCase
                 'another_parameter' => 'test_placeholder',
             ],
         ];
-        $this->assertEquals($expected, $app['config']);
+        self::assertEquals($expected, $app['config']);
     }
 
     /**
@@ -82,7 +82,7 @@ class ConfigServiceProviderTest extends TestCase
                 'options' => [1, 2, 3],
             ],
         ];
-        $this->assertEquals($expected, $app['config']);
+        self::assertEquals($expected, $app['config']);
     }
 
     /**
@@ -99,10 +99,10 @@ class ConfigServiceProviderTest extends TestCase
         $expected = [
             'component' => [
                 'base_parameter' => 'base parameter will not be overwritten',
-                'parameter' => "base component's parameter will be overwritten by root config",
+                'parameter' => 'base component\'s parameter will be overwritten by root config',
                 'placeholder_parameter' => 'placeholder',
             ],
         ];
-        $this->assertEquals($expected, $app['config']);
+        self::assertEquals($expected, $app['config']);
     }
 }
