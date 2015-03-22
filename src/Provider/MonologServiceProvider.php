@@ -15,28 +15,28 @@ use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
- *
- * @see \Cilex\Provider\MonologServiceProvider
  */
 class MonologServiceProvider extends Cilex\MonologServiceProvider
 {
     /**
-     * @param string $name
+     * @param int|string $level
      *
      * @return int
      *
+     * @throws \InvalidArgumentException if $level does not exist
+     *
      * @see \Silex\Provider\MonologServiceProvider::translateLevel
      */
-    public static function translateLevel($name)
+    public static function translateLevel($level)
     {
-        if (is_int($name)) {
-            return $name;
+        if (is_int($level)) {
+            return $level;
         }
         $levels = Logger::getLevels();
-        $upper = strtoupper($name);
+        $upper = strtoupper($level);
         if (!isset($levels[$upper])) {
             throw new \InvalidArgumentException(
-                sprintf('Provided logging level "%s" does not exist. Must be a valid monolog logging level.', $name)
+                sprintf('Provided logging level "%s" does not exist. Must be a valid monolog logging level.', $level)
             );
         }
         return $levels[$upper];
@@ -46,14 +46,14 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
     private $initConsoleHandler;
 
     /**
-     * @param bool $initConsoleHandler для инициализации <code>\Symfony\Bridge\Monolog\Handler\ConsoleHandler</code>,
-     * в случае если все зависимости разрешены
+     * @param bool $initConsoleHandler to initialize <code>\Symfony\Bridge\Monolog\Handler\ConsoleHandler</code>,
+     * if all dependencies resolved
      */
     public function __construct($initConsoleHandler = true)
     {
         $this->initConsoleHandler = $initConsoleHandler
-            && class_exists('\Symfony\Bridge\Monolog\Handler\ConsoleHandler', false)
-            && interface_exists('\Symfony\Component\EventDispatcher\EventSubscriberInterface', false);
+            && class_exists('\Symfony\Bridge\Monolog\Handler\ConsoleHandler')
+            && interface_exists('\Symfony\Component\EventDispatcher\EventSubscriberInterface');
     }
 
     /**
@@ -68,6 +68,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
             $app['monolog.name'] = $app['console.name'];
         }
         if (!empty($app['config']['monolog']['handlers'])) {
+            /** @var array $handlers */
             $handlers = $app['config']['monolog']['handlers'];
             $app['monolog.factory'] = $app->protect(function (array $config) use ($app) {
                 if (isset($config['type'])) {

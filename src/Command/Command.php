@@ -56,7 +56,7 @@ class Command extends Cilex\Command
     }
 
     /**
-     * Дополняет название команды своим пространством имен.
+     * Completes the command name with its namespace.
      *
      * @param string $name
      *
@@ -67,7 +67,7 @@ class Command extends Cilex\Command
      */
     public function setName($name)
     {
-        if (null === $this->namespace) {
+        if (!$this->namespace) {
             return parent::setName($name);
         }
         return parent::setName(sprintf('%s:%s', $this->namespace, $name));
@@ -85,12 +85,14 @@ class Command extends Cilex\Command
     public function initConsoleHandler(OutputInterface $outputInterface)
     {
         $outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $this
+        /** @var \Pimple $handlers */
+        $handlers = $this
             ->getContainer()
             ->offsetGet('monolog.handlers')
-            ->offsetGet('console')
-            ->setOutput($outputInterface)
         ;
+        if ($handlers->offsetExists('console')) {
+            $handlers->offsetGet('console')->setOutput($outputInterface);
+        }
         return $this;
     }
 
