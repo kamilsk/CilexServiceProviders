@@ -34,6 +34,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $object = new \stdClass();
         $object->property = 'value';
         $object->another = 'value';
+        $dumper = new Dumper();
         return [
             [null, ''],
             [true, '1'],
@@ -42,7 +43,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
             ['a', 'a'],
             [(array) $object, 'Array([property] => value,[another] => value)'],
             [$object, 'stdClass Object([property] => value,[another] => value)'],
-            [new Dumper(), sprintf('%s Object()', Dumper::class)],
+            [$dumper, sprintf('%s Object()', get_class($dumper))],
         ];
     }
 }
