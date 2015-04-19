@@ -1,7 +1,11 @@
 CHANGELOG versions 1.x
 ======================
 
-* v1.2 (coming soon)
+* v1.2 (2015-04-19)
+
+ * Add helper methods in base Command class ([#31](../../issues/31))
+ * Update dependencies ([#33](../../issues/33))
+ * Refactor MonologServiceProvider ([#35](../../issues/35))
 
 * v1.1 (2014-11-10)
 
@@ -14,4 +18,4 @@ CHANGELOG versions 1.x
 
 * v1.0 (2014-08-30)
 
- * первый стабильный релиз
+ * First stable release
