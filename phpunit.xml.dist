@@ -27,15 +27,16 @@
         verbose="false">
     <testsuites>
         <testsuite name="command">
-            <file>src/Tests/Command/CommandTest.php</file>
+            <directory>src/Tests/Command</directory>
         </testsuite>
         <testsuite name="config">
-            <file>src/Tests/Config/YamlFileLoaderTest.php</file>
+            <directory>src/Tests/Config</directory>
+        </testsuite>
+        <testsuite name="monolog">
+            <directory>src/Tests/Monolog</directory>
         </testsuite>
         <testsuite name="provider">
-            <file>src/Tests/Provider/ConfigServiceProviderTest.php</file>
-            <file>src/Tests/Provider/DoctrineServiceProviderTest.php</file>
-            <file>src/Tests/Provider/MonologServiceProviderTest.php</file>
+            <directory>src/Tests/Provider</directory>
         </testsuite>
     </testsuites>
 </phpunit>
