@@ -60,7 +60,7 @@ $app['monolog']->error('Some error occurred.');
 ## Processors
 
 * [TimeExecutionProcessor](src/Monolog/Processor/TimeExecutionProcessor.php): adds the current execution time
-(in seconds accurate to the nearest microsecond) to a log record.
+(in seconds accurate to the nearest millisecond) to a log record.
 
 __sprintf vs number_format performance__
 
