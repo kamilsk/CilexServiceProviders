@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.octolab.org/
- * @copyright Copyright (c) 2013 OctoLab
- * @license http://www.octolab.org/license
- */
 
 namespace OctoLab\Cilex\Tests\Command;
 
@@ -15,6 +10,8 @@ use OctoLab\Cilex\Tests\Mock\CommandMock;
 use OctoLab\Cilex\Tests\TestCase;
 
 /**
+ * phpunit src/Tests/Command/CommandTest.php
+ *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class CommandTest extends TestCase

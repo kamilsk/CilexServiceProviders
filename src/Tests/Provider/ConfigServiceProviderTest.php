@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.octolab.org/
- * @copyright Copyright (c) 2013 OctoLab
- * @license http://www.octolab.org/license
- */
 
 namespace OctoLab\Cilex\Tests\Provider;
 
@@ -12,6 +7,8 @@ use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Tests\TestCase;
 
 /**
+ * phpunit src/Tests/Provider/ConfigServiceProviderTest.php
+ *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class ConfigServiceProviderTest extends TestCase

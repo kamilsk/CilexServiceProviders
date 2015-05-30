@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.octolab.org/
- * @copyright Copyright (c) 2013 OctoLab
- * @license http://www.octolab.org/license
- */
 
 namespace OctoLab\Cilex\Tests\Provider;
 
@@ -13,6 +8,8 @@ use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Tests\TestCase;
 
 /**
+ * phpunit src/Tests/Provider/DoctrineServiceProviderTest.php
+ *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class DoctrineServiceProviderTest extends TestCase

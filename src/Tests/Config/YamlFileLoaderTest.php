@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.octolab.org/
- * @copyright Copyright (c) 2013 OctoLab
- * @license http://www.octolab.org/license
- */
 
 namespace OctoLab\Cilex\Tests\Config;
 
@@ -12,6 +7,8 @@ use OctoLab\Cilex\Tests\TestCase;
 use Symfony\Component\Config\FileLocator;
 
 /**
+ * phpunit src/Tests/Config/YamlFileLoaderTest.php
+ *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class YamlFileLoaderTest extends TestCase
