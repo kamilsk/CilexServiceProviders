@@ -24,6 +24,8 @@ class TimeExecutionProcessor
      * @param array $record
      *
      * @return array
+     *
+     * @api
      */
     public function __invoke(array $record)
     {

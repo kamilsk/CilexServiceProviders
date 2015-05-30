@@ -56,3 +56,42 @@ $app['error_formatter'] = function ($app) {
 ...
 $app['monolog']->error('Some error occurred.');
 ```
+
+## Processors
+
+* [TimeExecutionProcessor](src/Monolog/Processor/TimeExecutionProcessor.php): adds the current execution time
+(in seconds accurate to the nearest microsecond) to a log record.
+
+__sprintf vs number_format performance__
+
+TimeExecutionProcessor uses `sprintf` to format execution time. `number_format` as an alternative,
+but a simple test shows a slight advantage of `sprintf`:
+
+```php
+$iterations = 500000;
+$float = 123.456789;
+$t1 = microtime(true);
+for ($i = 0; $i < $iterations; $i++) {
+    sprintf('%01.3f', $float);
+}
+$t2 = microtime(true);
+echo 'sprintf:       ', $t2 - $t1, PHP_EOL;
+$t1 = microtime(true);
+for ($i = 0; $i < $iterations; $i++) {
+    number_format($float, 3, '.', '');
+}
+$t2 = microtime(true);
+echo 'number_format: ', $t2 - $t1, PHP_EOL;
+```
+
+Will output:
+
+```
+sprintf:       0.81137895584106 # ~0.8
+number_format: 0.92237401008606 # ~0.9
+```
+
+## Utils
+
+* [Dumper](src/Monolog/Util/Dumper.php)
+  * dumpToString: works like `print_r`, but displays the result in single line.

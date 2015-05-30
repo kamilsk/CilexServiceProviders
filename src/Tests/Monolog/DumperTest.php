@@ -10,6 +10,8 @@ namespace OctoLab\ForestManager\Tests\Helper;
 use OctoLab\Cilex\Monolog\Util\Dumper;
 
 /**
+ * phpunit src/Tests/Monolog/DumperTest.php
+ *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class DumperTest extends \PHPUnit_Framework_TestCase
