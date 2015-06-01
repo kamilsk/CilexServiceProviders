@@ -2,14 +2,14 @@
 
 `config.yml + parameters.yml.dist`
 
-Используйте `config.yml` для хранения настроек, не зависящих от окружения, и `parameters.yml` для их переопределения
-в зависимости от конкретного окружения.
+Use `config.yml` to store settings, independent from the environment, and `parameters.yml` to override them
+depending on your specific environment.
 
-1) Добавьте зависимость от [ParameterHandler](https://github.com/Incenteev/ParameterHandler):
+1) Add [ParameterHandler](https://github.com/Incenteev/ParameterHandler) dependency:
 ```bash
 $ composer require incenteev/composer-parameter-handler:~2.0
 ```
-2) Настройте `composer.json`:
+2) Set `composer.json`:
 ```json
 "scripts": {
     "post-install-cmd": [
@@ -25,26 +25,26 @@ $ composer require incenteev/composer-parameter-handler:~2.0
     }
 }
 ```
-3) Создайте файл `path/to/parameters.yml.dist` и пропишите там необходимые параметры:
+3) Create a file `path/to/parameters.yml.dist` and specify a necessary parameters:
 ```yaml
 parameters:
     some_parameter: some_value
 ```
-4) Исключите `path/to/parameters.yml` из vcs (например, git):
+4) Exclude `path/to/parameters.yml` from vcs (e.g. git):
 ```bash
 $ echo 'path/to/parameters.yml' >> .gitignore
 ```
-5) Используйте эти параметры в `config.yml`:
+5) Use these settings in `config.yml`:
 ```yaml
 component:
     component_option: %some_parameter%
 ```
-6) Обновите проект:
+6) Update your project:
 ```bash
 $ composer update
 ```
 
-# Extended OctoLab\Cilex\Command\Command for access useful methods
+# Extended OctoLab\Cilex\Command\Command for access useful features
 
 ## Command namespace
 
@@ -52,4 +52,4 @@ $ composer update
 
 ## `Command::getLogger`
 
-### `Command::setOutputInterface`
+## `Command::initConsoleHandler`

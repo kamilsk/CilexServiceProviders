@@ -16,7 +16,7 @@
 
 ### [MonologServiceProvider](docs/MonologServiceProvider.md)
 
-## [Example of usage](docs/Usage.md)
+## [Usage example](docs/UsageExample.md)
 
 ## [Best practice](docs/BestPractice.md)
 
