@@ -2,9 +2,9 @@
 
 `app/config/monolog/config.yml`
 
-> Пример из документации [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) Silex.
+> Example from the Silex [MonologServiceProvider](http://silex.sensiolabs.org/doc/providers/monolog.html) documentation.
 
-> Пример из документации [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html) Symfony.
+> Example from the Symfony [MonologBundle](http://symfony.com/doc/current/reference/configuration/monolog.html) documentation.
 
 ```yaml
 monolog:
@@ -18,20 +18,20 @@ monolog:
             formatter: error_formatter
 ```
 
-Теперь доступ к `\Monolog\Handler\AbstractProcessingHandler` можно получить следующим образом:
+Now access to the `\Monolog\Handler\AbstractProcessingHandler` instance can be obtained as follows:
 
 ```php
 $syslog = $app['monolog.handlers']['syslog'];
 ```
 
-Если в приложении добавлены зависимости `symfony/monolog-bridge` и `symfony/event-dispatcher`, то можно получить
-доступ к `\Symfony\Bridge\Monolog\Handler\ConsoleHandler`:
+If the app added dependencies `symfony/monolog-bridge` and `symfony/event-dispatcher`, you can get
+access to the `\Symfony\Bridge\Monolog\Handler\ConsoleHandler` instance:
 
 ```php
 $console = $app['monolog.handlers']['console'];
 ```
 
-Чтобы логи выводились в консоль, необходимо передать слушателю интерфейс вывода:
+The logs displayed in the console, you need to pass output interface to the listener:
 
 ```php
 $outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
@@ -42,10 +42,10 @@ $app
 ;
 ```
 
-или вызвать `\OctoLab\Cilex\Command\Command::setOutputInterface`, передав в метод этот интерфейс.
+or call `\OctoLab\Cilex\Command\Command::initConsoleHandler`, passing in a method this interface.
 
-Если для `handler` указан `formatter`, то его нужно зарегистрировать в приложении до обращения к `$app['monolog']`,
-например:
+If for `handler` was specified `formatter`, then it needs to be registered in the application before accessing
+to `$app['monolog']`, for example:
 
 ```php
 use Monolog\Formatter\JsonFormatter;

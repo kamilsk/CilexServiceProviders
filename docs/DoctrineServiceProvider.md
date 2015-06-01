@@ -2,9 +2,9 @@
 
 `app/config/doctrine/config.yml`
 
-> Example from the Silex documentation [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html).
+> Example from the Silex [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) documentation.
 
-> Example from the Symfony documentation [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html).
+> Example from the Symfony [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html) documentation.
 
 ```yaml
 doctrine:
