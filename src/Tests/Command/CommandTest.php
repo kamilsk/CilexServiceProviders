@@ -64,7 +64,7 @@ class CommandTest extends TestCase
         $app = new Application('Test');
         $command = new CommandMock();
         $app->command($command);
-        self::assertInstanceOf('\Monolog\Logger', $command->getLogger());
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
     }
 
     /**
@@ -80,6 +80,6 @@ class CommandTest extends TestCase
         $app->register(new MonologServiceProvider());
         $command = new CommandMock();
         $app->command($command);
-        self::assertInstanceOf('\Monolog\Logger', $command->getLogger());
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
     }
 }

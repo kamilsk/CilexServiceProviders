@@ -62,6 +62,9 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         } elseif (empty($app['monolog.name'])) {
             $app['monolog.name'] = $app['console.name'];
         }
+        $app['logger'] = $app->share(function () use ($app) {
+            return $app['monolog'];
+        });
         if (!empty($app['config']['monolog']['handlers'])) {
             /** @var array $handlers */
             $handlers = $app['config']['monolog']['handlers'];

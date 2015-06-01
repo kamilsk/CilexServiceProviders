@@ -39,7 +39,7 @@ class Command extends Cilex\Command
     }
 
     /**
-     * @return \Monolog\Logger
+     * @return \Psr\Log\LoggerInterface
      *
      * @throws \RuntimeException if monolog service is not defined
      *
@@ -47,7 +47,7 @@ class Command extends Cilex\Command
      */
     public function getLogger()
     {
-        $logger = $this->getService('monolog');
+        $logger = $this->getService('logger');
         if ($logger) {
             return $logger;
         }

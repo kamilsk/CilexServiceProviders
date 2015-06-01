@@ -20,7 +20,7 @@ class DoctrineServiceProviderTest extends TestCase
      *
      * @param ConfigServiceProvider $config
      */
-    public function supportConfigProvider(ConfigServiceProvider $config)
+    public function configSupport(ConfigServiceProvider $config)
     {
         $app = new Application('Test');
         $app->register($config);
@@ -35,7 +35,7 @@ class DoctrineServiceProviderTest extends TestCase
      *
      * @param ConfigServiceProvider $config
      */
-    public function supportHelperConnection(ConfigServiceProvider $config)
+    public function helperConnectionSupport(ConfigServiceProvider $config)
     {
         // default behavior
         $app = new Application('Test');

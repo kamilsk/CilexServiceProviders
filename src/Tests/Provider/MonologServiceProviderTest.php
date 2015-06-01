@@ -20,7 +20,7 @@ class MonologServiceProviderTest extends TestCase
      *
      * @param ConfigServiceProvider $config
      */
-    public function configSupportBehavior(ConfigServiceProvider $config)
+    public function configSupport(ConfigServiceProvider $config)
     {
         $app = new Application('Test');
         $app->register($config);
@@ -49,7 +49,7 @@ class MonologServiceProviderTest extends TestCase
      *
      * @param ConfigServiceProvider $config
      */
-    public function nameSupportBehavior(ConfigServiceProvider $config)
+    public function nameSupport(ConfigServiceProvider $config)
     {
         $appName = 'TEST';
         // set name by default way
@@ -83,5 +83,20 @@ class MonologServiceProviderTest extends TestCase
         self::assertNotContains($appName, file_get_contents($log));
         self::assertContains($app['config']['monolog']['name'], file_get_contents($log));
         unlink($log);
+    }
+
+    /**
+     * @test
+     * @dataProvider monologConfigProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function aliasSupport(ConfigServiceProvider $config)
+    {
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider());
+        self::assertInstanceOf('\Monolog\Logger', $app['monolog']);
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $app['logger']);
     }
 }
