@@ -53,7 +53,7 @@ class YamlFileLoaderTest extends TestCase
      */
     public function content(YamlFileLoader $loader)
     {
-        $config = $this->getConfigPath('config/config');
+        $config = $this->getConfigPath();
         $loader->load($config);
         $expected = [
             [

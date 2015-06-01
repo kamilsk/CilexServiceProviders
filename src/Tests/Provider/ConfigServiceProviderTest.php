@@ -31,7 +31,7 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function substituteParameters(Application $app)
     {
-        $app->register(new ConfigServiceProvider($this->getConfigPath('config/config_parameters')));
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config_parameters')));
         $expected = [
             'component' => [
                 'parameter' => 'test_parameter',
@@ -49,7 +49,7 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function substitutePlaceholders(Application $app)
     {
-        $app->register(new ConfigServiceProvider($this->getConfigPath('config/config_placeholders'), [
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config_placeholders'), [
             'another_parameter' => 'test_placeholder',
         ]));
         $expected = [
@@ -69,7 +69,7 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function overrideParameters(Application $app)
     {
-        $app->register(new ConfigServiceProvider($this->getConfigPath('config/config_override'), [
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config_override'), [
             'root_dir' => dirname(__DIR__),
             'file' => 'test.txt',
         ]));
@@ -91,7 +91,7 @@ class ConfigServiceProviderTest extends TestCase
     public function combineParametersAndPlaceholders(Application $app)
     {
         $app->register(
-            new ConfigServiceProvider($this->getConfigPath('config/config'), ['placeholder' => 'placeholder'])
+            new ConfigServiceProvider($this->getConfigPath(), ['placeholder' => 'placeholder'])
         );
         $expected = [
             'component' => [
