@@ -1,11 +1,5 @@
 # ConfigServiceProvider
 
-## `$app['config']`
-
-## `$app['array_merge_recursive']`
-
-## `$app['array_transform_recursive']`
-
 ## Power of YamlFileLoader
 
 `app/config/config.yml`
