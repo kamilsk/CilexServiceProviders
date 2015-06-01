@@ -90,16 +90,4 @@ class Command extends Cilex\Command
         }
         return $this;
     }
-
-    /**
-     * @deprecated use {@link initConsoleHandler} instead.
-     *
-     * @param OutputInterface $outputInterface
-     *
-     * @return $this
-     */
-    public function setOutputInterface(OutputInterface $outputInterface)
-    {
-        return $this->initConsoleHandler($outputInterface);
-    }
 }

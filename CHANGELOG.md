@@ -1,6 +1,12 @@
 CHANGELOG versions 1.x
 ======================
 
+* v1.3 (coming soon)
+
+ * `composer.lock` was removed ([#46](../../issues/46))
+ * `\OctoLab\Cilex\Command\Command::setOutputInterface` was removed ([#47](../../issues/47))
+ * [git diff](../../compare/v1.2.3...master)
+
 * v1.2 (2015-04-19)
 
  * Add helper methods in base Command class ([#31](../../issues/31))
@@ -8,7 +14,7 @@ CHANGELOG versions 1.x
  * Refactor MonologServiceProvider ([#35](../../issues/35))
  * Add Monolog TimeExecutionProcessor processor ([#39](../../issues/39))
  * Add Monolog Dumper util ([#40](../../issues/40))
- * [git diff](../../compare/v1.1.4...v1.2.1)
+ * [git diff](../../compare/v1.1.4...v1.2.3)
 
 * v1.1 (2014-11-10)
 
