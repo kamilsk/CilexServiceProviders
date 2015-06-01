@@ -32,8 +32,6 @@
         "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.0 is recommended)"
     },
     "autoload": {
-        "psr-4": {
-            "OctoLab\\Cilex\\": "src/"
-        }
+        "psr-4": { "OctoLab\\Cilex\\": "src/" }
     }
 }

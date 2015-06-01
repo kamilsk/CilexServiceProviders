@@ -26,6 +26,8 @@ class Command extends Cilex\Command
      * @return \Doctrine\DBAL\Connection
      *
      * @throws \RuntimeException if doctrine service is not defined
+     *
+     * @api
      */
     public function getDbConnection()
     {
@@ -40,6 +42,8 @@ class Command extends Cilex\Command
      * @return \Monolog\Logger
      *
      * @throws \RuntimeException if monolog service is not defined
+     *
+     * @api
      */
     public function getLogger()
     {
@@ -59,6 +63,8 @@ class Command extends Cilex\Command
      *
      * @throws \InvalidArgumentException
      *  {@link \Symfony\Component\Console\Command\Command::setName}
+     *
+     * @api
      */
     public function setName($name)
     {
@@ -76,6 +82,8 @@ class Command extends Cilex\Command
      * @return $this
      *
      * @uses \Symfony\Bridge\Monolog\Handler\ConsoleHandler
+     *
+     * @api
      */
     public function initConsoleHandler(OutputInterface $outputInterface)
     {
