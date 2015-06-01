@@ -3,6 +3,7 @@ CHANGELOG versions 1.x
 
 * v1.3 (coming soon)
 
+ * `cilex/cilex:~1.0` is required now ([#44](../../issues/44))
  * `composer.lock` was removed ([#46](../../issues/46))
  * `\OctoLab\Cilex\Command\Command::setOutputInterface` was removed ([#47](../../issues/47))
  * [git diff](../../compare/v1.2.3...master)

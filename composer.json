@@ -12,11 +12,11 @@
     ],
     "require": {
         "php": ">=5.4",
+        "cilex/cilex": "~1.0",
         "symfony/config": "~2.0",
         "symfony/yaml": "~2.0"
     },
     "require-dev": {
-        "cilex/cilex": "~1.0",
         "doctrine/dbal": "~2.0",
         "monolog/monolog": "~1.0",
         "symfony/event-dispatcher": "~2.0",
