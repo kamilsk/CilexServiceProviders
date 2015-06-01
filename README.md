@@ -1,6 +1,6 @@
 > # Cilex Service Providers
 >
-> The revised set of providers for Cilex.
+> The revised set of service providers for Cilex.
 
 [![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
 [![Code quality](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
@@ -16,13 +16,19 @@
 
 ### [MonologServiceProvider](docs/MonologServiceProvider.md)
 
+## [Example of usage](docs/Usage.md)
+
+## [Best practice](docs/BestPractice.md)
+
 ## Installation
 
 ### Git (to participate in development)
 
+[Fork it before](/kamilsk/CilexServiceProviders/fork?fragment=1).
+
 ```bash
-$ git clone git@github.com:kamilsk/CilexServiceProviders.git
-$ cd CilexServiceProvider && composer install
+$ git clone git@github.com:<your github account>/CilexServiceProviders.git
+$ cd CilexServiceProviders && composer install
 ```
 
 ### Composer (for use in project)
@@ -30,22 +36,4 @@ $ cd CilexServiceProvider && composer install
 ```bash
 $ composer require kamilsk/cilex-service-providers:~1.0
 $ composer update
-```
-
-## [Example of usage](docs/Usage.md)
-
-## [Best practice](docs/BestPractice.md)
-
-## Testing
-
-```bash
-$ phpunit
-
-# or a particular test-case
-
-$ phpunit --testsuite provider
-
-# or a particular test
-
-$ phpunit src/Tests/Provider/ConfigServiceProviderTest.php
 ```
