@@ -8,18 +8,18 @@ use OctoLab\Cilex\Provider\MonologServiceProvider;
 
 $app = new Application('Name');
 
-// регистрируем конфигурацию
+// register configuration
 $app->register(
     new ConfigServiceProvider(
         'app/config/config.yml',
         ['placeholder' => 'top level parameter']
     )
 );
-// регистрируем сервисы, которые подхватят настройки из $app['config']
+// registered services that will pick up settings from $app['config']
 $app->register(new DoctrineServiceProvider());
 $app->register(new MonologServiceProvider());
 
-// добавляем команды и инициализируем приложение
+// add commands and initialize the app
 $app->command(new ExampleCommand());
 ...
 $app->run();

@@ -24,7 +24,7 @@
 
 ### Git (to participate in development)
 
-[Fork it before](/kamilsk/CilexServiceProviders/fork?fragment=1).
+[Fork it before](https://github.com/kamilsk/CilexServiceProviders/fork?fragment=1).
 
 ```bash
 $ git clone git@github.com:<your github account>/CilexServiceProviders.git

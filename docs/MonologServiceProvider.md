@@ -59,7 +59,7 @@ $app['monolog']->error('Some error occurred.');
 
 ## Processors
 
-* [TimeExecutionProcessor](../src/Monolog/Processor/TimeExecutionProcessor.php): adds the current execution time
+* [TimeExecutionProcessor](/src/Monolog/Processor/TimeExecutionProcessor.php): adds the current execution time
 (in seconds accurate to the nearest millisecond) to a log record.
 
 __sprintf vs number_format performance__
@@ -93,5 +93,5 @@ number_format: 0.92237401008606 # ~0.9
 
 ## Utils
 
-* [Dumper](../src/Monolog/Util/Dumper.php)
+* [Dumper](/src/Monolog/Util/Dumper.php)
   * dumpToString: works like `print_r`, but displays the result in single line.
