@@ -1,4 +1,6 @@
-# Managing your ignored parameters with Composer
+# Best practice
+
+## Managing your ignored parameters with Composer
 
 `config.yml + parameters.yml.dist`
 
@@ -44,7 +46,7 @@ component:
 $ composer update
 ```
 
-# Useful features of OctoLab\Cilex\Command\Command
+## Useful features of OctoLab\Cilex\Command\Command
 
 * Command namespace
 * Command::getDbConnection

@@ -2,9 +2,9 @@
 
 `app/config/doctrine/config.yml`
 
-> Пример из документации [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) Silex.
+> Example from the Silex documentation [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html).
 
-> Пример из документации [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html) Symfony.
+> Example from the Symfony documentation [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html).
 
 ```yaml
 doctrine:
@@ -26,11 +26,11 @@ doctrine:
                 password: pass
 ```
 
-Теперь доступ к `\Doctrine\DBAL\Connection` можно получить следующим образом:
+Now access to the `\Doctrine\DBAL\Connection` instance can be obtained as follows:
 
 ```php
 $defaultConnection = $app['db'];
 $mysql = $app['dbs']['mysql'];
-// в данном случае $defaultConnection === $mysql
+// in this case $defaultConnection === $mysql
 $sqlite = $app['dbs']['sqlite'];
 ```

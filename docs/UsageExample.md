@@ -1,3 +1,5 @@
+# Usage example
+
 `app/console`:
 
 ```php
