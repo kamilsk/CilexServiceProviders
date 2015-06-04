@@ -4,6 +4,7 @@ namespace OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
+use OctoLab\Cilex\Config\YamlConfig;
 use OctoLab\Cilex\Config\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 
@@ -34,65 +35,19 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $this->registerHelpers($app);
-        $file = $this->filename;
-        $placeholders = $this->placeholders;
-        $app['config'] = $app->share(function () use ($app, $file, $placeholders) {
-            $loader = new YamlFileLoader(new FileLocator());
-            if ($loader->supports($file)) {
-                $loader->load($file);
-            } else {
-                throw new \RuntimeException(sprintf('File "%s" is not supported.', $file));
+        $app['config'] = $app->share(function () use ($app) {
+            switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
+                case 'yml':
+                    $config = (new YamlConfig(new YamlFileLoader(new FileLocator())))
+                        ->load($this->filename)
+                        ->replace($this->placeholders)
+                        ->toArray()
+                    ;
+                    break;
+                default:
+                    throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));
             }
-            $config = [];
-            foreach (array_reverse($loader->getContent()) as $data) {
-                $config = $app['array_merge_recursive']($config, $data);
-            }
-            if (isset($config['parameters'])) {
-                $app['array_transform_recursive']($config['parameters'], $placeholders);
-                $placeholders = array_merge($config['parameters'], $placeholders);
-            }
-            $app['array_transform_recursive']($config, $placeholders);
-            unset($config['parameters'], $config['imports']);
             return $config;
-        });
-    }
-
-    /**
-     * @param Application $app
-     */
-    private function registerHelpers(Application $app)
-    {
-        $app['array_merge_recursive'] = $app->protect(function (array $base) use ($app) {
-            $mixtures = array_slice(func_get_args(), 1);
-            foreach ($mixtures as $mixture) {
-                foreach ($mixture as $key => $value) {
-                    if (isset($base[$key]) && is_array($base[$key]) && is_array($value)) {
-                        $base[$key] = $app['array_merge_recursive']($base[$key], $value);
-                    } else {
-                        $base[$key] = $value;
-                    }
-                }
-            }
-            return $base;
-        });
-        $app['array_transform_recursive'] = $app->protect(function (array &$array, array $placeholders) {
-            $wrap = function (&$value) {
-                $value = sprintf('/%s/', $value);
-            };
-            array_walk_recursive($array, function (&$param) use ($wrap, $placeholders) {
-                if (preg_match('/^%([^%]+)%$/', $param, $matches)) {
-                    $placeholder = $matches[1];
-                    if (isset($placeholders[$placeholder])) {
-                        $param = $placeholders[$placeholder];
-                    }
-                } elseif (preg_match_all('/%([^%]+)%/', $param, $matches)) {
-                    array_walk($matches[0], $wrap);
-                    $pattern = $matches[0];
-                    $replacement = array_intersect_key($placeholders, array_flip($matches[1]));
-                    $param = preg_replace($pattern, $replacement, $param);
-                }
-            });
         });
     }
 }

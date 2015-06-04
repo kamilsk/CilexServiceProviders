@@ -15,7 +15,7 @@ class YamlFileLoader extends FileLoader
     /** @var array */
     private $content = [];
     /** @var YamlParser */
-    private $yamlParser;
+    private $parser;
 
     /**
      * @return array
@@ -69,10 +69,10 @@ class YamlFileLoader extends FileLoader
         if (!is_readable($file)) {
             throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $file));
         }
-        if (null === $this->yamlParser) {
-            $this->yamlParser = new YamlParser();
+        if (null === $this->parser) {
+            $this->parser = new YamlParser();
         }
-        return $this->yamlParser->parse(file_get_contents($file));
+        return $this->parser->parse(file_get_contents($file));
     }
 
     /**
@@ -87,7 +87,7 @@ class YamlFileLoader extends FileLoader
         $this->setCurrentDir(dirname($sourceResource));
         foreach ($content['imports'] as $import) {
             if (isset($import['resource'])) {
-                $ignoreErrors = isset($import['ignore_errors']) ? boolval($import['ignore_errors']) : false;
+                $ignoreErrors = isset($import['ignore_errors']) ? (bool) $import['ignore_errors'] : false;
                 $this->import($import['resource'], null, $ignoreErrors, $sourceResource);
             }
         }
