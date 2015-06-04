@@ -25,12 +25,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     public function monologConfigProvider()
     {
         return [
-            [
-                new ConfigServiceProvider(
-                    $this->getConfigPath('monolog/config'),
-                    ['root_dir' => __DIR__]
-                )
-            ],
+            [new ConfigServiceProvider($this->getConfigPath('monolog/config'), ['root_dir' => __DIR__])],
         ];
     }
 

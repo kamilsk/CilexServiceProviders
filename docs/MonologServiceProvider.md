@@ -11,11 +11,15 @@ monolog:
     name: MyApplicationName
     handlers:
         syslog:
-            type:      stream
-            path:      /var/log/cilex.log
-            level:     ERROR
-            bubble:    false
-            formatter: error_formatter
+            type:       stream
+            path:       /var/log/cilex.log
+            level:      ERROR
+            bubble:     false
+            formatter:  error_formatter # deprecated, will be removed in v2.0, use example below instead
+        access:
+            type:       "stream"
+            arguments:  ["%root_dir%/app/logs/access.log", "info", false]
+            formatter:  { type: "json" }
 ```
 
 Now access to the `\Monolog\Handler\AbstractProcessingHandler` instance can be obtained as follows:
@@ -55,6 +59,23 @@ $app['error_formatter'] = function ($app) {
 };
 ...
 $app['monolog']->error('Some error occurred.');
+```
+
+## Features
+
+* [ConfigResolver](/src/Monolog/ConfigResolver.php) it is a simple way to configure the `Monolog`:
+
+```yaml
+monolog:
+  handlers:
+    access:
+      type: "stream"                                                    # is \Monolog\Handler\StreamHandler
+      arguments: ["%root_dir%/app/logs/extended.log", "info", false]
+      formatter: { type: "json" }                                       # is \Monolog\Formatter\JsonFormatter
+  processors:
+    - { type: "memory_peak_usage" }                                     # is \Monolog\Processor\MemoryPeakUsageProcessor
+    - { type: "uid", arguments: { length: 7 } }                         # is \Monolog\Processor\UidProcessor
+    - { class: OctoLab\Cilex\Monolog\Processor\TimeExecutionProcessor }
 ```
 
 ## Processors

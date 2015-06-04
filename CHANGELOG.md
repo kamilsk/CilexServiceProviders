@@ -7,9 +7,11 @@ CHANGELOG versions 1.x
  * `\OctoLab\Cilex\Command\Command::getLogger` now return `\Psr\Log\LoggerInterface` ([#36](../../issues/36))
  * `cilex/cilex:~1.0` is required now ([#44](../../issues/44))
  * `composer.lock` was removed ([#46](../../issues/46))
- * `\OctoLab\Cilex\Command\Command::setOutputInterface` was removed ([#47](../../issues/47))
- * Isolate logick of `\OctoLab\Cilex\Provider\ConfigServiceProvider` in `\OctoLab\Cilex\Config\YamlConfig` ([#48](../../issues/48))
- * [git diff](../../compare/v1.2.3...v1.3.1)
+ * Isolate logic of `\OctoLab\Cilex\Provider\ConfigServiceProvider` in `\OctoLab\Cilex\Config\YamlConfig`
+ ([#48](../../issues/48))
+ * Isolate logic of `\OctoLab\Cilex\Provider\MonologServiceProvider` in `\OctoLab\Cilex\Monolog\ConfigResolver`
+ ([#51](../../issues/51))
+ * [git diff](../../compare/v1.2.3...v1.3.2)
 
 * v1.2 (2015-04-19)
 

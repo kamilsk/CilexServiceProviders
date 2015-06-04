@@ -17,9 +17,9 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
     private $helperConnection;
 
     /**
-     * @param bool|string $helperConnection для установки
-     * <code>\Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper</code>, например, для
-     * <code>\Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand</code>
+     * @param bool|string $helperConnection to setup
+     * {@link \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper}, in particular for
+     * {@link \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand}
      */
     public function __construct($helperConnection = false)
     {

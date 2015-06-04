@@ -24,7 +24,7 @@ class MonologServiceProviderTest extends TestCase
     {
         $app = new Application('Test');
         $app->register($config);
-        $app->register(new MonologServiceProvider());
+        $app->register(new MonologServiceProvider(false));
         $logs = [
             $app['config']['monolog']['handlers']['access']['path'],
             $app['config']['monolog']['handlers']['error']['path'],
@@ -57,7 +57,7 @@ class MonologServiceProviderTest extends TestCase
         $app->register($config);
         $log = $app['config']['monolog']['handlers']['access']['path'];
         $app['monolog.name'] = 'MONOLOG';
-        $app->register(new MonologServiceProvider());
+        $app->register(new MonologServiceProvider(false));
         $monolog = $app['monolog'];
         $monolog->info('message');
         self::assertNotContains($appName, file_get_contents($log));
@@ -66,7 +66,7 @@ class MonologServiceProviderTest extends TestCase
         // set name by Application
         $app = new Application($appName);
         $app->register($config);
-        $app->register(new MonologServiceProvider());
+        $app->register(new MonologServiceProvider(false));
         $monolog = $app['monolog'];
         $monolog->info('message');
         self::assertContains($appName, file_get_contents($log));
@@ -77,7 +77,7 @@ class MonologServiceProviderTest extends TestCase
         $config = $app['config'];
         $config['monolog']['name'] = 'CONFIG';
         $app['config'] = $config;
-        $app->register(new MonologServiceProvider());
+        $app->register(new MonologServiceProvider(false));
         $monolog = $app['monolog'];
         $monolog->info('message');
         self::assertNotContains($appName, file_get_contents($log));

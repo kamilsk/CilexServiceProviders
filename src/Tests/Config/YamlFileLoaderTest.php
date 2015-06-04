@@ -78,7 +78,7 @@ class YamlFileLoaderTest extends TestCase
             [
                 'imports' => [
                     [
-                        'resource' => 'base_config.yml',
+                        'resource' => 'base.yml',
                     ],
                 ],
                 'component' => [

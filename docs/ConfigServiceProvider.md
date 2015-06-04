@@ -1,6 +1,14 @@
 # ConfigServiceProvider
 
-## Power of YamlFileLoader
+## Power of [YamlConfig](/src/Config/YamlConfig.php)
+
+```php
+$config = (new YamlConfig(new YamlFileLoader(new FileLocator())))
+    ->load('app/config/config.yml')
+    ->replace(['root_dir' => __DIR__])
+    ->toArray()
+;
+```
 
 `app/config/config.yml`
 
@@ -10,8 +18,9 @@ imports:
     - { resource: doctrine/config.yml }
     - { resource: monolog/config.yml }
 
-top_level_options:
-    top_level_option: %some_parameter%
+framework:
+    base_path: %root_dir%
+    parameter: %some_parameter%
 ```
 
 `app/config/parameters.yml.dist` -> `app/config/parameters.yml`

@@ -77,7 +77,8 @@ class Command extends Cilex\Command
     /**
      * Set OutputInterface for ConsoleHandler.
      *
-     * @param OutputInterface $outputInterface
+     * @param OutputInterface $output
+     * @param string $handler
      *
      * @return $this
      *
@@ -85,17 +86,29 @@ class Command extends Cilex\Command
      *
      * @api
      */
-    public function initConsoleHandler(OutputInterface $outputInterface)
+    public function initConsoleHandler(OutputInterface $output, $handler = 'console')
     {
-        $outputInterface->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+        $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
         /** @var \Pimple $handlers */
         $handlers = $this
             ->getContainer()
             ->offsetGet('monolog.handlers')
         ;
-        if ($handlers->offsetExists('console')) {
-            $handlers->offsetGet('console')->setOutput($outputInterface);
+        if ($handlers->offsetExists($handler)) {
+            $handlers->offsetGet($handler)->setOutput($output);
         }
         return $this;
+    }
+
+    /**
+     * @deprecated will be removed in v2.0, use {@link initConsoleHandler} instead
+     *
+     * @param OutputInterface $output
+     *
+     * @return Command
+     */
+    public function setOutputInterface(OutputInterface $output)
+    {
+        return $this->initConsoleHandler($output);
     }
 }
