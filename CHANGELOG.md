@@ -3,11 +3,12 @@ CHANGELOG versions 1.x
 
 * v1.3 (2015-06-01)
 
+ * PHP 5.4 is deprecated now ([14 Sep 2015 is end of support](http://php.net/supported-versions.php))
  * `\OctoLab\Cilex\Command\Command::getLogger` now return `\Psr\Log\LoggerInterface` ([#36](../../issues/36))
  * `cilex/cilex:~1.0` is required now ([#44](../../issues/44))
  * `composer.lock` was removed ([#46](../../issues/46))
  * `\OctoLab\Cilex\Command\Command::setOutputInterface` was removed ([#47](../../issues/47))
- * [git diff](../../compare/v1.2.3...v1.3)
+ * [git diff](../../compare/v1.2.3...v1.3.1)
 
 * v1.2 (2015-04-19)
 
