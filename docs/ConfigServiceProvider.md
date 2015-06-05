@@ -1,6 +1,12 @@
 # ConfigServiceProvider
 
-## Power of [YamlConfig](/src/Config/YamlConfig.php)
+## Supported formats
+
+* PHP (by [SimpleConfig](/src/Config/SimpleConfig.php))
+* JSON (by json_decode)
+* YML (by [YamlConfig](/src/Config/YamlConfig.php))
+
+## Power of YamlConfig
 
 ```php
 $config = (new YamlConfig(new YamlFileLoader(new FileLocator())))

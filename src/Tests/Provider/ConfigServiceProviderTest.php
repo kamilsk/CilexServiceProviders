@@ -103,4 +103,26 @@ class ConfigServiceProviderTest extends TestCase
         ];
         self::assertEquals($expected, $app['config']);
     }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function phpConfigSupport(Application $app)
+    {
+        $app->register(
+            new ConfigServiceProvider($this->getConfigPath('config', 'php'), ['placeholder' => 'placeholder'])
+        );
+        $expected = [
+            'component' => [
+                'base_parameter' => 'base parameter will not be overwritten',
+                'parameter' => 'base component\'s parameter will be overwritten by root config',
+                'placeholder_parameter' => 'placeholder',
+                'constant' => E_ALL,
+            ],
+        ];
+        self::assertEquals($expected, $app['config']);
+    }
 }

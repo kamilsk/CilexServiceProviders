@@ -4,6 +4,7 @@ namespace OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
+use OctoLab\Cilex\Config\SimpleConfig;
 use OctoLab\Cilex\Config\YamlConfig;
 use OctoLab\Cilex\Config\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
@@ -48,8 +49,20 @@ class ConfigServiceProvider implements ServiceProviderInterface
                         ->toArray()
                     ;
                     break;
+                case 'php':
+                    $config = (new SimpleConfig(include $this->filename))
+                        ->replace($this->placeholders)
+                        ->toArray()
+                    ;
+                    break;
+                case 'json':
+                    $config = json_decode(file_get_contents($this->filename), true);
+                    break;
                 default:
                     throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));
+            }
+            if (!is_array($config)) {
+                throw new \RuntimeException('Configuration must be an array.');
             }
             return $config;
         });
