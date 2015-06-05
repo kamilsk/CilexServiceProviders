@@ -2,8 +2,10 @@
 
 namespace OctoLab\Cilex\Config;
 
+use OctoLab\Cilex\Config\Parser\Parser;
+use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\FileLoader;
-use Symfony\Component\Yaml\Parser as YamlParser;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -14,11 +16,29 @@ class YamlFileLoader extends FileLoader
 {
     /** @var array */
     private $content = [];
-    /** @var YamlParser */
+    /** @var Parser */
     private $parser;
 
     /**
+     * @param FileLocatorInterface $locator
+     * @param Parser $parser
+     *
+     * @api
+     */
+    public function __construct(FileLocatorInterface $locator, Parser $parser = null)
+    {
+        parent::__construct($locator);
+        // deprecated BC will be removed in v2.0, $parser will be required parameter
+        if (null === $parser) {
+            $parser = new SymfonyYamlParser();
+        }
+        $this->parser = $parser;
+    }
+
+    /**
      * @return array
+     *
+     * @api
      */
     public function getContent()
     {
@@ -28,6 +48,8 @@ class YamlFileLoader extends FileLoader
     /**
      * @param mixed $resource
      * @param string $type
+     *
+     * @api
      */
     public function load($resource, $type = null)
     {
@@ -45,6 +67,8 @@ class YamlFileLoader extends FileLoader
      * @param string $type
      *
      * @return bool
+     *
+     * @api
      */
     public function supports($resource, $type = null)
     {
@@ -54,7 +78,7 @@ class YamlFileLoader extends FileLoader
     /**
      * @param string $file
      *
-     * @return array
+     * @return mixed
      *
      * @throws \InvalidArgumentException
      */
@@ -68,9 +92,6 @@ class YamlFileLoader extends FileLoader
         }
         if (!is_readable($file)) {
             throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $file));
-        }
-        if (null === $this->parser) {
-            $this->parser = new YamlParser();
         }
         return $this->parser->parse(file_get_contents($file));
     }

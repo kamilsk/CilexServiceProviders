@@ -23,6 +23,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
     /**
      * @param string $filename
      * @param array $placeholders
+     *
+     * @api
      */
     public function __construct($filename, array $placeholders = [])
     {
@@ -32,6 +34,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Application $app
+     *
+     * @api
      */
     public function register(Application $app)
     {

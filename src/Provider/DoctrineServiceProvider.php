@@ -20,6 +20,8 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
      * @param bool|string $helperConnection to setup
      * {@link \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper}, in particular for
      * {@link \Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand}
+     *
+     * @api
      */
     public function __construct($helperConnection = false)
     {
@@ -29,7 +31,7 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
     /**
      * @param Application $app
      *
-     * @throws \InvalidArgumentException
+     * @api
      */
     public function register(Application $app)
     {

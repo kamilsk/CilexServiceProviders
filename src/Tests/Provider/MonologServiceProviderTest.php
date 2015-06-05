@@ -99,4 +99,34 @@ class MonologServiceProviderTest extends TestCase
         self::assertInstanceOf('\Monolog\Logger', $app['monolog']);
         self::assertInstanceOf('\Psr\Log\LoggerInterface', $app['logger']);
     }
+
+    /**
+     * @test
+     * @dataProvider monologConfigProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function consoleHandler(ConfigServiceProvider $config)
+    {
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider(false));
+        try {
+            // lazy loading
+            $app['monolog'] && $app['monolog.handlers']['console'];
+            self::assertTrue(false);
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(true);
+        }
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider());
+        try {
+            // lazy loading
+            $app['monolog'] && $app['monolog.handlers']['console'];
+            self::assertTrue(true);
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(false);
+        }
+    }
 }

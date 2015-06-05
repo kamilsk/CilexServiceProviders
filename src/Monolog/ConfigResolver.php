@@ -12,7 +12,7 @@ use Monolog\Logger;
 class ConfigResolver
 {
     /**
-     * @deprecated will be removed in v2.0
+     * @deprecated BC will be removed in v2.0
      *
      * @var \Pimple
      */
@@ -99,7 +99,7 @@ class ConfigResolver
             if (array_key_exists('arguments', $handler)) {
                 $arguments = $this->resolveArguments($handler['arguments'], $reflection);
             } elseif (!strcasecmp($class, 'Monolog\Handler\StreamHandler')) {
-                // TODO BC will be removed in v2.0
+                // deprecated BC will be removed in v2.0
                 if (empty($handler['path'])) {
                     throw new \InvalidArgumentException('Invalid configuration for handler: path is required.');
                 }
@@ -156,7 +156,7 @@ class ConfigResolver
     private function resolveFormatter($formatter, HandlerInterface $handler)
     {
         if (is_string($formatter)) {
-            // TODO BC will be removed in v2.0
+            // deprecated BC will be removed in v2.0
             $instance = $this->app->offsetGet($formatter);
         } else {
             if (array_key_exists('type', $formatter)) {

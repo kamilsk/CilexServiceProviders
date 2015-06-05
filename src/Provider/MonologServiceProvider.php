@@ -4,7 +4,6 @@ namespace OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use Cilex\Provider as Cilex;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use OctoLab\Cilex\Monolog\ConfigResolver;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
@@ -20,6 +19,8 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
     /**
      * @param bool $initConsoleHandler to initialize {@link \Symfony\Bridge\Monolog\Handler\ConsoleHandler},
      * if all dependencies resolved
+     *
+     * @api
      */
     public function __construct($initConsoleHandler = true)
     {
@@ -30,6 +31,8 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
 
     /**
      * @param Application $app
+     *
+     * @api
      */
     public function register(Application $app)
     {

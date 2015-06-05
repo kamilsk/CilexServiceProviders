@@ -26,7 +26,7 @@ class ConfigResolverTest extends TestCase
             ->replace(['root_dir' => dirname(__DIR__)])
             ->toArray()
         ;
-        // TODO BC will be removed in v2.0
+        // deprecated BC will be removed in v2.0
         $app = new \Pimple();
         $app['json'] = new JsonFormatter();
         $resolver = new ConfigResolver($app);

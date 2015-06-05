@@ -101,7 +101,7 @@ class Command extends Cilex\Command
     }
 
     /**
-     * @deprecated will be removed in v2.0, use {@link initConsoleHandler} instead
+     * @deprecated BC will be removed in v2.0, use {@link initConsoleHandler} instead
      *
      * @param OutputInterface $output
      *

@@ -29,3 +29,11 @@ framework:
 parameters:
     some_parameter: %placeholder%
 ```
+
+## Custom YAML parser
+
+[SymfonyYamlParser](/src/Config/Parser/SymfonyYamlParser.php) as default parser, based on `symfony/yaml`.
+
+As alternative you can use [DipperYamlParser](/src/Config/Parser/DipperYamlParser.php), based on `secondparty/dipper`.
+
+Or you can define your own parser, just implement simple [Parser](/src/Config/Parser/Parser.php) interface.

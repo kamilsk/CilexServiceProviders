@@ -14,6 +14,8 @@ class YamlConfig
 
     /**
      * @param YamlFileLoader $fileLoader
+     *
+     * @api
      */
     public function __construct(YamlFileLoader $fileLoader)
     {
@@ -25,6 +27,8 @@ class YamlConfig
      * @param bool $check
      *
      * @return $this
+     *
+     * @api
      */
     public function load($resource, $check = false)
     {
@@ -42,6 +46,8 @@ class YamlConfig
      * @param array $placeholders
      *
      * @return $this
+     *
+     * @api
      */
     public function replace(array $placeholders)
     {
@@ -56,6 +62,8 @@ class YamlConfig
 
     /**
      * @return array
+     *
+     * @api
      */
     public function toArray()
     {
