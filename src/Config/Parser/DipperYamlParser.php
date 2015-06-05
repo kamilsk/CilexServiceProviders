@@ -7,7 +7,7 @@ use secondparty\Dipper\Dipper;
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class DipperYamlParser implements Parser
+class DipperYamlParser implements ParserInterface
 {
     /**
      * {@inheritdoc}

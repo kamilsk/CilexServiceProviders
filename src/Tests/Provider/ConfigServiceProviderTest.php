@@ -98,6 +98,7 @@ class ConfigServiceProviderTest extends TestCase
                 'base_parameter' => 'base parameter will not be overwritten',
                 'parameter' => 'base component\'s parameter will be overwritten by root config',
                 'placeholder_parameter' => 'placeholder',
+                'constant' => E_ALL,
             ],
         ];
         self::assertEquals($expected, $app['config']);

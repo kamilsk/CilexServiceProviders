@@ -5,7 +5,7 @@ namespace OctoLab\Cilex\Config\Parser;
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-interface Parser
+interface ParserInterface
 {
     /**
      * @param string $content

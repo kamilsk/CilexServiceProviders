@@ -5,7 +5,7 @@
 ```php
 $config = (new YamlConfig(new YamlFileLoader(new FileLocator())))
     ->load('app/config/config.yml')
-    ->replace(['root_dir' => __DIR__])
+    ->replace(['root_dir' => __DIR__, 'placeholder' => 'value'])
     ->toArray()
 ;
 ```
@@ -21,6 +21,7 @@ imports:
 framework:
     base_path: %root_dir%
     parameter: %some_parameter%
+    error_reporting: const(E_ALL)
 ```
 
 `app/config/parameters.yml.dist` -> `app/config/parameters.yml`
@@ -36,4 +37,4 @@ parameters:
 
 As alternative you can use [DipperYamlParser](/src/Config/Parser/DipperYamlParser.php), based on `secondparty/dipper`.
 
-Or you can define your own parser, just implement simple [Parser](/src/Config/Parser/Parser.php) interface.
+Or you can define your own parser, just implement simple [Parser](/src/Config/Parser/ParserInterface.php) interface.

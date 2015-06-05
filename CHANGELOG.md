@@ -1,10 +1,15 @@
 CHANGELOG versions 1.x
 ======================
 
+* V1.4 (2015-xx-xx)
+
+ * n/a
+
 * v1.3 (2015-06-01)
 
  * PHP 5.4 is deprecated now ([14 Sep 2015 is end of support](http://php.net/supported-versions.php))
  * `\OctoLab\Cilex\Command\Command::getLogger` now return `\Psr\Log\LoggerInterface` ([#36](../../issues/36))
+ * Constant supports by `\OctoLab\Cilex\Config\YamlConfig` ([#42](../../issues/42))
  * `cilex/cilex:~1.0` is required now ([#44](../../issues/44))
  * `composer.lock` was removed ([#46](../../issues/46))
  * Isolate logic of `\OctoLab\Cilex\Provider\ConfigServiceProvider` in `\OctoLab\Cilex\Config\YamlConfig`

@@ -100,7 +100,11 @@ class YamlConfig
             $value = sprintf('/%s/', (string) $value);
         };
         array_walk_recursive($array, function (&$param) use ($wrap, $placeholders) {
-            if (preg_match('/^%([^%]+)%$/', $param, $matches)) {
+            if (strpos($param, 'const(') === 0) {
+                if (preg_match('/^const\((.*)\)$/', $param, $matches) && defined($matches[1])) {
+                    $param = constant($matches[1]);
+                }
+            } elseif (preg_match('/^%([^%]+)%$/', $param, $matches)) {
                 $placeholder = $matches[1];
                 if (isset($placeholders[$placeholder])) {
                     $param = $placeholders[$placeholder];
