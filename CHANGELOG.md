@@ -1,7 +1,7 @@
 CHANGELOG versions 1.x
 ======================
 
-* V1.4 (2015-06-06)
+* v1.4 (2015-06-06)
 
  * Add support for .php and .json config files ([#27](../../issues/27))
  * Constant supports by `\OctoLab\Cilex\Config\YamlConfig` ([#42](../../issues/42))
@@ -9,7 +9,8 @@ CHANGELOG versions 1.x
  ([#50](../../issues/50))
  * Add `\OctoLab\Cilex\Doctrine\FileBasedMigration`, `\OctoLab\Cilex\Doctrine\DriverBasedMigration` and
  `\OctoLab\Cilex\Doctrine\Command\CheckMigrationCommand` ([#52](../../issues/52))
- * [git diff](../../compare/v1.3.2...v1.4)
+ * Add `\OctoLab\Cilex\Doctrine\Command\GenerateIndexNameCommand` ([#53](../../issues/53))
+ * [git diff](../../compare/v1.3.2...v1.4.1)
 
 * v1.3 (2015-06-01)
 

@@ -40,6 +40,7 @@ $sqlite = $app['dbs']['sqlite'];
 * [FileBasedMigration](/src/Doctrine/FileBasedMigration.php)
 * [DriverBasedMigration](/src/Doctrine/DriverBasedMigration.php)
 * [CheckMigrationCommand](/src/Doctrine/Command/CheckMigrationCommand.php)
+* [GenerateIndexNameCommand](/src/Doctrine/Command/GenerateIndexNameCommand.php)
 
 ## Utils
 

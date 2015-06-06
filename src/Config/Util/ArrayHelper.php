@@ -11,14 +11,13 @@ class ArrayHelper
      * Merges two or more arrays into one recursively.
      *
      * Based on yii\helpers\BaseArrayHelper::merge.
-     * @param array $a
-     * @param array $b
+     * @params ... array
      *
      * @return array
      *
      * @author Qiang Xue <qiang.xue@gmail.com>
      */
-    public static function merge(array $a, array $b)
+    public static function merge()
     {
         $args = func_get_args();
         $res = array_shift($args);

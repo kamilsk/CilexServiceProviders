@@ -38,7 +38,7 @@
             <directory>src/Tests/Monolog</directory>
         </testsuite>
         <testsuite name="provider">
-             <directory>src/Tests/Provider</directory>
+            <directory>src/Tests/Provider</directory>
         </testsuite>
     </testsuites>
 </phpunit>
