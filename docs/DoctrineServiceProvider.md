@@ -38,6 +38,8 @@ $sqlite = $app['dbs']['sqlite'];
 ## Features
 
 * [FileBasedMigration](/src/Doctrine/FileBasedMigration.php)
+* [DriverBasedMigration](/src/Doctrine/DriverBasedMigration.php)
+* [CheckMigrationCommand](/src/Doctrine/Command/CheckMigrationCommand.php)
 
 ## Utils
 
