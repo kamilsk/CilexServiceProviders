@@ -2,6 +2,8 @@
 
 namespace OctoLab\Cilex\Config;
 
+use OctoLab\Cilex\Config\Loader\YamlFileLoader;
+
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

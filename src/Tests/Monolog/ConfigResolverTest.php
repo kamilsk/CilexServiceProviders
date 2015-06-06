@@ -3,8 +3,8 @@
 namespace OctoLab\Cilex\Tests\Monolog;
 
 use Monolog\Formatter\JsonFormatter;
+use OctoLab\Cilex\Config\Loader\YamlFileLoader;
 use OctoLab\Cilex\Config\YamlConfig;
-use OctoLab\Cilex\Config\YamlFileLoader;
 use OctoLab\Cilex\Monolog\ConfigResolver;
 use OctoLab\Cilex\Tests\TestCase;
 use Symfony\Component\Config\FileLocator;

@@ -152,6 +152,7 @@ class ConfigResolver
      * @param HandlerInterface $handler
      *
      * @throws \InvalidArgumentException
+     *  {@link \Pimple::offsetGet}
      */
     private function resolveFormatter($formatter, HandlerInterface $handler)
     {

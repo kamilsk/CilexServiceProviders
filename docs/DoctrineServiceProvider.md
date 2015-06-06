@@ -34,3 +34,11 @@ $mysql = $app['dbs']['mysql'];
 // in this case $defaultConnection === $mysql
 $sqlite = $app['dbs']['sqlite'];
 ```
+
+## Features
+
+* [FileBasedMigration](/src/Doctrine/FileBasedMigration.php)
+
+## Utils
+
+* [Parser](/src/Doctrine/Util/Parser.php)

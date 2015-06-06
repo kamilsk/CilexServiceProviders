@@ -3,10 +3,10 @@
 namespace OctoLab\Cilex\Tests\Command;
 
 use Cilex\Application;
+use OctoLab\Cilex\Command\Command;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
-use OctoLab\Cilex\Tests\Mock\CommandMock;
 use OctoLab\Cilex\Tests\TestCase;
 
 /**
@@ -21,9 +21,9 @@ class CommandTest extends TestCase
      */
     public function commandNamespace()
     {
-        $command = new CommandMock();
+        $command = $this->getCommandMock('test');
         self::assertEquals('test', $command->getName());
-        $command = new CommandMock('mock');
+        $command = $this->getCommandMock('test', 'mock');
         self::assertEquals('mock:test', $command->getName());
     }
 
@@ -34,7 +34,7 @@ class CommandTest extends TestCase
     public function getDbConnectionFail()
     {
         $app = new Application('Test');
-        $command = new CommandMock();
+        $command = $this->getCommandMock();
         $app->command($command);
         self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
     }
@@ -50,7 +50,7 @@ class CommandTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new DoctrineServiceProvider());
-        $command = new CommandMock();
+        $command = $this->getCommandMock();
         $app->command($command);
         self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
     }
@@ -62,7 +62,7 @@ class CommandTest extends TestCase
     public function getLoggerFail()
     {
         $app = new Application('Test');
-        $command = new CommandMock();
+        $command = $this->getCommandMock();
         $app->command($command);
         self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
     }
@@ -78,8 +78,29 @@ class CommandTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new MonologServiceProvider());
-        $command = new CommandMock();
+        $command = $this->getCommandMock();
         $app->command($command);
         self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
+    }
+
+    /**
+     * @param string $name
+     * @param string $namespace
+     *
+     * @return Command
+     */
+    private function getCommandMock($name = 'test', $namespace = null)
+    {
+        /** @var Command $instance */
+        $instance = (new \ReflectionClass(Command::class))->newInstanceWithoutConstructor();
+        $reflection = (new \ReflectionObject($instance));
+        if (null !== $namespace) {
+            $property = $reflection->getProperty('namespace');
+            $property->setAccessible(true);
+            $property->setValue($instance, $namespace);
+        }
+        $instance->setName($name);
+        $reflection->getConstructor()->invoke($instance);
+        return $instance;
     }
 }

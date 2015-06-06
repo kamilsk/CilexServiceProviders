@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Config;
+namespace OctoLab\Cilex\Config\Loader;
 
 use OctoLab\Cilex\Config\Parser\ParserInterface;
 use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
