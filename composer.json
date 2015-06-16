@@ -13,12 +13,12 @@
     "require": {
         "php": ">=5.5",
         "cilex/cilex": "~1.0",
+        "kamilsk/common": "dev-master",
         "symfony/config": "~2.0",
         "symfony/yaml": "~2.0"
     },
     "require-dev": {
-        "doctrine/dbal": "~2.0",
-        "doctrine/migrations": "1.0.x-dev#4256449",
+        "doctrine/migrations": "~1.0|1.0.x-dev#67f0268",
         "monolog/monolog": "~1.0",
         "secondparty/dipper": "*",
         "symfony/event-dispatcher": "~2.0",
@@ -26,7 +26,7 @@
     },
     "suggest": {
         "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
-        "doctrine/migrations": "optional for DoctrineServiceProvider (1.0.x-dev#4256449 is recommended)",
+        "doctrine/migrations": "optional for DoctrineServiceProvider (~1.0|1.0.x-dev#67f0268 is recommended)",
         "incenteev/composer-parameter-handler": "to handle parameters.yml (~2.0 is recommended)",
         "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)",
         "secondparty/dipper": "as alternative of Symfony Yaml parser (stable version is recommended)",

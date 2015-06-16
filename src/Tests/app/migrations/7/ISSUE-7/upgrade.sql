@@ -1,6 +1,0 @@
-CREATE TABLE temp (
-  id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(8) NOT NULL,
-  PRIMARY KEY (id)
-);
-INSERT INTO temp (title) VALUES ('test');

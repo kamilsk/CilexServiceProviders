@@ -31,9 +31,6 @@
         <testsuite name="config">
             <directory>src/Tests/Config</directory>
         </testsuite>
-        <testsuite name="doctrine">
-            <directory>src/Tests/Doctrine</directory>
-        </testsuite>
         <testsuite name="monolog">
             <directory>src/Tests/Monolog</directory>
         </testsuite>
