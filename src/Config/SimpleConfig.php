@@ -34,7 +34,6 @@ class SimpleConfig
             $placeholders = array_merge($this->config['parameters'], $placeholders);
         }
         $this->transform($this->config, $placeholders);
-        unset($this->config['parameters'], $this->config['imports']);
         return $this;
     }
 
@@ -45,6 +44,13 @@ class SimpleConfig
      */
     public function toArray()
     {
+        if (isset($this->config['imports'])) {
+            unset($this->config['imports']);
+        }
+        if (isset($this->config['parameters'])) {
+            $this->transform($this->config, $this->config['parameters']);
+            unset($this->config['parameters']);
+        }
         return $this->config;
     }
 

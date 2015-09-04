@@ -36,6 +36,12 @@ class ConfigServiceProvider implements ServiceProviderInterface
     /**
      * @param Application $app
      *
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceException
+     * @throws \DomainException
+     * @throws \RuntimeException
+     *
      * @api
      */
     public function register(Application $app)

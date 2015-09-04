@@ -15,6 +15,10 @@ class Command extends Cilex\Command
 
     /**
      * @param string $namespace
+     *
+     * @throws \LogicException
+     *
+     * @api
      */
     public function __construct($namespace = null)
     {
@@ -62,7 +66,6 @@ class Command extends Cilex\Command
      * @return \Symfony\Component\Console\Command\Command
      *
      * @throws \InvalidArgumentException
-     *  {@link \Symfony\Component\Console\Command\Command::setName}
      *
      * @api
      */
@@ -81,6 +84,8 @@ class Command extends Cilex\Command
      * @param string $handler
      *
      * @return $this
+     *
+     * @throws \InvalidArgumentException
      *
      * @uses \Symfony\Bridge\Monolog\Handler\ConsoleHandler
      *
@@ -106,6 +111,8 @@ class Command extends Cilex\Command
      * @param OutputInterface $output
      *
      * @return Command
+     *
+     * @throws \InvalidArgumentException
      */
     public function setOutputInterface(OutputInterface $output)
     {

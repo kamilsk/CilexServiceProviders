@@ -49,6 +49,10 @@ class YamlFileLoader extends FileLoader
      * @param mixed $resource
      * @param string $type
      *
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceException
+     *
      * @api
      */
     public function load($resource, $type = null)
@@ -99,6 +103,9 @@ class YamlFileLoader extends FileLoader
     /**
      * @param array $content
      * @param string $sourceResource
+     *
+     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceException
      */
     private function parseImports($content, $sourceResource)
     {

@@ -29,6 +29,11 @@ class YamlConfig extends SimpleConfig
      *
      * @return $this
      *
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
+     * @throws \Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceException
+     * @throws \DomainException
+     *
      * @api
      */
     public function load($resource, $check = false)

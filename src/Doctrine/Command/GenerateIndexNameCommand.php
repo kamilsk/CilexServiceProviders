@@ -30,6 +30,8 @@ class GenerateIndexNameCommand extends Command
      * @param OutputInterface $output
      *
      * @return int
+     *
+     * @throws \InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

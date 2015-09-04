@@ -62,8 +62,6 @@ class ConfigResolver
      * @return $this
      *
      * @throws \InvalidArgumentException
-     *  {@link resolveHandlers}
-     *  {@link resolveProcessors}
      *
      * @api
      */
@@ -82,7 +80,6 @@ class ConfigResolver
      * @param array $config
      *
      * @throws \InvalidArgumentException
-     *  {@link resolveFormatters}
      */
     private function resolveHandlers(array $config)
     {
@@ -152,7 +149,6 @@ class ConfigResolver
      * @param HandlerInterface $handler
      *
      * @throws \InvalidArgumentException
-     *  {@link \Pimple::offsetGet}
      */
     private function resolveFormatter($formatter, HandlerInterface $handler)
     {

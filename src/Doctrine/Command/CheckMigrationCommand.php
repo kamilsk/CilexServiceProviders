@@ -29,6 +29,10 @@ class CheckMigrationCommand extends AbstractCommand
      * @param OutputInterface $output
      *
      * @return int
+     *
+     * @throws \InvalidArgumentException
+     * @throws \Doctrine\DBAL\Migrations\MigrationException
+     * @throws \RuntimeException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -84,12 +88,15 @@ class CheckMigrationCommand extends AbstractCommand
     /**
      * @param array $queries
      * @param OutputInterface $output
+     *
+     * @throws \InvalidArgumentException
      */
     private function printQueries(array $queries, OutputInterface $output)
     {
-        for ($i = 0, $count = count($queries); $i < $count; $i++) {
+        $count = count($queries);
+        foreach ($queries as $i => $query) {
             $output->writeln(
-                sprintf('<info>%s. %s</info>', str_pad($i + 1, strlen($count), ' ', STR_PAD_LEFT), $queries[$i])
+                sprintf('<info>%s. %s</info>', str_pad($i + 1, strlen($count), ' ', STR_PAD_LEFT), $query)
             );
         }
     }
