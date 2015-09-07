@@ -32,6 +32,7 @@ class SimpleConfig
         if (isset($this->config['parameters'])) {
             $this->transform($this->config['parameters'], $placeholders);
             $placeholders = array_merge($this->config['parameters'], $placeholders);
+            unset($this->config['parameters']);
         }
         $this->transform($this->config, $placeholders);
         return $this;
