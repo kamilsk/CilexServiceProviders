@@ -10,7 +10,8 @@ CHANGELOG versions 1.x
  * Add `\OctoLab\Cilex\Doctrine\FileBasedMigration`, `\OctoLab\Cilex\Doctrine\DriverBasedMigration` and
  `\OctoLab\Cilex\Doctrine\Command\CheckMigrationCommand` ([#52](../../issues/52))
  * Add `\OctoLab\Cilex\Doctrine\Command\GenerateIndexNameCommand` ([#53](../../issues/53))
- * [git diff](../../compare/v1.3.2...v1.4.1)
+ * Fix bug [#56](../../issues/56)
+ * [git diff](../../compare/v1.3.2...v1.4.3)
 
 * v1.3 (2015-06-01)
 
