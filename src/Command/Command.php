@@ -104,18 +104,4 @@ class Command extends Cilex\Command
         }
         return $this;
     }
-
-    /**
-     * @deprecated BC will be removed in v2.0, use {@link initConsoleHandler} instead
-     *
-     * @param OutputInterface $output
-     *
-     * @return Command
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function setOutputInterface(OutputInterface $output)
-    {
-        return $this->initConsoleHandler($output);
-    }
 }

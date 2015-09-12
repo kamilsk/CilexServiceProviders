@@ -2,8 +2,8 @@
 
 namespace OctoLab\Cilex\Tests\Monolog;
 
-use Monolog\Formatter\JsonFormatter;
 use OctoLab\Cilex\Config\Loader\YamlFileLoader;
+use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
 use OctoLab\Cilex\Config\YamlConfig;
 use OctoLab\Cilex\Monolog\ConfigResolver;
 use OctoLab\Cilex\Tests\TestCase;
@@ -21,15 +21,12 @@ class ConfigResolverTest extends TestCase
      */
     public function resolve()
     {
-        $config = (new YamlConfig(new YamlFileLoader(new FileLocator())))
-            ->load($this->getConfigPath('monolog/resolver'))
+        $config = (new YamlConfig(new YamlFileLoader(new FileLocator(), new SymfonyYamlParser())))
+            ->load($this->getConfigPath('monolog/config'))
             ->replace(['root_dir' => dirname(__DIR__)])
             ->toArray()
         ;
-        // deprecated BC will be removed in v2.0
-        $app = new \Pimple();
-        $app['json'] = new JsonFormatter();
-        $resolver = new ConfigResolver($app);
+        $resolver = new ConfigResolver();
         $resolver->resolve($config['monolog']);
         self::assertCount(2, $resolver->getHandlers()->keys());
         self::assertCount(3, $resolver->getProcessors());

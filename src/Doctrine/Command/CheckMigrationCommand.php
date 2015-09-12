@@ -4,8 +4,8 @@ namespace OctoLab\Cilex\Doctrine\Command;
 
 use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;
-use OctoLab\Cilex\Doctrine\FileBasedMigration;
-use OctoLab\Cilex\Doctrine\Util\Parser;
+use OctoLab\Common\Doctrine\Migration\FileBasedMigration;
+use OctoLab\Common\Doctrine\Util\Parser;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

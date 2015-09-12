@@ -3,7 +3,6 @@
 namespace OctoLab\Cilex\Config\Loader;
 
 use OctoLab\Cilex\Config\Parser\ParserInterface;
-use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\FileLoader;
 
@@ -25,13 +24,9 @@ class YamlFileLoader extends FileLoader
      *
      * @api
      */
-    public function __construct(FileLocatorInterface $locator, ParserInterface $parser = null)
+    public function __construct(FileLocatorInterface $locator, ParserInterface $parser)
     {
         parent::__construct($locator);
-        // deprecated BC will be removed in v2.0, $parser will be required parameter
-        if (null === $parser) {
-            $parser = new SymfonyYamlParser();
-        }
         $this->parser = $parser;
     }
 
