@@ -4,8 +4,8 @@
 
 [![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
 [![Code coverage](https://scrutinizer-ci.com/g/kamilsk/CilexServiceProviders/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/kamilsk/CilexServiceProviders/?branch=master)
-[![SensioLabsInsight code quality](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
 [![Scrutinizer code quality](https://scrutinizer-ci.com/g/kamilsk/CilexServiceProviders/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kamilsk/CilexServiceProviders/?branch=master)
+[![SensioLabsInsight code quality](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a/mini.png)](https://insight.sensiolabs.com/projects/6832873c-92a3-4d6f-a748-e3068332a61a)
 
 [![Total downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Latest stable version](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
