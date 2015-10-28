@@ -15,6 +15,7 @@ CHANGELOG versions 2.x
     * Config component changes
       * `$parser` is required argument for `OctoLab\Cilex\Config\Loader\YamlFileLoader::__construct
       * `$app` was removed from `OctoLab\Cilex\Monolog\ConfigResolver`
+  * [git diff](../../compare/master...2.0)
 
 CHANGELOG versions 1.x
 ======================
