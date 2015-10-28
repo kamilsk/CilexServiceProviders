@@ -81,10 +81,10 @@ class SimpleConfig
      */
     protected function transform(array &$array, array $placeholders)
     {
-        $wrap = function (&$value) {
+        $wrap = function(&$value) {
             $value = sprintf('/%s/', (string) $value);
         };
-        array_walk_recursive($array, function (&$param) use ($wrap, $placeholders) {
+        array_walk_recursive($array, function(&$param) use ($wrap, $placeholders) {
             if (strpos($param, 'const(') === 0) {
                 if (preg_match('/^const\((.*)\)$/', $param, $matches) && defined($matches[1])) {
                     $param = constant($matches[1]);

@@ -46,7 +46,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app['config'] = $app->share(function () {
+        $app['config'] = $app->share(function() {
             switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
                 case 'yml':
                     $config = (new YamlConfig(new YamlFileLoader(new FileLocator())))
