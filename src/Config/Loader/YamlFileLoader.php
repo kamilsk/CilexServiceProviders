@@ -46,7 +46,7 @@ class YamlFileLoader extends FileLoader
     }
 
     /**
-     * @param mixed $resource
+     * @param string $resource
      * @param string $type
      *
      * @throws \InvalidArgumentException
@@ -67,7 +67,7 @@ class YamlFileLoader extends FileLoader
     }
 
     /**
-     * @param mixed $resource
+     * @param string $resource
      * @param string $type
      *
      * @return bool

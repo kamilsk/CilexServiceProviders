@@ -86,7 +86,7 @@ class CheckMigrationCommand extends AbstractCommand
     }
 
     /**
-     * @param array $queries
+     * @param string[] $queries
      * @param OutputInterface $output
      *
      * @throws \InvalidArgumentException
