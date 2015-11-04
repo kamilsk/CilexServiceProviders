@@ -11,7 +11,6 @@ class ArrayHelper
      * Merges two or more arrays into one recursively.
      *
      * Based on yii\helpers\BaseArrayHelper::merge.
-     * @params ... array
      *
      * @return array
      *
@@ -21,16 +20,17 @@ class ArrayHelper
     {
         $args = func_get_args();
         $res = array_shift($args);
-        while ($args) {
+        while (!empty($args)) {
             $next = array_shift($args);
             foreach ($next as $k => $v) {
+                $keyExists = isset($res[$k]);
                 if (is_int($k)) {
-                    if (isset($res[$k])) {
+                    if ($keyExists) {
                         $res[] = $v;
                     } else {
                         $res[$k] = $v;
                     }
-                } elseif (is_array($v) && isset($res[$k]) && is_array($res[$k])) {
+                } elseif (is_array($v) && $keyExists && is_array($res[$k])) {
                     $res[$k] = self::merge($res[$k], $v);
                 } else {
                     $res[$k] = $v;
