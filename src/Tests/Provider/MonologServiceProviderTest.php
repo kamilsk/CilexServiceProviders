@@ -3,6 +3,7 @@
 namespace OctoLab\Cilex\Tests\Provider;
 
 use Cilex\Application;
+use Monolog\Formatter\JsonFormatter;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
 use OctoLab\Cilex\Tests\TestCase;
@@ -128,5 +129,24 @@ class MonologServiceProviderTest extends TestCase
         } catch (\InvalidArgumentException $e) {
             self::assertTrue(false);
         }
+    }
+
+    /**
+     * @test
+     * @dataProvider monologConfigProviderWithNewStyle
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function newConfigStyleFormat(ConfigServiceProvider $config)
+    {
+        $app = new Application('test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider());
+        // old style
+        $app['json'] = new JsonFormatter();
+        /** @var \Monolog\Logger $monolog */
+        $monolog = $app['monolog'];
+        self::assertNotEmpty($monolog->getHandlers());
+        self::assertNotEmpty($monolog->getProcessors());
     }
 }
