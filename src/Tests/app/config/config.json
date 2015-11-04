@@ -1,0 +1,11 @@
+{
+  "imports": [
+    "parameters.json",
+    "component/config.json"
+  ],
+  "component": {
+    "parameter": "base component's parameter",
+    "placeholder_parameter": "%placeholder%",
+    "constant": "const(E_ALL)"
+  }
+}
