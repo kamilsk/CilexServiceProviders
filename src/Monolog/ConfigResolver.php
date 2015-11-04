@@ -84,18 +84,10 @@ class ConfigResolver
     private function resolveHandlers(array $config)
     {
         foreach ($config as $key => $handler) {
-            if (array_key_exists('type', $handler)) {
-                $class = $this->resolveClass($handler['type'], 'Monolog\Handler', 'Handler');
-            } elseif (array_key_exists('class', $handler)) {
-                $class = $handler['class'];
-            } else {
-                throw new \InvalidArgumentException('Handler\'s config requires either the type or class.');
-            }
-            $arguments = [];
+            $class = $this->getClass('Handler', 'Monolog\Handler', $handler);
             $reflection = new \ReflectionClass($class);
-            if (array_key_exists('arguments', $handler)) {
-                $arguments = $this->resolveArguments($handler['arguments'], $reflection);
-            } elseif (!strcasecmp($class, 'Monolog\Handler\StreamHandler')) {
+            $arguments = $this->getArguments($reflection, $handler);
+            if (empty($arguments) && !strcasecmp($class, 'Monolog\Handler\StreamHandler')) {
                 // deprecated BC will be removed in v2.0
                 if (empty($handler['path'])) {
                     throw new \InvalidArgumentException('Invalid configuration for handler: path is required.');
@@ -128,18 +120,9 @@ class ConfigResolver
     private function resolveProcessors(array $config)
     {
         foreach ($config as $processor) {
-            if (array_key_exists('type', $processor)) {
-                $class = $this->resolveClass($processor['type'], 'Monolog\Processor', 'Processor');
-            } elseif (array_key_exists('class', $processor)) {
-                $class = $processor['class'];
-            } else {
-                throw new \InvalidArgumentException('Processor\'s config requires either the type or class.');
-            }
-            $arguments = [];
+            $class = $this->getClass('Processor', 'Monolog\Processor', $processor);
             $reflection = new \ReflectionClass($class);
-            if (array_key_exists('arguments', $processor)) {
-                $arguments = $this->resolveArguments($processor['arguments'], $reflection);
-            }
+            $arguments = $this->getArguments($reflection, $processor);
             $this->getProcessors()->attach($reflection->newInstanceArgs($arguments));
         }
     }
@@ -156,22 +139,49 @@ class ConfigResolver
             // deprecated BC will be removed in v2.0
             $instance = $this->app->offsetGet($formatter);
         } else {
-            if (array_key_exists('type', $formatter)) {
-                $class = $this->resolveClass($formatter['type'], 'Monolog\Formatter', 'Formatter');
-            } elseif (array_key_exists('class', $formatter)) {
-                $class = $formatter['class'];
-            } else {
-                throw new \InvalidArgumentException('Formatter\'s config requires either the type or class.');
-            }
-            $arguments = [];
+            $class = $this->getClass('Formatter', 'Monolog\Formatter', $formatter);
             $reflection = new \ReflectionClass($class);
-            if (array_key_exists('arguments', $formatter)) {
-                $arguments = $this->resolveArguments($formatter['arguments'], $reflection);
-            }
+            $arguments = $this->getArguments($reflection, $formatter);
             /** @var FormatterInterface $instance */
             $instance = $reflection->newInstanceArgs($arguments);
         }
         $handler->setFormatter($instance);
+    }
+
+    /**
+     * @param string $component
+     * @param string $namespace
+     * @param array $config
+     *
+     * @return string
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function getClass($component, $namespace, array $config)
+    {
+        if (isset($config['type'])) {
+            $class = $this->resolveClass($config['type'], $namespace, $component);
+        } elseif (isset($config['class'])) {
+            $class = $config['class'];
+        } else {
+            throw new \InvalidArgumentException(sprintf('%s\'s config requires either the type or class.', $component));
+        }
+        return $class;
+    }
+
+    /**
+     * @param \ReflectionClass $reflection
+     * @param array $config
+     *
+     * @return array
+     */
+    private function getArguments(\ReflectionClass $reflection, array $config)
+    {
+        $arguments = [];
+        if (isset($config['arguments'])) {
+            $arguments = $this->resolveArguments($config['arguments'], $reflection);
+        }
+        return $arguments;
     }
 
     /**
