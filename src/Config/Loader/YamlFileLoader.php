@@ -57,7 +57,7 @@ class YamlFileLoader extends FileLoader
      */
     public function load($resource, $type = null)
     {
-        $path = $this->locator->locate($resource);
+        $path = (string) $this->locator->locate($resource);
         $content = $this->loadFile($path);
         if (null === $content) {
             return;
