@@ -3,6 +3,7 @@
 namespace OctoLab\Cilex\Command;
 
 use Cilex\Command as Cilex;
+use Monolog\Logger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -93,7 +94,7 @@ class Command extends Cilex\Command
      */
     public function initConsoleHandler(OutputInterface $output, $handler = 'console')
     {
-        $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+        $this->getContainer()->offsetGet('monolog') && $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
         /** @var \Pimple $handlers */
         $handlers = $this
             ->getContainer()
