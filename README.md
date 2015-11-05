@@ -11,8 +11,8 @@
 [![Monthly downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/monthly.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Daily downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/daily.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 
-[![License](https://poser.pugx.org/kamilsk/cilex-service-providers/license.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Latest stable version](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
+[![License](https://poser.pugx.org/kamilsk/cilex-service-providers/license.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Total references](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
 
 ## What's inside

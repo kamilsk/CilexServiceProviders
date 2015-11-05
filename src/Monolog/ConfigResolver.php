@@ -58,6 +58,7 @@ class ConfigResolver
 
     /**
      * @param array $config
+     * <pre>[..., 'handlers' => [...], 'processors' => [...]]</pre>
      *
      * @return $this
      *
@@ -67,10 +68,10 @@ class ConfigResolver
      */
     public function resolve(array $config)
     {
-        if (array_key_exists('handlers', $config)) {
+        if (isset($config['handlers'])) {
             $this->resolveHandlers($config['handlers']);
         }
-        if (array_key_exists('processors', $config)) {
+        if (isset($config['processors'])) {
             $this->resolveProcessors($config['processors']);
         }
         return $this;
