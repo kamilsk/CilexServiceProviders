@@ -32,6 +32,8 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
     /**
      * @param Application $app
      *
+     * @throws \InvalidArgumentException
+     *
      * @api
      */
     public function register(Application $app)

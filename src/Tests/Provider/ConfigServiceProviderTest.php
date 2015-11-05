@@ -125,4 +125,40 @@ class ConfigServiceProviderTest extends TestCase
         ];
         self::assertEquals($expected, $app['config']);
     }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function jsonConfigSupport(Application $app)
+    {
+        $app->register(
+            new ConfigServiceProvider($this->getConfigPath('config', 'json'), ['placeholder' => 'placeholder'])
+        );
+        $expected = [
+            'component' => [
+                'parameter' => 'base component\'s parameter',
+                'placeholder_parameter' => 'placeholder',
+                'constant' => E_ALL,
+            ],
+        ];
+        self::assertEquals($expected, $app['config']);
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     * @expectedException \DomainException
+     *
+     * @param Application $app
+     */
+    public function throwDomainException(Application $app)
+    {
+        $app->register(
+            new ConfigServiceProvider($this->getConfigPath('config', 'xml'), ['placeholder' => 'placeholder'])
+        );
+        $app->offsetGet('config');
+    }
 }

@@ -63,13 +63,13 @@ class ConfigServiceProvider implements ServiceProviderInterface
                     ;
                     break;
                 case 'json':
-                    $config = json_decode(file_get_contents($this->filename), true);
+                    $config = (new SimpleConfig(json_decode(file_get_contents($this->filename), true)))
+                        ->replace($this->placeholders)
+                        ->toArray()
+                    ;
                     break;
                 default:
                     throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));
-            }
-            if (!is_array($config)) {
-                throw new \RuntimeException('Configuration must be an array.');
             }
             return $config;
         });

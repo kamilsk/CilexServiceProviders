@@ -41,7 +41,7 @@ class YamlFileLoader extends FileLoader
     }
 
     /**
-     * @param mixed $resource
+     * @param string $resource
      * @param string $type
      *
      * @throws \InvalidArgumentException
@@ -52,7 +52,7 @@ class YamlFileLoader extends FileLoader
      */
     public function load($resource, $type = null)
     {
-        $path = $this->locator->locate($resource);
+        $path = (string) $this->locator->locate($resource);
         $content = $this->loadFile($path);
         if (null === $content) {
             return;
@@ -62,7 +62,7 @@ class YamlFileLoader extends FileLoader
     }
 
     /**
-     * @param mixed $resource
+     * @param string $resource
      * @param string $type
      *
      * @return bool
@@ -78,20 +78,9 @@ class YamlFileLoader extends FileLoader
      * @param string $file
      *
      * @return mixed
-     *
-     * @throws \InvalidArgumentException
      */
     private function loadFile($file)
     {
-        if (!stream_is_local($file)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a local file.', $file));
-        }
-        if (!is_file($file)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a regular file.', $file));
-        }
-        if (!is_readable($file)) {
-            throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $file));
-        }
         return $this->parser->parse(file_get_contents($file));
     }
 

@@ -40,7 +40,7 @@ class CheckMigrationCommand extends AbstractCommand
         $parser = new Parser();
         if (is_file($migration)) {
             $queries = $parser->extractSql(file_get_contents($migration));
-            if ($queries) {
+            if (!empty($queries)) {
                 $output->writeln(sprintf('<comment>Migration %s contains</comment>', $migration));
                 $this->printQueries($queries, $output);
             } else {
@@ -73,6 +73,7 @@ class CheckMigrationCommand extends AbstractCommand
                         }
                     }
                 } catch (\ReflectionException $e) {
+                    throw new \RuntimeException('', 0, $e);
                 }
             }
         } else {
@@ -86,7 +87,7 @@ class CheckMigrationCommand extends AbstractCommand
     }
 
     /**
-     * @param array $queries
+     * @param string[] $queries
      * @param OutputInterface $output
      *
      * @throws \InvalidArgumentException

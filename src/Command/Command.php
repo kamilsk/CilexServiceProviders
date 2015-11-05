@@ -93,7 +93,7 @@ class Command extends Cilex\Command
      */
     public function initConsoleHandler(OutputInterface $output, $handler = 'console')
     {
-        $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+        $this->getContainer()->offsetGet('monolog') && $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
         /** @var \Pimple $handlers */
         $handlers = $this
             ->getContainer()

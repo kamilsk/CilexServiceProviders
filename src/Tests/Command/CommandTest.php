@@ -8,6 +8,7 @@ use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
 use OctoLab\Cilex\Tests\TestCase;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * phpunit src/Tests/Command/CommandTest.php
@@ -81,6 +82,23 @@ class CommandTest extends TestCase
         $command = $this->getCommandMock();
         $app->command($command);
         self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
+    }
+
+    /**
+     * @test
+     * @dataProvider monologConfigProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function setOutputInterface(ConfigServiceProvider $config)
+    {
+        $output = new NullOutput();
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider(true));
+        $command = $this->getCommandMock();
+        $app->command($command);
+        $command->setOutputInterface($output);
     }
 
     /**

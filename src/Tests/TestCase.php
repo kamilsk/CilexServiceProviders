@@ -10,7 +10,7 @@ use OctoLab\Cilex\Provider\ConfigServiceProvider;
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return ConfigServiceProvider[]
+     * @return array[]
      */
     public function doctrineConfigProvider()
     {
@@ -20,12 +20,22 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return ConfigServiceProvider[]
+     * @return array[]
      */
     public function monologConfigProvider()
     {
         return [
             [new ConfigServiceProvider($this->getConfigPath('monolog/config'), ['root_dir' => __DIR__])],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
+    public function monologConfigProviderWithNewStyle()
+    {
+        return [
+            [new ConfigServiceProvider($this->getConfigPath('monolog/resolver'), ['root_dir' => __DIR__])],
         ];
     }
 

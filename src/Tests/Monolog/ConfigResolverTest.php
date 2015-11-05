@@ -31,4 +31,38 @@ class ConfigResolverTest extends TestCase
         self::assertCount(2, $resolver->getHandlers()->keys());
         self::assertCount(3, $resolver->getProcessors());
     }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function throwInvalidArgumentExceptionByResolve()
+    {
+        // deprecated BC will be removed in v2.0
+        $app = new \Pimple();
+        $resolver = new ConfigResolver($app);
+        $resolver->resolve([
+            'handlers' => [
+                'stream' => [
+                    'type' => 'stream',
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function throwInvalidArgumentExceptionByGetClass()
+    {
+        // deprecated BC will be removed in v2.0
+        $app = new \Pimple();
+        $resolver = new ConfigResolver($app);
+        $resolver->resolve([
+            'handlers' => [
+                'stream' => [],
+            ],
+        ]);
+    }
 }

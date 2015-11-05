@@ -20,6 +20,10 @@ CHANGELOG versions 2.x
 CHANGELOG versions 1.x
 ======================
 
+* v1.5 (2015-11-06)
+
+ * Up to 100% test coverage and resolve Scrutinizer CI recommendations ([#61](../../issues/61))
+
 * v1.4 (2015-06-06)
 
   * Add support for .php and .json config files ([#27](../../issues/27))
