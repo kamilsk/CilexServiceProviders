@@ -83,20 +83,9 @@ class YamlFileLoader extends FileLoader
      * @param string $file
      *
      * @return mixed
-     *
-     * @throws \InvalidArgumentException
      */
     private function loadFile($file)
     {
-        if (!stream_is_local($file)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a local file.', $file));
-        }
-        if (!is_file($file)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not a regular file.', $file));
-        }
-        if (!is_readable($file)) {
-            throw new \InvalidArgumentException(sprintf('File "%s" is not readable.', $file));
-        }
         return $this->parser->parse(file_get_contents($file));
     }
 

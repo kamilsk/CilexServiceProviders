@@ -96,4 +96,26 @@ class YamlFileLoaderTest extends TestCase
         ];
         self::assertEquals($expected, $loader->getContent());
     }
+    /**
+     * @test
+     */
+    public function load()
+    {
+        // DipperYamlParser is not compatible
+        $loader = new YamlFileLoader(new FileLocator());
+        $loader->load($this->getConfigPath('empty'));
+        self::assertEmpty($loader->getContent());
+    }
+
+    /**
+     * @test
+     * @dataProvider loaderProvider
+     * @expectedException \InvalidArgumentException
+     *
+     * @param YamlFileLoader $loader
+     */
+    public function throwInvalidArgumentExceptionByNotLocalFile(YamlFileLoader $loader)
+    {
+        $loader->load('http://example.com/');
+    }
 }
