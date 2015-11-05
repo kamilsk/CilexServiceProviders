@@ -3,7 +3,6 @@
 namespace OctoLab\Cilex\Command;
 
 use Cilex\Command as Cilex;
-use Monolog\Logger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
