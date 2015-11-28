@@ -25,17 +25,8 @@
          timeoutForLargeTests="60"
          verbose="false">
     <testsuites>
-        <testsuite name="command">
-            <directory>src/Tests/Command</directory>
-        </testsuite>
-        <testsuite name="config">
-            <directory>src/Tests/Config</directory>
-        </testsuite>
-        <testsuite name="monolog">
-            <directory>src/Tests/Monolog</directory>
-        </testsuite>
-        <testsuite name="provider">
-            <directory>src/Tests/Provider</directory>
+        <testsuite name="unit">
+            <directory>src/Tests/*</directory>
         </testsuite>
     </testsuites>
 </phpunit>

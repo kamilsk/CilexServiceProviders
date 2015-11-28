@@ -1,5 +1,6 @@
 /docs/              export-ignore
 /src/Tests/         export-ignore
+.codeclimate.yml    export-ignore
 .gitattributes      export-ignore
 .gitignore          export-ignore
 .scrutinizer.yml    export-ignore
