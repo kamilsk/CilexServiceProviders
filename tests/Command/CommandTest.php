@@ -1,13 +1,13 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Command;
+namespace Test\OctoLab\Cilex\Command;
 
 use Cilex\Application;
 use OctoLab\Cilex\Command\Command;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
-use OctoLab\Cilex\Tests\TestCase;
+use Test\OctoLab\Cilex\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**

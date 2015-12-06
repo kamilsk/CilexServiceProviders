@@ -1,9 +1,9 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Config;
+namespace Test\OctoLab\Cilex\Config;
 
 use OctoLab\Cilex\Config\SimpleConfig;
-use OctoLab\Cilex\Tests\TestCase;
+use Test\OctoLab\Cilex\TestCase;
 
 /**
  * phpunit src/Tests/Config/SimpleConfigTest.php

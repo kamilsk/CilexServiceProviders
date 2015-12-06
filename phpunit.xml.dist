@@ -26,7 +26,7 @@
          verbose="false">
     <testsuites>
         <testsuite name="unit">
-            <directory>src/Tests/*</directory>
+            <directory>tests/*</directory>
         </testsuite>
     </testsuites>
 </phpunit>

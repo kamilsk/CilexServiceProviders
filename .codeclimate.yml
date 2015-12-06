@@ -5,8 +5,10 @@ engines:
     enabled: true
   phpmd:
     enabled: true
+
 ratings:
   paths:
   - "**.php"
+
 exclude_paths:
-  - src/Tests/*
+  - tests/*

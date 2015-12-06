@@ -1,10 +1,10 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Provider;
+namespace Test\OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
-use OctoLab\Cilex\Tests\TestCase;
+use Test\OctoLab\Cilex\TestCase;
 
 /**
  * phpunit src/Tests/Provider/ConfigServiceProviderTest.php

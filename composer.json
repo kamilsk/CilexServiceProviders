@@ -1,7 +1,7 @@
 {
   "name": "kamilsk/cilex-service-providers",
   "type": "library",
-  "description": "The revised set of service providers for Cilex.",
+  "description": "Revised set of service providers for Cilex.",
   "homepage": "https://github.com/kamilsk/CilexServiceProviders",
   "license": "MIT",
   "authors": [
@@ -32,5 +32,8 @@
   },
   "autoload": {
     "psr-4": { "OctoLab\\Cilex\\": "src/" }
+  },
+  "autoload-dev": {
+    "psr-4": { "Test\\OctoLab\\Cilex\\": "tests/" }
   }
 }
