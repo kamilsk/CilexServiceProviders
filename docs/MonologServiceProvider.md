@@ -10,16 +10,10 @@
 monolog:
     name: MyApplicationName
     handlers:
-        syslog:
+        stream:
             type:       stream
-            path:       /var/log/cilex.log
-            level:      ERROR
-            bubble:     false
-            formatter:  error_formatter # deprecated, will be removed in v2.0, use example below instead
-        access:
-            type:       "stream"
-            arguments:  ["%root_dir%/app/logs/access.log", "info", false]
-            formatter:  { type: "json" }
+            arguments:  ["%root_dir%/app/logs/access.log", info, false]
+            formatter:  { type: json }
 ```
 
 Now access to the `\Monolog\Handler\AbstractProcessingHandler` instance can be obtained as follows:

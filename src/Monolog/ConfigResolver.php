@@ -4,31 +4,16 @@ namespace OctoLab\Cilex\Monolog;
 
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\HandlerInterface;
-use Monolog\Logger;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class ConfigResolver
 {
-    /**
-     * @deprecated BC will be removed in v2.0
-     *
-     * @var \Pimple
-     */
-    private $app;
     /** @var \Pimple */
     private $handlers;
     /** @var \SplObjectStorage */
     private $processors;
-
-    /**
-     * @param \Pimple $app
-     */
-    public function __construct(\Pimple $app)
-    {
-        $this->app = $app;
-    }
 
     /**
      * @return \Pimple
@@ -88,25 +73,9 @@ class ConfigResolver
             $class = $this->getClass('Handler', 'Monolog\Handler', $handler);
             $reflection = new \ReflectionClass($class);
             $arguments = $this->getArguments($reflection, $handler);
-            if (empty($arguments) && !strcasecmp($class, 'Monolog\Handler\StreamHandler')) {
-                // deprecated BC will be removed in v2.0
-                if (empty($handler['path'])) {
-                    throw new \InvalidArgumentException('Invalid configuration for handler: path is required.');
-                }
-                $default = [
-                    'level' => isset($this->app['monolog.level']) ? $this->app['monolog.level'] : Logger::DEBUG,
-                    'bubble' => true,
-                    'permission' => null,
-                ];
-                $arguments = array_merge($default, $handler);
-                $arguments['stream'] = $arguments['path'];
-                $arguments['filePermission'] = $arguments['permission'];
-                unset($arguments['path'], $arguments['permission']);
-                $arguments = $this->resolveArguments($arguments, $reflection);
-            }
             /** @var HandlerInterface $instance */
             $instance = $reflection->newInstanceArgs($arguments);
-            if (array_key_exists('formatter', $handler)) {
+            if (isset($handler['formatter'])) {
                 $this->resolveFormatter($handler['formatter'], $instance);
             }
             $this->getHandlers()->offsetSet($key, $instance);
@@ -129,23 +98,18 @@ class ConfigResolver
     }
 
     /**
-     * @param array|string $formatter string will be removed in v2.0
+     * @param array $formatter
      * @param HandlerInterface $handler
      *
      * @throws \InvalidArgumentException
      */
-    private function resolveFormatter($formatter, HandlerInterface $handler)
+    private function resolveFormatter(array $formatter, HandlerInterface $handler)
     {
-        if (is_string($formatter)) {
-            // deprecated BC will be removed in v2.0
-            $instance = $this->app->offsetGet($formatter);
-        } else {
-            $class = $this->getClass('Formatter', 'Monolog\Formatter', $formatter);
-            $reflection = new \ReflectionClass($class);
-            $arguments = $this->getArguments($reflection, $formatter);
-            /** @var FormatterInterface $instance */
-            $instance = $reflection->newInstanceArgs($arguments);
-        }
+        $class = $this->getClass('Formatter', 'Monolog\Formatter', $formatter);
+        $reflection = new \ReflectionClass($class);
+        $arguments = $this->getArguments($reflection, $formatter);
+        /** @var FormatterInterface $instance */
+        $instance = $reflection->newInstanceArgs($arguments);
         $handler->setFormatter($instance);
     }
 

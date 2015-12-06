@@ -4,8 +4,9 @@ namespace Test\OctoLab\Cilex\Config;
 
 use OctoLab\Cilex\Config\Loader\YamlFileLoader;
 use OctoLab\Cilex\Config\Parser\DipperYamlParser;
-use Test\OctoLab\Cilex\TestCase;
+use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
 use Symfony\Component\Config\FileLocator;
+use Test\OctoLab\Cilex\TestCase;
 
 /**
  * phpunit src/Tests/Config/YamlFileLoaderTest.php
@@ -20,7 +21,7 @@ class YamlFileLoaderTest extends TestCase
     public function loaderProvider()
     {
         return [
-            [new YamlFileLoader(new FileLocator())],
+            [new YamlFileLoader(new FileLocator(), new SymfonyYamlParser())],
             [new YamlFileLoader(new FileLocator(), new DipperYamlParser())],
         ];
     }

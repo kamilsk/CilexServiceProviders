@@ -98,7 +98,7 @@ class CommandTest extends TestCase
         $app->register(new MonologServiceProvider(true));
         $command = $this->getCommandMock();
         $app->command($command);
-        $command->setOutputInterface($output);
+        $command->initConsoleHandler($output);
     }
 
     /**

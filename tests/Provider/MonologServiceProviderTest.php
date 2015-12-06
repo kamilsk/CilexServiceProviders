@@ -27,8 +27,8 @@ class MonologServiceProviderTest extends TestCase
         $app->register($config);
         $app->register(new MonologServiceProvider(false));
         $logs = [
-            $app['config']['monolog']['handlers']['access']['path'],
-            $app['config']['monolog']['handlers']['error']['path'],
+            $app['config']['monolog']['handlers']['access']['arguments'][0],
+            $app['config']['monolog']['handlers']['error']['arguments'][0],
         ];
         $messages = [
             'Info level message.',
@@ -56,7 +56,7 @@ class MonologServiceProviderTest extends TestCase
         // set name by default way
         $app = new Application($appName);
         $app->register($config);
-        $log = $app['config']['monolog']['handlers']['access']['path'];
+        $log = $app['config']['monolog']['handlers']['access']['arguments'][0];
         $app['monolog.name'] = 'MONOLOG';
         $app->register(new MonologServiceProvider(false));
         $monolog = $app['monolog'];

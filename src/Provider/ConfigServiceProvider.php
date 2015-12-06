@@ -5,6 +5,7 @@ namespace OctoLab\Cilex\Provider;
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
 use OctoLab\Cilex\Config\Loader\YamlFileLoader;
+use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
 use OctoLab\Cilex\Config\SimpleConfig;
 use OctoLab\Cilex\Config\YamlConfig;
 use Symfony\Component\Config\FileLocator;
@@ -49,7 +50,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $app['config'] = $app->share(function () {
             switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
                 case 'yml':
-                    $config = (new YamlConfig(new YamlFileLoader(new FileLocator())))
+                    $config = (new YamlConfig(new YamlFileLoader(new FileLocator(), new SymfonyYamlParser())))
                         ->load($this->filename)
                         ->replace($this->placeholders)
                         ->toArray()
