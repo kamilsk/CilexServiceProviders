@@ -4,6 +4,8 @@ CHANGELOG versions 1.x
 * v1.5 (2015-11-06)
 
  * Up to 100% test coverage and resolve Scrutinizer CI recommendations ([#61](../../issues/61))
+ * Move Test in separated namespace ([#67](../../issue/67))
+ * [git diff](../../compare/v1.4.3...v1.5.1)
 
 * v1.4 (2015-06-06)
 
