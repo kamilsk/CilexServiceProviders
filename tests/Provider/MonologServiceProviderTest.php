@@ -1,12 +1,12 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Provider;
+namespace Test\OctoLab\Cilex\Provider;
 
 use Cilex\Application;
 use Monolog\Formatter\JsonFormatter;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
-use OctoLab\Cilex\Tests\TestCase;
+use Test\OctoLab\Cilex\TestCase;
 
 /**
  * phpunit src/Tests/Provider/MonologServiceProviderTest.php

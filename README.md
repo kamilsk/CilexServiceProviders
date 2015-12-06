@@ -1,6 +1,6 @@
 > # Cilex Service Providers
 >
-> The revised set of service providers for Cilex.
+> Revised set of service providers for Cilex.
 
 ## What's inside
 

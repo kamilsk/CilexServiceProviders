@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Config;
+namespace Test\OctoLab\Cilex\Config;
 
 use OctoLab\Cilex\Config\Util\ArrayHelper;
 

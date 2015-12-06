@@ -1,12 +1,12 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Monolog;
+namespace Test\OctoLab\Cilex\Monolog;
 
 use Monolog\Formatter\JsonFormatter;
 use OctoLab\Cilex\Config\Loader\YamlFileLoader;
 use OctoLab\Cilex\Config\YamlConfig;
 use OctoLab\Cilex\Monolog\ConfigResolver;
-use OctoLab\Cilex\Tests\TestCase;
+use Test\OctoLab\Cilex\TestCase;
 use Symfony\Component\Config\FileLocator;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Tests;
+namespace Test\OctoLab\Cilex;
 
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 

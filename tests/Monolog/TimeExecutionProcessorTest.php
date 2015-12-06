@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Monolog;
+namespace Test\OctoLab\Cilex\Monolog;
 
 use OctoLab\Cilex\Monolog\Processor\TimeExecutionProcessor;
 

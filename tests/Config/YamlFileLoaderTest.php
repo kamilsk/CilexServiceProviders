@@ -1,10 +1,10 @@
 <?php
 
-namespace OctoLab\Cilex\Tests\Config;
+namespace Test\OctoLab\Cilex\Config;
 
 use OctoLab\Cilex\Config\Loader\YamlFileLoader;
 use OctoLab\Cilex\Config\Parser\DipperYamlParser;
-use OctoLab\Cilex\Tests\TestCase;
+use Test\OctoLab\Cilex\TestCase;
 use Symfony\Component\Config\FileLocator;
 
 /**

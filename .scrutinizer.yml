@@ -13,4 +13,4 @@ checks:
 
 filter:
   excluded_paths:
-    - src/Tests/*
+    - tests/*
