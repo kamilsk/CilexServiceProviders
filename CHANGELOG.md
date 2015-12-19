@@ -1,5 +1,5 @@
-CHANGELOG versions 2.x
-======================
+CHANGELOG for 2.x
+=================
 
 * v2.0 (2015-xx-xx)
   * Remove all deprecated functionality
@@ -20,8 +20,8 @@ CHANGELOG versions 2.x
       * `$app` was removed from `OctoLab\Cilex\Monolog\ConfigResolver`
   * [git diff](../../compare/1.x...master)
 
-CHANGELOG versions 1.x
-======================
+CHANGELOG for 1.x
+=================
 
 * v1.5 (2015-11-06)
 
