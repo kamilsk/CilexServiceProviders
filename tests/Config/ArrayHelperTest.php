@@ -5,7 +5,7 @@ namespace Test\OctoLab\Cilex\Config;
 use OctoLab\Cilex\Config\Util\ArrayHelper;
 
 /**
- * phpunit src/Tests/Config/ArrayHelperTest.php
+ * phpunit tests/Config/ArrayHelperTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

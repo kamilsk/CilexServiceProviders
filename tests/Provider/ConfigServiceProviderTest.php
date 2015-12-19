@@ -7,7 +7,7 @@ use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit src/Tests/Provider/ConfigServiceProviderTest.php
+ * phpunit tests/Provider/ConfigServiceProviderTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

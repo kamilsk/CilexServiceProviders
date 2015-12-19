@@ -11,4 +11,4 @@ monolog:
   processors:
     - { type: memory_peak_usage }
     - { type: uid, arguments: { length: 7 } }
-    - { class: OctoLab\Cilex\Monolog\Processor\TimeExecutionProcessor }
+    - { class: OctoLab\Common\Monolog\Processor\TimeExecutionProcessor }

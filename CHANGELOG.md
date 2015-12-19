@@ -7,15 +7,18 @@ CHANGELOG versions 2.x
       * `OctoLab\Cilex\Doctrine\Util\Parser` by `OctoLab\Common\Doctrine\Util\Parser`
       * `OctoLab\Cilex\Doctrine\DriverBasedMigration` by `OctoLab\Common\Doctrine\Migration\DriverBasedMigration`
       * `OctoLab\Cilex\Doctrine\FileBasedMigration` by `OctoLab\Common\Doctrine\Migration\FileBasedMigration`
+      * `OctoLab\Cilex\Monolog\Processor\TimeExecutionProcessor`
+      by `OctoLab\Common\Monolog\Processor\TimeExecutionProcessor`
+      * `OctoLab\Cilex\Monolog\Util\Dumper` by `OctoLab\Common\Monolog\Util\Dumper`
     * `OctoLab\Cilex\Command\Command` has been optimized
       * `setOutputInterface` was removed, use `initConsoleHandler` instead
     * Monolog's configuration was changed
       * `path`, `level` and `bubble` became part of `arguments`
       * `formatter` now is not a alias, use `{ type: ... }` notation instead
     * Config component changes
-      * `$parser` is required argument for `OctoLab\Cilex\Config\Loader\YamlFileLoader::__construct
+      * `$parser` is required argument for `OctoLab\Cilex\Config\Loader\YamlFileLoader::__construct`
       * `$app` was removed from `OctoLab\Cilex\Monolog\ConfigResolver`
-  * [git diff](../../compare/master...2.0)
+  * [git diff](../../compare/1.x...master)
 
 CHANGELOG versions 1.x
 ======================

@@ -11,7 +11,7 @@ use Test\OctoLab\Cilex\TestCase;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
- * phpunit src/Tests/Command/CommandTest.php
+ * phpunit tests/Command/CommandTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

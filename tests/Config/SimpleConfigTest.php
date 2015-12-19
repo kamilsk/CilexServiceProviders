@@ -6,7 +6,7 @@ use OctoLab\Cilex\Config\SimpleConfig;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit src/Tests/Config/SimpleConfigTest.php
+ * phpunit tests/Config/SimpleConfigTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

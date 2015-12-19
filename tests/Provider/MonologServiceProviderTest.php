@@ -3,13 +3,12 @@
 namespace Test\OctoLab\Cilex\Provider;
 
 use Cilex\Application;
-use Monolog\Formatter\JsonFormatter;
 use OctoLab\Cilex\Provider\ConfigServiceProvider;
 use OctoLab\Cilex\Provider\MonologServiceProvider;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit src/Tests/Provider/MonologServiceProviderTest.php
+ * phpunit tests/Provider/MonologServiceProviderTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
@@ -142,8 +141,6 @@ class MonologServiceProviderTest extends TestCase
         $app = new Application('test');
         $app->register($config);
         $app->register(new MonologServiceProvider());
-        // old style
-        $app['json'] = new JsonFormatter();
         /** @var \Monolog\Logger $monolog */
         $monolog = $app['monolog'];
         self::assertNotEmpty($monolog->getHandlers());

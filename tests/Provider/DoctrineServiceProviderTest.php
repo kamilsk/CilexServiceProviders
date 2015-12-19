@@ -8,7 +8,7 @@ use OctoLab\Cilex\Provider\DoctrineServiceProvider;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit src/Tests/Provider/DoctrineServiceProviderTest.php
+ * phpunit tests/Provider/DoctrineServiceProviderTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

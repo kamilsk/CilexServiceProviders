@@ -9,7 +9,7 @@ use Symfony\Component\Config\FileLocator;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit src/Tests/Config/YamlFileLoaderTest.php
+ * phpunit tests/Config/YamlFileLoaderTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
@@ -103,7 +103,7 @@ class YamlFileLoaderTest extends TestCase
     public function load()
     {
         // DipperYamlParser is not compatible
-        $loader = new YamlFileLoader(new FileLocator());
+        $loader = new YamlFileLoader(new FileLocator(), new SymfonyYamlParser());
         $loader->load($this->getConfigPath('empty'));
         self::assertEmpty($loader->getContent());
     }

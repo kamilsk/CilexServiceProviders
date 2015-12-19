@@ -10,7 +10,7 @@ use Test\OctoLab\Cilex\TestCase;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * phpunit src/Tests/Monolog/ConfigResolverTest.php
+ * phpunit tests/Monolog/ConfigResolverTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
@@ -36,29 +36,9 @@ class ConfigResolverTest extends TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function throwInvalidArgumentExceptionByResolve()
-    {
-        // deprecated BC will be removed in v2.0
-        $app = new \Pimple();
-        $resolver = new ConfigResolver($app);
-        $resolver->resolve([
-            'handlers' => [
-                'stream' => [
-                    'type' => 'stream',
-                ],
-            ],
-        ]);
-    }
-
-    /**
-     * @test
-     * @expectedException \InvalidArgumentException
-     */
     public function throwInvalidArgumentExceptionByGetClass()
     {
-        // deprecated BC will be removed in v2.0
-        $app = new \Pimple();
-        $resolver = new ConfigResolver($app);
+        $resolver = new ConfigResolver();
         $resolver->resolve([
             'handlers' => [
                 'stream' => [],
