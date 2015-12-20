@@ -12,6 +12,8 @@ CHANGELOG for 2.x
         * `FileBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
       * Processors
         * `TimeExecutionProcessor` from `OctoLab\Cilex\Monolog\Processor` to `OctoLab\Common\Monolog\Processor`
+      * Configs
+        * Namespace moved from `OctoLab\Cilex\Config` to `OctoLab\Common\Config`
       * Utils
         * `Parser` from `OctoLab\Cilex\Doctrine\Util` to `OctoLab\Common\Doctrine\Util`
         * `Dumper` from `OctoLab\Cilex\Monolog\Util` to `OctoLab\Common\Monolog\Util`
@@ -19,6 +21,8 @@ CHANGELOG for 2.x
         * `ConfigServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
         * `DoctrineServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
         * `MonologServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
+      * Helpers
+        * `Monolog` `ConfigResolver` from `OctoLab\Cilex\Monolog` to `OctoLab\Common\Monolog\Util`
     * `OctoLab\Cilex\Command\Command` has been optimized
       * extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
       * `setOutputInterface` was removed, use `initConsoleHandler` instead

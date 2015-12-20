@@ -4,10 +4,10 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
-use OctoLab\Cilex\Config\Loader\YamlFileLoader;
-use OctoLab\Cilex\Config\Parser\SymfonyYamlParser;
-use OctoLab\Cilex\Config\SimpleConfig;
-use OctoLab\Cilex\Config\YamlConfig;
+use OctoLab\Common\Config\Loader\YamlFileLoader;
+use OctoLab\Common\Config\Parser\SymfonyYamlParser;
+use OctoLab\Common\Config\SimpleConfig;
+use OctoLab\Common\Config\YamlConfig;
 use Symfony\Component\Config\FileLocator;
 
 /**

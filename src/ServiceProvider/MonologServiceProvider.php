@@ -5,7 +5,7 @@ namespace OctoLab\Cilex\ServiceProvider;
 use Cilex\Application;
 use Cilex\Provider as Cilex;
 use Monolog\Logger;
-use OctoLab\Cilex\Monolog\ConfigResolver;
+use OctoLab\Common\Monolog\Util\ConfigResolver;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 
 /**

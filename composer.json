@@ -10,25 +10,26 @@
   "require": {
     "php": ">=5.5",
     "cilex/cilex": "~1.0",
-    "kamilsk/common": "*",
-    "symfony/config": "~2.0",
-    "symfony/yaml": "~2.0"
+    "kamilsk/common": "~1.0"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
     "monolog/monolog": "~1.0",
     "secondparty/dipper": "*",
+    "symfony/config": "^2.0",
     "symfony/event-dispatcher": "~2.0",
-    "symfony/monolog-bridge": "~2.0"
+    "symfony/monolog-bridge": "~2.0",
+    "symfony/yaml": "^2.0"
   },
   "suggest": {
     "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
     "doctrine/migrations": "optional for DoctrineServiceProvider (~1.0 is recommended)",
-    "incenteev/composer-parameter-handler": "to handle parameters.yml (~2.0 is recommended)",
     "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)",
     "secondparty/dipper": "as alternative of Symfony Yaml parser (stable version is recommended)",
+    "symfony/config": "for ConfigServiceProvider (~2.0 is recommended)",
     "symfony/event-dispatcher": "needed when using log messages in console commands (~2.0 is recommended)",
-    "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.0 is recommended)"
+    "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.0 is recommended)",
+    "symfony/yaml": "for ConfigServiceProvider (~2.0 is recommended)"
   },
   "autoload": {
     "psr-4": { "OctoLab\\Cilex\\": "src/" }
