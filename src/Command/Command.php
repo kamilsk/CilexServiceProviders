@@ -2,11 +2,10 @@
 
 namespace OctoLab\Cilex\Command;
 
-use Cilex\Provider\Console\ContainerAwareApplication;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method ContainerAwareApplication getApplication()
+ * @method \Cilex\Provider\Console\ContainerAwareApplication getApplication()
  * @see \Cilex\Command\Command
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
