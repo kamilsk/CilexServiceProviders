@@ -90,7 +90,7 @@ class CommandTest extends TestCase
      *
      * @param ConfigServiceProvider $config
      */
-    public function setOutputInterface(ConfigServiceProvider $config)
+    public function initConsoleHandler(ConfigServiceProvider $config)
     {
         $output = new NullOutput();
         $app = new Application('Test');

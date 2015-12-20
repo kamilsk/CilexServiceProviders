@@ -2,13 +2,16 @@
 
 namespace OctoLab\Cilex\Command;
 
-use Cilex\Command as Cilex;
+use Cilex\Provider\Console\ContainerAwareApplication;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @method ContainerAwareApplication getApplication()
+ * @see \Cilex\Command\Command
+ *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class Command extends Cilex\Command
+class Command extends \Symfony\Component\Console\Command\Command
 {
     /** @var string */
     private $namespace;
@@ -24,6 +27,28 @@ class Command extends Cilex\Command
     {
         $this->namespace = $namespace;
         parent::__construct();
+    }
+
+    /**
+     * @return \Pimple
+     *
+     * @api
+     */
+    public function getContainer()
+    {
+        return $this->getApplication()->getContainer();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return mixed|null
+     *
+     * @api
+     */
+    public function getService($name)
+    {
+        return $this->getApplication()->getService($name);
     }
 
     /**

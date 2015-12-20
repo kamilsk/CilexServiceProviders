@@ -12,6 +12,7 @@ CHANGELOG for 2.x
       * `OctoLab\Cilex\Monolog\Util\Dumper` by `OctoLab\Common\Monolog\Util\Dumper`
     * `OctoLab\Cilex\Command\Command` has been optimized
       * `setOutputInterface` was removed, use `initConsoleHandler` instead
+      * extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
     * Monolog's configuration was changed
       * `path`, `level` and `bubble` became part of `arguments`
       * `formatter` now is not a alias, use `{ type: ... }` notation instead
