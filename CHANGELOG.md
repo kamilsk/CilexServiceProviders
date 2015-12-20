@@ -3,21 +3,26 @@ CHANGELOG for 2.x
 
 * v2.0 (2015-xx-xx)
   * Remove all deprecated functionality
-    * Classes have been replaced
-      * `OctoLab\Cilex\Doctrine\Util\Parser` by `OctoLab\Common\Doctrine\Util\Parser`
-      * `OctoLab\Cilex\Doctrine\DriverBasedMigration` by `OctoLab\Common\Doctrine\Migration\DriverBasedMigration`
-      * `OctoLab\Cilex\Doctrine\FileBasedMigration` by `OctoLab\Common\Doctrine\Migration\FileBasedMigration`
-      * `OctoLab\Cilex\Monolog\Processor\TimeExecutionProcessor`
-      by `OctoLab\Common\Monolog\Processor\TimeExecutionProcessor`
-      * `OctoLab\Cilex\Monolog\Util\Dumper` by `OctoLab\Common\Monolog\Util\Dumper`
+    * Classes have been moved
+      * Commands
+        * `CheckMigrationCommand` from `OctoLab\Cilex\Doctrine\Command` to `OctoLab\Cilex\Command\Doctrine`
+        * `GenerateIndexNameCommand` from `OctoLab\Cilex\Doctrine\Command` to `OctoLab\Cilex\Command\Doctrine`
+      * Migrations
+        * `DriverBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
+        * `FileBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
+      * Processors
+        * `TimeExecutionProcessor` from `OctoLab\Cilex\Monolog\Processor` to `OctoLab\Common\Monolog\Processor`
+      * Utils
+        * `Parser` from `OctoLab\Cilex\Doctrine\Util` to `OctoLab\Common\Doctrine\Util`
+        * `Dumper` from `OctoLab\Cilex\Monolog\Util` to `OctoLab\Common\Monolog\Util`
     * `OctoLab\Cilex\Command\Command` has been optimized
-      * `setOutputInterface` was removed, use `initConsoleHandler` instead
       * extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
+      * `setOutputInterface` was removed, use `initConsoleHandler` instead
     * Monolog's configuration was changed
       * `path`, `level` and `bubble` became part of `arguments`
       * `formatter` now is not a alias, use `{ type: ... }` notation instead
     * Config component changes
-      * `$parser` is required argument for `OctoLab\Cilex\Config\Loader\YamlFileLoader::__construct`
+      * `$parser` is required argument for `OctoLab\Cilex\Config\Loader\YamlFileLoader::__construct()`
       * `$app` was removed from `OctoLab\Cilex\Monolog\ConfigResolver`
   * [git diff](../../compare/1.x...master)
 
@@ -32,7 +37,7 @@ CHANGELOG for 1.x
 
 * v1.4 (2015-06-06)
 
-  * Add support for .php and .json config files ([#27](../../issues/27))
+  * Add support for `.php` and `.json` config files ([#27](../../issues/27))
   * Constant supports by `OctoLab\Cilex\Config\YamlConfig` ([#42](../../issues/42))
   * Add support for [Dipper](https://github.com/secondparty/dipper) as alternative of `\Symfony\Component\Yaml\Parser`
   ([#50](../../issues/50))
@@ -56,11 +61,11 @@ CHANGELOG for 1.x
 
 * v1.2 (2015-04-19)
 
-  * Add helper methods in base Command class ([#31](../../issues/31))
+  * Add helper methods in base `Command` class ([#31](../../issues/31))
   * Update dependencies ([#33](../../issues/33))
-  * Refactor MonologServiceProvider ([#35](../../issues/35))
-  * Add Monolog TimeExecutionProcessor processor ([#39](../../issues/39))
-  * Add Monolog Dumper util ([#40](../../issues/40))
+  * Refactor `MonologServiceProvider` ([#35](../../issues/35))
+  * Add `Monolog` `TimeExecutionProcessor` processor ([#39](../../issues/39))
+  * Add `Monolog` `Dumper` util ([#40](../../issues/40))
   * [git diff](../../compare/v1.1.4...v1.2.3)
 
 * v1.1 (2014-11-10)

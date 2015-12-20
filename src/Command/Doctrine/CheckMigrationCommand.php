@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Doctrine\Command;
+namespace OctoLab\Cilex\Command\Doctrine;
 
 use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand;

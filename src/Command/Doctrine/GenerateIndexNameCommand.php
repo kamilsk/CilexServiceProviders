@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Doctrine\Command;
+namespace OctoLab\Cilex\Command\Doctrine;
 
 use OctoLab\Cilex\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,7 +62,7 @@ class GenerateIndexNameCommand extends Command
      */
     private function generateIdentifierName(array $columnNames, $prefix = '', $maxSize = 30)
     {
-        $hash = implode('', array_map(function($column) {
+        $hash = implode('', array_map(function ($column) {
             return dechex(crc32($column));
         }, $columnNames));
         return substr(strtoupper($prefix . '_' . $hash), 0, $maxSize);
