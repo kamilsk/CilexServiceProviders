@@ -3,6 +3,7 @@
 namespace Test\OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
+use Doctrine\DBAL\Types\Type;
 use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
 use OctoLab\Cilex\ServiceProvider\DoctrineServiceProvider;
 use Test\OctoLab\Cilex\TestCase;
@@ -27,6 +28,7 @@ class DoctrineServiceProviderTest extends TestCase
         $app->register(new DoctrineServiceProvider());
         self::assertEquals($app['config']['doctrine']['dbal']['connections'], $app['dbs.options']);
         self::assertEquals($app['config']['doctrine']['dbal']['default_connection'], $app['dbs.default']);
+        self::assertTrue(Type::hasType('enum'));
     }
 
     /**

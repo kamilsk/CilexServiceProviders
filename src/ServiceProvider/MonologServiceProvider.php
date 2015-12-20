@@ -49,7 +49,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         });
         if (!empty($app['config']['monolog'])) {
             $app['monolog.configure'] = $app->protect(function (Logger $logger) use ($app) {
-                $resolver = new ConfigResolver($app);
+                $resolver = new ConfigResolver();
                 $resolver->resolve($app['config']['monolog']);
                 if ($this->initConsoleHandler) {
                     $resolver->getHandlers()->offsetSet('console', new ConsoleHandler());

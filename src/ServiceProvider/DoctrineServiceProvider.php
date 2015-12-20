@@ -5,6 +5,7 @@ namespace OctoLab\Cilex\ServiceProvider;
 use Cilex\Application;
 use Cilex\Provider as Cilex;
 use Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper;
+use OctoLab\Common\Doctrine\Util\ConfigResolver;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -31,6 +32,7 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
     /**
      * @param Application $app
      *
+     * @throws \Doctrine\DBAL\DBALException
      * @throws \InvalidArgumentException
      *
      * @api
@@ -47,6 +49,10 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
                 }
             }
             $app['dbs.options'] = $connections;
+        }
+        if (isset($app['config']['doctrine']['dbal']['types'])) {
+            $resolver = new ConfigResolver();
+            $resolver->resolve($app['config']['doctrine']['dbal']);
         }
         if ($this->helperConnection) {
             $dbs = $app->offsetGet('dbs');

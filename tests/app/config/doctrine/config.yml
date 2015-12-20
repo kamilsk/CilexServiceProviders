@@ -15,3 +15,5 @@ doctrine:
         dbname:   database
         username: user
         password: pass
+    types:
+      enum: string

@@ -1,7 +1,7 @@
 CHANGELOG for 2.x
 =================
 
-* v2.0 (2015-xx-xx)
+* 2.0 (2015-xx-xx)
   * Remove all deprecated functionality
     * Classes have been moved
       * Commands
@@ -26,6 +26,8 @@ CHANGELOG for 2.x
     * `OctoLab\Cilex\Command\Command` has been optimized
       * extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
       * `setOutputInterface` was removed, use `initConsoleHandler` instead
+    * Doctrine's configuration was changed
+      * Add support `types` directive ([#71](../../issues/71))
     * Monolog's configuration was changed
       * `path`, `level` and `bubble` became part of `arguments`
       * `formatter` now is not a alias, use `{ type: ... }` notation instead
