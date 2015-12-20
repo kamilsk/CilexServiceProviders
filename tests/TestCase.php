@@ -2,7 +2,7 @@
 
 namespace Test\OctoLab\Cilex;
 
-use OctoLab\Cilex\Provider\ConfigServiceProvider;
+use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>

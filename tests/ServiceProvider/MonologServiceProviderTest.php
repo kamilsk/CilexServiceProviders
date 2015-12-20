@@ -1,14 +1,14 @@
 <?php
 
-namespace Test\OctoLab\Cilex\Provider;
+namespace Test\OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
-use OctoLab\Cilex\Provider\ConfigServiceProvider;
-use OctoLab\Cilex\Provider\MonologServiceProvider;
+use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
+use OctoLab\Cilex\ServiceProvider\MonologServiceProvider;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit tests/Provider/MonologServiceProviderTest.php
+ * phpunit tests/ServiceProvider/MonologServiceProviderTest.php
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */

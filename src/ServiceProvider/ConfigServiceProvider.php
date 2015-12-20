@@ -1,6 +1,6 @@
 <?php
 
-namespace OctoLab\Cilex\Provider;
+namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;

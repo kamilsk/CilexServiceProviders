@@ -15,6 +15,10 @@ CHANGELOG for 2.x
       * Utils
         * `Parser` from `OctoLab\Cilex\Doctrine\Util` to `OctoLab\Common\Doctrine\Util`
         * `Dumper` from `OctoLab\Cilex\Monolog\Util` to `OctoLab\Common\Monolog\Util`
+      * Service providers
+        * `ConfigServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
+        * `DoctrineServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
+        * `MonologServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
     * `OctoLab\Cilex\Command\Command` has been optimized
       * extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
       * `setOutputInterface` was removed, use `initConsoleHandler` instead
