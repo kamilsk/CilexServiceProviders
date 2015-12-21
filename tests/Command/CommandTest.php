@@ -3,7 +3,6 @@
 namespace Test\OctoLab\Cilex\Command;
 
 use Cilex\Application;
-use OctoLab\Cilex\Command\Command;
 use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
 use OctoLab\Cilex\ServiceProvider\DoctrineServiceProvider;
 use OctoLab\Cilex\ServiceProvider\MonologServiceProvider;
@@ -103,14 +102,14 @@ class CommandTest extends TestCase
 
     /**
      * @param string $name
-     * @param string $namespace
+     * @param string|null $namespace
      *
-     * @return Command
+     * @return Mock\CommandMock
      */
     private function getCommandMock($name = 'test', $namespace = null)
     {
-        /** @var Command $instance */
-        $instance = (new \ReflectionClass(Command::class))->newInstanceWithoutConstructor();
+        /** @var Mock\CommandMock $instance */
+        $instance = (new \ReflectionClass(Mock\CommandMock::class))->newInstanceWithoutConstructor();
         $reflection = (new \ReflectionObject($instance));
         if (null !== $namespace) {
             $property = $reflection->getProperty('namespace');

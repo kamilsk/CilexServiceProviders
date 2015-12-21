@@ -10,10 +10,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class Command extends \Symfony\Component\Console\Command\Command
+abstract class Command extends \Symfony\Component\Console\Command\Command
 {
     /** @var string */
-    private $namespace;
+    protected $namespace;
 
     /**
      * @param string $namespace
@@ -48,6 +48,17 @@ class Command extends \Symfony\Component\Console\Command\Command
     public function getService($name)
     {
         return $this->getApplication()->getService($name);
+    }
+
+    /**
+     * @return array
+     *
+     * @api
+     */
+    public function getConfig()
+    {
+        $config = $this->getService('config');
+        return $config ?: [];
     }
 
     /**

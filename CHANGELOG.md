@@ -23,17 +23,26 @@ CHANGELOG for 2.x
         * `MonologServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
       * Helpers
         * `Monolog` `ConfigResolver` from `OctoLab\Cilex\Monolog` to `OctoLab\Common\Monolog\Util`
+    * Classes have been abstracted
+      * `OctoLab\Cilex\Command\Command`
+    * Classes have been finalized
+      * `OctoLab\Cilex\Command\Doctrine\CheckMigrationCommand`
+      * `OctoLab\Cilex\Command\Doctrine\GenerateIndexNameCommand`
+      * `OctoLab\Cilex\Command\PresetCommand`
     * `OctoLab\Cilex\Command\Command` has been optimized
-      * extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
+      * Extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
       * `setOutputInterface` was removed, use `initConsoleHandler` instead
+      * Add `getConfig` method to return `Application` configuration
     * Doctrine's configuration was changed
       * Add support `types` directive ([#71](../../issues/71))
     * Monolog's configuration was changed
       * `path`, `level` and `bubble` became part of `arguments`
       * `formatter` now is not a alias, use `{ type: ... }` notation instead
-    * Config component changes
-      * `$parser` is required argument for `OctoLab\Cilex\Config\Loader\YamlFileLoader::__construct()`
-      * `$app` was removed from `OctoLab\Cilex\Monolog\ConfigResolver`
+    * Config component has been changed
+      * `$parser` is required argument for `OctoLab\Common\Config\Loader\YamlFileLoader::__construct()`
+      (ex. `OctoLab\Cilex\Config\Loader\YamlFileLoader`)
+      * `$app` was removed from `OctoLab\Common\Monolog\Util\ConfigResolver`
+      (ex. `OctoLab\Cilex\Monolog\ConfigResolver`)
   * [git diff](../../compare/1.x...master)
 
 CHANGELOG for 1.x

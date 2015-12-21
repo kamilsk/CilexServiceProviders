@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class CheckMigrationCommand extends AbstractCommand
+final class CheckMigrationCommand extends AbstractCommand
 {
     protected function configure()
     {

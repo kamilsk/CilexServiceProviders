@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class GenerateIndexNameCommand extends Command
+final class GenerateIndexNameCommand extends Command
 {
     const MAX_IDENTIFIER_LENGTH = 63;
 
