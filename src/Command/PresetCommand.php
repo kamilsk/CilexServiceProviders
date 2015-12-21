@@ -61,7 +61,7 @@ final class PresetCommand extends Command
      */
     public function run(InputInterface $input, OutputInterface $output)
     {
-        $this->setInput($input)->setOutput($output)->initMenu();
+        $this->initMenu()->setInput($input)->setOutput($output);
         return parent::run($input, $output);
     }
 
@@ -76,7 +76,7 @@ final class PresetCommand extends Command
      */
     public function runMenuItem($item, InputInterface $input, OutputInterface $output)
     {
-        $this->setInput($input)->setOutput($output)->initMenu();
+        $this->initMenu()->setInput($input)->setOutput($output);
         if (isset($this->callbacks[$item])) {
             return $this->callbacks[$item]();
         }
