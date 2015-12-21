@@ -43,6 +43,8 @@ CHANGELOG for 2.x
       (ex. `OctoLab\Cilex\Config\Loader\YamlFileLoader`)
       * `$app` was removed from `OctoLab\Common\Monolog\Util\ConfigResolver`
       (ex. `OctoLab\Cilex\Monolog\ConfigResolver`)
+    * New features
+      * Integrates with `php-school/cli-menu` by `OctoLab\Cilex\Command\PresetCommand` ([#69](../../issues/69))
   * [git diff](../../compare/1.x...master)
 
 CHANGELOG for 1.x
