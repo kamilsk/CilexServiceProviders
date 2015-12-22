@@ -21,7 +21,46 @@ class PresetCommandTest extends TestCase
     /**
      * @test
      */
-    public function execute()
+    public function getConfigSuccess()
+    {
+        if (defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='))) {
+            $app = new Application('Test');
+            $command = new PresetCommand('test');
+            $app->register(new ConfigServiceProvider($this->getConfigPath('component/cli-menu')));
+            $app->command($command);
+            $expected = [
+                'title' => 'Test CLI Menu',
+                'items' => [
+                    ['text' => 'Hello, World', 'callable' => 'test:hello', 'options' => ['message' => 'World']],
+                    ['text' => 'Fibonacci sequence', 'callable' => 'test:fibonacci', 'options' => ['size' => 10]],
+                ],
+            ];
+            self::assertEquals($expected, $command->getConfig());
+        } else {
+            self::assertFalse(false);
+        }
+    }
+
+    /**
+     * @test
+     * @expectedException \RuntimeException
+     */
+    public function getConfigFail()
+    {
+        if (defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='))) {
+            $app = new Application('Test');
+            $command = new PresetCommand('test');
+            $app->command($command);
+            $command->getConfig();
+        } else {
+            throw new \RuntimeException('Not supported version.');
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function runMenuItem()
     {
         if (defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='))) {
             $app = new Application('Test');

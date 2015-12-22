@@ -3,48 +3,48 @@ CHANGELOG for 2.x
 
 * 2.0 (2015-xx-xx)
   * Remove all deprecated functionality
-    * Classes have been moved
-      * Commands
-        * `CheckMigrationCommand` from `OctoLab\Cilex\Doctrine\Command` to `OctoLab\Cilex\Command\Doctrine`
-        * `GenerateIndexNameCommand` from `OctoLab\Cilex\Doctrine\Command` to `OctoLab\Cilex\Command\Doctrine`
-      * Migrations
-        * `DriverBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
-        * `FileBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
-      * Processors
-        * `TimeExecutionProcessor` from `OctoLab\Cilex\Monolog\Processor` to `OctoLab\Common\Monolog\Processor`
-      * Configs
-        * Namespace moved from `OctoLab\Cilex\Config` to `OctoLab\Common\Config`
-      * Utils
-        * `Parser` from `OctoLab\Cilex\Doctrine\Util` to `OctoLab\Common\Doctrine\Util`
-        * `Dumper` from `OctoLab\Cilex\Monolog\Util` to `OctoLab\Common\Monolog\Util`
-      * Service providers
-        * `ConfigServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
-        * `DoctrineServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
-        * `MonologServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
-      * Helpers
-        * `Monolog` `ConfigResolver` from `OctoLab\Cilex\Monolog` to `OctoLab\Common\Monolog\Util`
-    * Classes have been abstracted
-      * `OctoLab\Cilex\Command\Command`
-    * Classes have been finalized
-      * `OctoLab\Cilex\Command\Doctrine\CheckMigrationCommand`
-      * `OctoLab\Cilex\Command\Doctrine\GenerateIndexNameCommand`
-      * `OctoLab\Cilex\Command\PresetCommand`
-    * `OctoLab\Cilex\Command\Command` has been optimized
-      * Extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
-      * `setOutputInterface` was removed, use `initConsoleHandler` instead
-      * Add `getConfig` method to return `Application` configuration
-    * Doctrine's configuration was changed
-      * Add support `types` directive ([#71](../../issues/71))
-    * Monolog's configuration was changed
-      * `path`, `level` and `bubble` became part of `arguments`
-      * `formatter` now is not a alias, use `{ type: ... }` notation instead
-    * Config component has been changed
-      * `$parser` is required argument for `OctoLab\Common\Config\Loader\YamlFileLoader::__construct()`
-      (ex. `OctoLab\Cilex\Config\Loader\YamlFileLoader`)
-      * `$app` was removed from `OctoLab\Common\Monolog\Util\ConfigResolver`
-      (ex. `OctoLab\Cilex\Monolog\ConfigResolver`)
-    * New features
-      * Integrates with `php-school/cli-menu` by `OctoLab\Cilex\Command\PresetCommand` ([#69](../../issues/69))
+  * Classes have been moved
+    * Commands
+      * `CheckMigrationCommand` from `OctoLab\Cilex\Doctrine\Command` to `OctoLab\Cilex\Command\Doctrine`
+      * `GenerateIndexNameCommand` from `OctoLab\Cilex\Doctrine\Command` to `OctoLab\Cilex\Command\Doctrine`
+    * Migrations
+      * `DriverBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
+      * `FileBasedMigration` from `OctoLab\Cilex\Doctrine` to `OctoLab\Common\Doctrine\Migration`
+    * Processors
+      * `TimeExecutionProcessor` from `OctoLab\Cilex\Monolog\Processor` to `OctoLab\Common\Monolog\Processor`
+    * Configs
+      * Namespace moved from `OctoLab\Cilex\Config` to `OctoLab\Common\Config`
+    * Utils
+      * `Parser` from `OctoLab\Cilex\Doctrine\Util` to `OctoLab\Common\Doctrine\Util`
+      * `Dumper` from `OctoLab\Cilex\Monolog\Util` to `OctoLab\Common\Monolog\Util`
+    * Service providers
+      * `ConfigServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
+      * `DoctrineServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
+      * `MonologServiceProvider` from `OctoLab\Cilex\Provider` to `OctoLab\Cilex\ServiceProvider`
+    * Helpers
+      * `Monolog`'s `ConfigResolver` from `OctoLab\Cilex\Monolog` to `OctoLab\Common\Monolog\Util`
+  * Classes have been abstracted
+    * `OctoLab\Cilex\Command\Command`
+  * Classes have been finalized
+    * `OctoLab\Cilex\Command\Doctrine\CheckMigrationCommand`
+    * `OctoLab\Cilex\Command\Doctrine\GenerateIndexNameCommand`
+    * `OctoLab\Cilex\Command\PresetCommand`
+  * `OctoLab\Cilex\Command\Command` has been optimized
+    * Extends `Symfony\Component\Console\Command\Command` instead of `Cilex\Command\Command`
+    * `setOutputInterface` was removed, use `initConsoleHandler` instead
+    * Add `getConfig` method to return `Application` configuration
+  * `Doctrine`'s configuration was changed
+    * Add support `types` directive ([#71](../../issues/71))
+  * `Monolog`'s configuration was changed
+    * `path`, `level` and `bubble` became part of `arguments`
+    * `formatter` now is not a alias, use `{ type: ... }` notation instead
+  * Config component has been changed
+    * `$parser` is required argument for `OctoLab\Common\Config\Loader\YamlFileLoader::__construct()`
+    (ex. `OctoLab\Cilex\Config\Loader\YamlFileLoader`)
+    * `$app` was removed from `OctoLab\Common\Monolog\Util\ConfigResolver`
+    (ex. `OctoLab\Cilex\Monolog\ConfigResolver`)
+  * New features
+    * Integrates with `php-school/cli-menu` by `OctoLab\Cilex\Command\PresetCommand` ([#69](../../issues/69))
   * [git diff](../../compare/1.x...master)
 
 CHANGELOG for 1.x

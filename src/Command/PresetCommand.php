@@ -13,10 +13,6 @@ final class PresetCommand extends Command
 {
     /** @var CliMenuBuilder */
     private $menu;
-    /** @var InputInterface */
-    private $input;
-    /** @var OutputInterface */
-    private $output;
     /** @var array */
     private $callbacks = [];
 
@@ -24,6 +20,8 @@ final class PresetCommand extends Command
      * @return array
      *
      * @throws \RuntimeException
+     *
+     * @api
      */
     public function getConfig()
     {
@@ -35,37 +33,6 @@ final class PresetCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     *
-     * @return $this
-     */
-    public function setInput(InputInterface $input)
-    {
-        $this->input = $input;
-        return $this;
-    }
-
-    /**
-     * @param OutputInterface $output
-     *
-     * @return $this
-     */
-    public function setOutput(OutputInterface $output)
-    {
-        $this->output = $output;
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function run(InputInterface $input, OutputInterface $output)
-    {
-        $this->initMenu()->setInput($input)->setOutput($output);
-        return parent::run($input, $output);
-    }
-
-    /**
      * @param string $item
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -73,10 +40,12 @@ final class PresetCommand extends Command
      * @throws \RuntimeException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\LogicException
+     *
+     * @api
      */
     public function runMenuItem($item, InputInterface $input, OutputInterface $output)
     {
-        $this->initMenu()->setInput($input)->setOutput($output);
+        $this->initMenu($input, $output);
         if (isset($this->callbacks[$item])) {
             return $this->callbacks[$item]();
         }
@@ -96,51 +65,54 @@ final class PresetCommand extends Command
     /**
      * {@inheritdoc}
      *
+     * @throws \RuntimeException
+     * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
+     * @throws \Symfony\Component\Console\Exception\LogicException
      * @throws \PhpSchool\CliMenu\Exception\InvalidTerminalException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->menu->build()->open();
+        $this->initMenu($input, $output)->build()->open();
         return 0;
     }
 
     /**
-     * @return $this
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return CliMenuBuilder
      *
      * @throws \RuntimeException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    private function initMenu()
+    private function initMenu(InputInterface $input, OutputInterface $output)
     {
-        if (!$this->menu) {
+        if ($this->menu === null) {
             $config = $this->getConfig();
             $this->menu = (new CliMenuBuilder())
                 ->setTitle($config['title'])
             ;
             foreach ($config['items'] as $item) {
                 $key = $item['text'];
-                $this->callbacks[$key] = function () use ($item) {
+                $this->callbacks[$key] = function () use ($item, $input, $output) {
                     $command = $this->getApplication()->get($item['callable']);
-                    $property = (new \ReflectionObject($this->input))->getProperty('tokens');
+                    $property = (new \ReflectionObject($input))->getProperty('tokens');
                     $property->setAccessible(true);
-                    $property->setValue($this->input, []);
-                    $this->input->bind($command->getDefinition());
-                    if (isset($item['arguments']) && is_array($item['arguments'])) {
-                        foreach ($item['arguments'] as $name => $value) {
-                            $this->input->setArgument($name, $value);
+                    $property->setValue($input, []);
+                    $input->bind($command->getDefinition());
+                    foreach (['arguments' => 'setArgument', 'options' => 'setOption'] as $type => $setter) {
+                        if (isset($item[$type]) && is_array($item[$type])) {
+                            foreach ($item[$type] as $name => $value) {
+                                $input->{$setter}($name, $value);
+                            }
                         }
                     }
-                    if (isset($item['options']) && is_array($item['options'])) {
-                        foreach ($item['options'] as $name => $value) {
-                            $this->input->setOption($name, $value);
-                        }
-                    }
-                    return $command->execute($this->input, $this->output);
+                    return $command->execute($input, $output);
                 };
                 $this->menu->addItem($key, $this->callbacks[$key]);
             }
         }
-        return $this;
+        return $this->menu;
     }
 }
