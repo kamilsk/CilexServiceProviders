@@ -4,15 +4,15 @@
 
 ## What's inside
 
+### [Application and commands](docs/AppAndCommands.md)
+
 ### [ConfigServiceProvider](docs/ConfigServiceProvider.md)
 
 ### [DoctrineServiceProvider](docs/DoctrineServiceProvider.md)
 
 ### [MonologServiceProvider](docs/MonologServiceProvider.md)
 
-## [Usage example](docs/UsageExample.md)
-
-## [Best practice](docs/BestPractice.md)
+## [Usage examples](docs/UsageExamples.md)
 
 ## Installation
 
