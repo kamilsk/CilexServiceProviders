@@ -1,47 +1,50 @@
 # DoctrineServiceProvider
 
-`app/config/doctrine/config.yml`
+## Configuration example
 
-> Example from the Silex [DoctrineServiceProvider](http://silex.sensiolabs.org/doc/providers/doctrine.html) documentation.
-
-> Example from the Symfony [DoctrineBundle](http://symfony.com/doc/current/reference/configuration/doctrine.html) documentation.
-
-```yaml
+```yml
 doctrine:
-    dbal:
-        default_connection: mysql
-        connections:
-            mysql:
-                driver:   pdo_mysql
-                host:     localhost
-                port:     3306
-                dbname:   database
-                user:     username
-                password: pass
-            sqlite:
-                driver:   pdo_sqlite
-                memory:   true
-                dbname:   database
-                user:     username
-                password: pass
+  dbal:
+    default_connection: mysql
+    connections:
+      mysql:
+        driver:   pdo_mysql
+        host:     localhost
+        port:     3306
+        dbname:   database
+        username: user
+        password: pass
+      sqlite:
+        driver:   pdo_sqlite
+        memory:   true
+        dbname:   database
+        username: user
+        password: pass
+    types:
+      enum: string
+      custom: \Your\Custom\Type # extends \Doctrine\DBAL\Types\Type
+```
+
+## Usage
+
+```php
+$app->register(new ConfigServiceProvider('/path/to/config.yml'));
+
+// if you won't to use ConnectionHelper ($app->offsetGet('console')->getHelperSet()->get('connection')->getConnection())
+$app->register(new DoctrineServiceProvider());
+
+// if you want to use ConnectionHelper with default connection
+$app->register(new DoctrineServiceProvider(true));
+
+// if you want to use ConnectionHelper with specified connection
+$app->register(new DoctrineServiceProvider('sqlite'));
 ```
 
 Now access to the `\Doctrine\DBAL\Connection` instance can be obtained as follows:
 
 ```php
-$defaultConnection = $app['db'];
+$default = $app['db'];
 $mysql = $app['dbs']['mysql'];
-// in this case $defaultConnection === $mysql
+// in this case $default === $mysql
 $sqlite = $app['dbs']['sqlite'];
 ```
-
-## Features
-
-* [FileBasedMigration](/src/Doctrine/FileBasedMigration.php)
-* [DriverBasedMigration](/src/Doctrine/DriverBasedMigration.php)
-* [CheckMigrationCommand](/src/Doctrine/Command/CheckMigrationCommand.php)
-* [GenerateIndexNameCommand](/src/Doctrine/Command/GenerateIndexNameCommand.php)
-
-## Utils
-
-* [Parser](/src/Doctrine/Util/Parser.php)

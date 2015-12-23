@@ -38,6 +38,17 @@ return [
 ];
 ```
 
+_Component_:
+
+```php
+return [
+    'component' => [
+        'base_parameter' => 'base parameter will not be overwritten',
+        'parameter' => 'base component\'s parameter will be overwritten by component config',
+    ],
+];
+```
+
 ### Example configuration on JSON
 
 ```php
@@ -70,6 +81,17 @@ _Parameters_:
 }
 ```
 
+_Component_:
+
+```json
+{
+  "component": {
+    "base_parameter": "base parameter will not be overwritten",
+    "parameter": "base component's parameter will be overwritten by component config"
+  }
+}
+```
+
 ### Example configuration on YAML
 
 ```php
@@ -94,6 +116,14 @@ _Parameters_:
 ```yml
 parameters:
   parameter: "will overwrite parameter"
+```
+
+_Component_:
+
+```yml
+component:
+  base_parameter: "base parameter will not be overwritten"
+  parameter: "base component's parameter will be overwritten by component config"
 ```
 
 ---
