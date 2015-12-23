@@ -5,10 +5,10 @@ monolog:
       arguments: ["%root_dir%/app/logs/access.log", info, false]
       formatter: { type: json }
     error:
-      type: stream
-      arguments: ["%root_dir%/app/logs/error.log", error, false]
-      formatter: { type: json }
+      class: \Monolog\Handler\StreamHandler
+      arguments: { stream: "%root_dir%/app/logs/error.log", level: error, bubble: false }
+      formatter: { class: \Monolog\Formatter\JsonFormatter }
   processors:
     - { type: memory_peak_usage }
     - { type: uid, arguments: { length: 7 } }
-    - { class: OctoLab\Common\Monolog\Processor\TimeExecutionProcessor }
+    - { class: \OctoLab\Common\Monolog\Processor\TimeExecutionProcessor }
