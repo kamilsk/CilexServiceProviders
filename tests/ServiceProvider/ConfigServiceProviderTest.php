@@ -149,6 +149,28 @@ class ConfigServiceProviderTest extends TestCase
 
     /**
      * @test
+     */
+    public function equivalence()
+    {
+        $php = new Application('PHP');
+        $php->register(
+            new ConfigServiceProvider($this->getConfigPath('config', 'php'), ['placeholder' => 'placeholder'])
+        );
+        $json = new Application('JSON');
+        $json->register(
+            new ConfigServiceProvider($this->getConfigPath('config', 'json'), ['placeholder' => 'placeholder'])
+        );
+        $yml = new Application('YAML');
+        $yml->register(
+            new ConfigServiceProvider($this->getConfigPath(), ['placeholder' => 'placeholder'])
+        );
+        self::assertNotEquals($php['config'], $json['config']);
+        self::assertNotEquals($yml['config'], $json['config']);
+        self::assertEquals($php['config'], $yml['config']);
+    }
+
+    /**
+     * @test
      * @dataProvider applicationProvider
      * @expectedException \DomainException
      *
