@@ -22,7 +22,6 @@ monolog:
 _Handlers_:
 
 Class of instance can be defined by `type` (will convert to `\Monolog\Handler\(CamelCase of type)Handler` or `class`.
-Handler constructor arguments are passed as parameter `arguments`.
 
 _Processors_:
 
@@ -33,6 +32,10 @@ _Formatter_:
 
 Class of instance can be defined by `type` (will convert to `\Monolog\Formatter\(CamelCase of type)Formatter`
 or `class`.
+
+---
+
+Arguments of the class constructor are taken from the parameter `arguments`.
 
 ## Usage
 
@@ -52,13 +55,13 @@ Now access to the `\Monolog\Logger` instance can be obtained as follows:
 $logger = $app['monolog'];
 ```
 
-Access to the `\Monolog\Handler\StreamHandler` instance can be obtained as follows:
+Access to the `\Monolog\Handler\StreamHandler` instance:
 
 ```php
 $handler = $app['monolog.handlers']['error'];
 ```
 
-Access to the `\Psr\Log\LoggerInterface` instance can be obtained as follows:
+Access to the `\Psr\Log\LoggerInterface` instance:
 
 ```php
 $logger = $app['logger'];
