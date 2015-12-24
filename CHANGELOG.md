@@ -1,7 +1,7 @@
 CHANGELOG for 2.x
 =================
 
-* 2.0 (2015-12-xx)
+* 2.0 (2015-12-24)
   * Remove all deprecated functionality
   * Classes have been moved
     * Commands
@@ -42,7 +42,7 @@ CHANGELOG for 2.x
   * New features
     * Integrates with `php-school/cli-menu` by `OctoLab\Cilex\Command\PresetCommand` ([#69](../../issues/69))
     * `OctoLab\Cilex\Application::register()` prevent register service twice ([#74](../../issues/74))
-  * [git diff](../../compare/1.x...master)
+  * [git diff](../../compare/1.x...2.0)
 
 CHANGELOG for 1.x
 =================

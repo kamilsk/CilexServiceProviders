@@ -12,7 +12,7 @@
 
 ### [MonologServiceProvider](docs/MonologServiceProvider.md)
 
-### [Usage examples](docs/UsageExamples.md)
+### [Usage example](docs/UsageExample.md)
 
 ## Installation
 

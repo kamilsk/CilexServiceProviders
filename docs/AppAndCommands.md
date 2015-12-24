@@ -2,7 +2,7 @@
 
 ## Application
 
-`\OctoLab\Cilex\Application::register()` prevents register the same Service Provider twice.
+`\OctoLab\Cilex\Application::register($provider, array $values = [])` prevents register the same Service Provider twice.
 
 ## Commands
 
