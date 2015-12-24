@@ -2,9 +2,19 @@
 
 ## Application
 
-`\OctoLab\Cilex\Application::register()` prevent register the same Service Provider twice.
+`\OctoLab\Cilex\Application::register()` prevents register the same Service Provider twice.
 
 ## Commands
+
+### Basic
+
+Useful shortcut methods:
+
+- `\OctoLab\Cilex\Command\Command::getContainer()` return `\Pimple` (e.g. `\Cilex\Application`)
+- `\OctoLab\Cilex\Command\Command::getService($name)` return registered service
+- `\OctoLab\Cilex\Command\Command::getConfig()` return application configuration (`$app['config']`)
+- `\OctoLab\Cilex\Command\Command::getDbConnection()` return default connection (`$app['db']`)
+- `\OctoLab\Cilex\Command\Command::getLogger()` return `\Psr\Log\LoggerInterface` (`$app['logger']`)
 
 ### PresetCommand
 
@@ -21,6 +31,8 @@ cli_menu:
 #### Usage
 
 ```php
+$app->command(new HelloCommand('example'));
+$app->command(new FibonacciCommand('example'));
 $app->command(new PresetCommand('example'));
 $app->run();
 ```
