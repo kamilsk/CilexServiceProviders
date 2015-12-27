@@ -1,6 +1,10 @@
 CHANGELOG for 2.x
 =================
 
+* 2.1 (2016-01-xx)
+
+  * [git diff](https://github.com/kamilsk/CilexServiceProviders/compare/2.0...master)
+
 * 2.0 (2015-12-24)
   * Remove all deprecated functionality
   * Classes have been moved
