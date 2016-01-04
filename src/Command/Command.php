@@ -62,15 +62,26 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     }
 
     /**
+     * @param string $alias
+     *
      * @return \Doctrine\DBAL\Connection
      *
      * @throws \RuntimeException if doctrine service is not defined
+     * @throws \InvalidArgumentException if the identifier (alias) is not defined
      *
      * @api
      */
-    public function getDbConnection()
+    public function getDbConnection($alias = null)
     {
-        $connection = $this->getService('db');
+        $connection = null;
+        if ($alias) {
+            $dbs = $this->getService('dbs');
+            if ($dbs instanceof \Pimple) {
+                $connection = $dbs->offsetGet($alias);
+            }
+        } else {
+            $connection = $this->getService('db');
+        }
         if ($connection) {
             return $connection;
         }

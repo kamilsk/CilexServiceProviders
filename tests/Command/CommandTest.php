@@ -57,6 +57,39 @@ class CommandTest extends TestCase
 
     /**
      * @test
+     * @dataProvider doctrineConfigProvider
+     * @expectedException \InvalidArgumentException
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function getDbConnectionByAliasFail(ConfigServiceProvider $config)
+    {
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new DoctrineServiceProvider());
+        $command = $this->getCommandMock();
+        $app->command($command);
+        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection('undefined'));
+    }
+
+    /**
+     * @test
+     * @dataProvider doctrineConfigProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function getDbConnectionByAliasSuccess(ConfigServiceProvider $config)
+    {
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new DoctrineServiceProvider());
+        $command = $this->getCommandMock();
+        $app->command($command);
+        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection('sqlite'));
+    }
+
+    /**
+     * @test
      * @expectedException \RuntimeException
      */
     public function getLoggerFail()
