@@ -139,7 +139,8 @@ class ConfigServiceProviderTest extends TestCase
         );
         $expected = [
             'component' => [
-                'parameter' => 'base component\'s parameter',
+                'base_parameter' => 'base parameter will not be overwritten',
+                'parameter' => 'base component\'s parameter will be overwritten by root config',
                 'placeholder_parameter' => 'placeholder',
                 'constant' => E_ALL,
             ],
@@ -164,8 +165,8 @@ class ConfigServiceProviderTest extends TestCase
         $yml->register(
             new ConfigServiceProvider($this->getConfigPath(), ['placeholder' => 'placeholder'])
         );
-        self::assertNotEquals($php['config'], $json['config']);
-        self::assertNotEquals($yml['config'], $json['config']);
+        self::assertEquals($php['config'], $json['config']);
+        self::assertEquals($yml['config'], $json['config']);
         self::assertEquals($php['config'], $yml['config']);
     }
 

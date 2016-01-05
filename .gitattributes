@@ -1,7 +1,7 @@
 # https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
-/docs/              export-ignore
-/info/              export-ignore
-/tests/             export-ignore
+/docs               export-ignore
+/info               export-ignore
+/tests              export-ignore
 /.codeclimate.yml   export-ignore
 /.editorconfig      export-ignore
 /.gitattributes     export-ignore

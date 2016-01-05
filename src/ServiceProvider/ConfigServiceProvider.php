@@ -4,6 +4,8 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
+use OctoLab\Common\Config\JsonConfig;
+use OctoLab\Common\Config\Loader\JsonFileLoader;
 use OctoLab\Common\Config\Loader\YamlFileLoader;
 use OctoLab\Common\Config\Parser\SymfonyYamlParser;
 use OctoLab\Common\Config\SimpleConfig;
@@ -61,7 +63,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
                     ;
                     break;
                 case 'json':
-                    $config = (new SimpleConfig(json_decode(file_get_contents($this->filename), true)))
+                    $config = (new JsonConfig(new JsonFileLoader(new FileLocator())))
+                        ->load($this->filename)
                         ->replace($this->placeholders)
                     ;
                     break;

@@ -1,10 +1,10 @@
 {
   "imports": [
-    "parameters.json",
-    "component/config.json"
+    { "resource": "parameters.json" },
+    { "resource": "component/config.json" }
   ],
   "component": {
-    "parameter": "base component's parameter",
+    "parameter": "base component's parameter will be overwritten by root config",
     "placeholder_parameter": "%placeholder%",
     "constant": "const(E_ALL)"
   }

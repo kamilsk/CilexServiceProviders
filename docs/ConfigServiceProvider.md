@@ -60,11 +60,11 @@ _General_:
 ```json
 {
   "imports": [
-    "parameters.json",
-    "component/config.json"
+    { "resource": "parameters.json" },
+    { "resource": "component/config.json" }
   ],
   "component": {
-    "parameter": "base component's parameter",
+    "parameter": "base component's parameter will be overwritten by root config",
     "placeholder_parameter": "%placeholder%",
     "constant": "const(E_ALL)"
   }
@@ -142,5 +142,3 @@ $app['config'] = [
     ],
 ];
 ```
-
-> Actually it is not quite so now ([issue](https://github.com/kamilsk/Common/issues/22)).
