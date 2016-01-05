@@ -34,7 +34,7 @@ $ composer require kamilsk/cilex-service-providers:~2.0
 
 ## Pulse of repository
 
-### [Changelog](CHANGELOG.md)
+### [Changelog](info/CHANGELOG.md)
 
 ### General information
 
@@ -65,20 +65,16 @@ $ composer require kamilsk/cilex-service-providers:~2.0
 ### Feedback
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kamilsk/small-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![@ikamilsk](https://img.shields.io/badge/author-%40ikamilsk-blue.svg)](https://twitter.com/ikamilsk)
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
+Please see [CONTRIBUTING](info/CONTRIBUTING.md) and [CONDUCT](info/CONDUCT.md) for details.
 
 ## Security
 
 If you discover any security related issues, please email feedback@octolab.org instead of using the issue tracker.
 
-## Credits
-
-- [![@ikamilsk](https://img.shields.io/badge/author-%40ikamilsk-blue.svg)](https://twitter.com/ikamilsk)
-- [All contributors](../../contributors)
-
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](info/LICENSE.md) for more information.
