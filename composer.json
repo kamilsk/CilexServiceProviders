@@ -5,7 +5,7 @@
   "homepage": "https://github.com/kamilsk/CilexServiceProviders",
   "license": "MIT",
   "authors": [
-    { "name": "Kamil Samigullin", "email": "kamil@samigullin.info" }
+    { "name": "Kamil Samigullin", "email": "kamil@samigullin.info", "role": "Developer" }
   ],
   "require": {
     "php": ">=5.5",
@@ -38,5 +38,10 @@
   },
   "autoload-dev": {
     "psr-4": { "Test\\OctoLab\\Cilex\\": "tests/" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.1-dev"
+    }
   }
 }
