@@ -11,7 +11,7 @@ class Application extends \Cilex\Application
     private $registry = [];
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function register($provider, array $values = [])
     {

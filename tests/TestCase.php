@@ -30,16 +30,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array[]
-     */
-    public function monologConfigProviderWithNewStyle()
-    {
-        return [
-            [new ConfigServiceProvider($this->getConfigPath('monolog/resolver'), ['root_dir' => __DIR__])],
-        ];
-    }
-
-    /**
      * @param string $config
      * @param string $extension
      *

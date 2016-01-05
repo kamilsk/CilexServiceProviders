@@ -47,31 +47,31 @@ class ConfigServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app['config'] = $app->share(function () {
+        $app['config.raw'] = $app::share(function () {
             switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
                 case 'yml':
                     $config = (new YamlConfig(new YamlFileLoader(new FileLocator(), new SymfonyYamlParser())))
                         ->load($this->filename)
                         ->replace($this->placeholders)
-                        ->toArray()
                     ;
                     break;
                 case 'php':
                     $config = (new SimpleConfig(include $this->filename))
                         ->replace($this->placeholders)
-                        ->toArray()
                     ;
                     break;
                 case 'json':
                     $config = (new SimpleConfig(json_decode(file_get_contents($this->filename), true)))
                         ->replace($this->placeholders)
-                        ->toArray()
                     ;
                     break;
                 default:
                     throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));
             }
             return $config;
+        });
+        $app['config'] = $app::share(function () use ($app) {
+            return $app['config.raw']->toArray();
         });
     }
 }

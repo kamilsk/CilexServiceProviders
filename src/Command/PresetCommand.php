@@ -17,19 +17,22 @@ final class PresetCommand extends Command
     private $callbacks = [];
 
     /**
+     * @param string $path Is a key or path in a special format (e.g. "some:component:config") of cli menu configuration
+     * @param array $default Default cli menu configuration
+     *
      * @return array
      *
      * @throws \RuntimeException
      *
      * @api
      */
-    public function getConfig()
+    public function getConfig($path = 'cli_menu', $default = [])
     {
-        $config = parent::getConfig();
-        if (empty($config['cli_menu']) || !is_array($config['cli_menu'])) {
+        $config = parent::getConfig($path, $default);
+        if (!is_array($config) || empty($config)) {
             throw new \RuntimeException(sprintf('Command "%s" is not configured.', $this->getName()));
         }
-        return $config['cli_menu'];
+        return $config;
     }
 
     /**
@@ -53,7 +56,7 @@ final class PresetCommand extends Command
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws \InvalidArgumentException
      */
@@ -63,7 +66,7 @@ final class PresetCommand extends Command
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws \RuntimeException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException

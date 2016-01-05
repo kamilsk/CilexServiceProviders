@@ -29,6 +29,56 @@ class CommandTest extends TestCase
 
     /**
      * @test
+     */
+    public function getContainer()
+    {
+        $app = new Application('Test');
+        $command = $this->getCommandMock('test', 'mock');
+        $app->command($command);
+        self::assertInstanceOf(\Pimple::class, $command->getContainer());
+    }
+
+    /**
+     * @test
+     */
+    public function getService()
+    {
+        $app = new Application('Test');
+        $command = $this->getCommandMock('test', 'mock');
+        $app->command($command);
+        $app['service'] = function () {
+            return 'service';
+        };
+        self::assertEquals('service', $command->getService('service'));
+    }
+
+    /**
+     * @test
+     */
+    public function getConfig()
+    {
+        $app = new Application('Test');
+        $expected = ['empty' => true];
+        $app->register(new ConfigServiceProvider($this->getConfigPath()), ['config' => $expected]);
+        $command = $this->getCommandMock('test', 'mock');
+        $app->command($command);
+        self::assertEquals($expected, $command->getConfig());
+    }
+
+    /**
+     * @test
+     */
+    public function getConfigByPath()
+    {
+        $app = new Application('Test');
+        $app->register(new ConfigServiceProvider($this->getConfigPath()));
+        $command = $this->getCommandMock('test', 'mock');
+        $app->command($command);
+        self::assertEquals(E_ALL, $command->getConfig('component:constant'));
+    }
+
+    /**
+     * @test
      * @expectedException \RuntimeException
      */
     public function getDbConnectionFail()

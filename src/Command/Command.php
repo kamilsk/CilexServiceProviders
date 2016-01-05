@@ -51,18 +51,28 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     }
 
     /**
-     * @return array
+     * @param string $path Is a key or path in a special format (e.g. "some:component:config") of configuration
+     * @param mixed $default Default value if a key or path is cannot be resolved
+     *
+     * @return array|mixed
      *
      * @api
      */
-    public function getConfig()
+    public function getConfig($path = null, $default = null)
     {
-        $config = $this->getService('config');
-        return $config ?: [];
+        if ($path === null) {
+            $config = $this->getService('config');
+            return $config ?: [];
+        }
+        $rawConfig = $this->getService('config.raw');
+        if ($rawConfig) {
+            $config = $rawConfig[$path];
+        }
+        return isset($config) ? $config : $default;
     }
 
     /**
-     * @param string $alias
+     * @param null|string $alias
      *
      * @return \Doctrine\DBAL\Connection
      *
@@ -74,13 +84,13 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     public function getDbConnection($alias = null)
     {
         $connection = null;
-        if ($alias) {
+        if ($alias === null) {
+            $connection = $this->getService('db');
+        } else {
             $dbs = $this->getService('dbs');
             if ($dbs instanceof \Pimple) {
                 $connection = $dbs->offsetGet($alias);
             }
-        } else {
-            $connection = $this->getService('db');
         }
         if ($connection) {
             return $connection;

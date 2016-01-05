@@ -129,21 +129,4 @@ class MonologServiceProviderTest extends TestCase
             self::assertTrue(false);
         }
     }
-
-    /**
-     * @test
-     * @dataProvider monologConfigProviderWithNewStyle
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function newConfigStyleFormat(ConfigServiceProvider $config)
-    {
-        $app = new Application('test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider());
-        /** @var \Monolog\Logger $monolog */
-        $monolog = $app['monolog'];
-        self::assertNotEmpty($monolog->getHandlers());
-        self::assertNotEmpty($monolog->getProcessors());
-    }
 }

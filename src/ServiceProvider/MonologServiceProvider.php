@@ -44,11 +44,11 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         } elseif (empty($app['monolog.name'])) {
             $app['monolog.name'] = $app['console.name'];
         }
-        $app['logger'] = $app->share(function () use ($app) {
+        $app['logger'] = $app::share(function () use ($app) {
             return $app['monolog'];
         });
         if (!empty($app['config']['monolog'])) {
-            $app['monolog.configure'] = $app->protect(function (Logger $logger) use ($app) {
+            $app['monolog.configure'] = $app::protect(function (Logger $logger) use ($app) {
                 $resolver = new ConfigResolver();
                 $resolver->resolve($app['config']['monolog']);
                 if ($this->initConsoleHandler) {
