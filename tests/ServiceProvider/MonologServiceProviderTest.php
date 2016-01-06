@@ -111,22 +111,10 @@ class MonologServiceProviderTest extends TestCase
         $app = new Application('Test');
         $app->register($config);
         $app->register(new MonologServiceProvider(false));
-        try {
-            // lazy loading
-            $app['monolog'] && $app['monolog.handlers']['console'];
-            self::assertTrue(false);
-        } catch (\InvalidArgumentException $e) {
-            self::assertTrue(true);
-        }
+        self::assertFalse(isset($app['monolog.resolver']->getHandlers()['console']));
         $app = new Application('Test');
         $app->register($config);
         $app->register(new MonologServiceProvider());
-        try {
-            // lazy loading
-            $app['monolog'] && $app['monolog.handlers']['console'];
-            self::assertTrue(true);
-        } catch (\InvalidArgumentException $e) {
-            self::assertTrue(false);
-        }
+        self::assertTrue(isset($app['monolog.resolver']->getHandlers()['console']));
     }
 }

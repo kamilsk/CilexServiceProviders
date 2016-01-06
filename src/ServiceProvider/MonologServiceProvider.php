@@ -4,7 +4,6 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\Provider as Cilex;
-use Monolog\Logger;
 use OctoLab\Common\Monolog\Util\ConfigResolver;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 
@@ -33,6 +32,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
      * @param Application $app
      *
      * @throws \InvalidArgumentException
+     * @throws \DomainException
      *
      * @api
      */
@@ -44,24 +44,23 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         } elseif (empty($app['monolog.name'])) {
             $app['monolog.name'] = $app['console.name'];
         }
+        if (!empty($app['config']['monolog'])) {
+            $app['monolog.resolver'] = $app::share(function () use ($app) {
+                $resolver = new ConfigResolver();
+                $resolver->resolve($app['config']['monolog'], $app['monolog.name']);
+                if ($this->initConsoleHandler) {
+                    $consoleHandler = new ConsoleHandler();
+                    $resolver->addHandler('console', $consoleHandler);
+                    $resolver->getDefaultChannel()->pushHandler($consoleHandler);
+                }
+                return $resolver;
+            });
+            $app['monolog'] = $app::share(function () use ($app) {
+                return $app['monolog.resolver']->getDefaultChannel();
+            });
+        }
         $app['logger'] = $app::share(function () use ($app) {
             return $app['monolog'];
         });
-        if (!empty($app['config']['monolog'])) {
-            $app['monolog.configure'] = $app::protect(function (Logger $logger) use ($app) {
-                $resolver = new ConfigResolver();
-                $resolver->resolve($app['config']['monolog']);
-                if ($this->initConsoleHandler) {
-                    $resolver->getHandlers()->offsetSet('console', new ConsoleHandler());
-                }
-                foreach ($resolver->getHandlers()->keys() as $id) {
-                    $logger->pushHandler($resolver->getHandlers()->offsetGet($id));
-                }
-                foreach ($resolver->getProcessors() as $processor) {
-                    $logger->pushProcessor($processor);
-                }
-                $app->offsetSet('monolog.handlers', $resolver->getHandlers());
-            });
-        }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace OctoLab\Cilex\Command;
 
+use OctoLab\Common\Monolog\Util\ConfigResolver;
+use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -141,7 +143,10 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @return $this
      *
+     * @throws \RuntimeException
      * @throws \InvalidArgumentException
+     * @throws \DomainException
+     * @throws \UnexpectedValueException
      *
      * @uses \Symfony\Bridge\Monolog\Handler\ConsoleHandler
      *
@@ -149,15 +154,21 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      */
     public function initConsoleHandler(OutputInterface $output, $handler = 'console')
     {
-        $this->getContainer()->offsetGet('monolog') && $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        /** @var \Pimple $handlers */
-        $handlers = $this
-            ->getContainer()
-            ->offsetGet('monolog.handlers')
-        ;
-        if ($handlers->offsetExists($handler)) {
-            $handlers->offsetGet($handler)->setOutput($output);
+        /** @var ConfigResolver $resolver */
+        $resolver = $this->getService('monolog.resolver');
+        if ($resolver === null) {
+            throw new \RuntimeException('MonologServiceProvider is not registered.');
         }
+        if (!isset($resolver->getHandlers()[$handler])) {
+            throw new \DomainException(sprintf('Handler with ID "%s" not found.', $handler));
+        }
+        $consoleHandler = $resolver->getHandlers()[$handler];
+        if (!$consoleHandler instanceof ConsoleHandler) {
+            throw new \UnexpectedValueException(
+                sprintf('Handler with ID "%s" is not an instance of %s', $handler, ConsoleHandler::class)
+            );
+        }
+        $consoleHandler->setOutput($output);
         return $this;
     }
 }
