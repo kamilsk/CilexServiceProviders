@@ -10,7 +10,7 @@
   "require": {
     "php": ">=5.5",
     "cilex/cilex": "~1.0",
-    "kamilsk/common": "1.1.x-dev"
+    "kamilsk/common": "~1.1"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
@@ -41,7 +41,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.1-dev"
+      "dev-master": "2.2-dev"
     }
   }
 }

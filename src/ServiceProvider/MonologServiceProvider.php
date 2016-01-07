@@ -12,20 +12,23 @@ use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
  */
 class MonologServiceProvider extends Cilex\MonologServiceProvider
 {
-    /** @var bool */
-    private $initConsoleHandler;
+    /** @var null|string */
+    private $consoleHandler;
 
     /**
-     * @param bool $initConsoleHandler to initialize {@link \Symfony\Bridge\Monolog\Handler\ConsoleHandler},
+     * @param bool|string $initConsoleHandler to initialize {@link \Symfony\Bridge\Monolog\Handler\ConsoleHandler},
      * if all dependencies resolved
      *
      * @api
      */
-    public function __construct($initConsoleHandler = true)
+    public function __construct($initConsoleHandler = 'console')
     {
-        $this->initConsoleHandler = $initConsoleHandler
-            && class_exists('\Symfony\Bridge\Monolog\Handler\ConsoleHandler')
-            && interface_exists('\Symfony\Component\EventDispatcher\EventSubscriberInterface');
+        if (!empty($initConsoleHandler)
+            && class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')
+            && interface_exists('Symfony\Component\EventDispatcher\EventSubscriberInterface')
+        ) {
+            $this->consoleHandler = is_string($initConsoleHandler) ? (string) $initConsoleHandler : 'console';
+        }
     }
 
     /**
@@ -46,12 +49,16 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
         }
         if (!empty($app['config']['monolog'])) {
             $app['monolog.resolver'] = $app::share(function () use ($app) {
+                $config = $app['config']['monolog'];
+                if ($this->consoleHandler !== null) {
+                    $config['handlers'][$this->consoleHandler] = [
+                        'class' => ConsoleHandler::class,
+                    ];
+                }
                 $resolver = new ConfigResolver();
-                $resolver->resolve($app['config']['monolog'], $app['monolog.name']);
-                if ($this->initConsoleHandler) {
-                    $consoleHandler = new ConsoleHandler();
-                    $resolver->addHandler('console', $consoleHandler);
-                    $resolver->getDefaultChannel()->pushHandler($consoleHandler);
+                $resolver->resolve($config, $app['monolog.name']);
+                if ($this->consoleHandler !== null) {
+                    $resolver->getDefaultChannel()->pushHandler($resolver->getHandlers()[$this->consoleHandler]);
                 }
                 return $resolver;
             });

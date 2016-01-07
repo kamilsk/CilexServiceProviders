@@ -1,0 +1,30 @@
+monolog:
+  default_channel: logger
+  channels:
+    db:
+      name: logger
+      handlers:
+      - info
+      processors:
+      - memory
+    service:
+      id: logger
+      handlers:
+      - type: chrome_php
+        arguments: [info, true]
+        formatter: chrome
+      - id: info
+        formatter: { type: json }
+        processors:
+        - { type: uid, arguments: { length: 7 } }
+  handlers:
+    info:
+      type: stream
+      arguments: ["%root_dir%/app/logs/info.log", info, true]
+      formatter: { type: normalizer }
+  processors:
+    memory:
+      type: memory_peak_usage
+  formatters:
+    chrome:
+      type: chrome_php

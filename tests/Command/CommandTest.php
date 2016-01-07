@@ -168,6 +168,34 @@ class CommandTest extends TestCase
 
     /**
      * @test
+     * @expectedException \RuntimeException
+     */
+    public function getLoggerByIdFail()
+    {
+        $app = new Application('Test');
+        $command = $this->getCommandMock();
+        $app->command($command);
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('default'));
+    }
+
+    /**
+     * @test
+     * @dataProvider monologConfigProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function getLoggerByIdSuccess(ConfigServiceProvider $config)
+    {
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider());
+        $command = $this->getCommandMock();
+        $app->command($command);
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('default'));
+    }
+
+    /**
+     * @test
      * @dataProvider monologConfigProvider
      *
      * @param ConfigServiceProvider $config

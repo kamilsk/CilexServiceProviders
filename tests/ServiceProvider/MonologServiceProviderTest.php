@@ -5,6 +5,7 @@ namespace Test\OctoLab\Cilex\ServiceProvider;
 use Cilex\Application;
 use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
 use OctoLab\Cilex\ServiceProvider\MonologServiceProvider;
+use OctoLab\Common\Monolog\Util\ConfigResolver;
 use Test\OctoLab\Cilex\TestCase;
 
 /**
@@ -116,5 +117,21 @@ class MonologServiceProviderTest extends TestCase
         $app->register($config);
         $app->register(new MonologServiceProvider());
         self::assertTrue(isset($app['monolog.resolver']->getHandlers()['console']));
+    }
+
+    /**
+     * @test
+     * @dataProvider monologCascadeConfigProvider
+     *
+     * @param ConfigServiceProvider $config
+     */
+    public function cascadeSupport(ConfigServiceProvider $config)
+    {
+        $app = new Application('Test');
+        $app->register($config);
+        $app->register(new MonologServiceProvider());
+        /** @var ConfigResolver $resolver */
+        $resolver = $app['monolog.resolver'];
+        self::assertEquals($resolver->getDefaultChannel(), $app['monolog']);
     }
 }

@@ -30,6 +30,16 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array[]
+     */
+    public function monologCascadeConfigProvider()
+    {
+        return [
+            [new ConfigServiceProvider($this->getConfigPath('monolog/cascade'), ['root_dir' => __DIR__])],
+        ];
+    }
+
+    /**
      * @param string $config
      * @param string $extension
      *

@@ -101,19 +101,33 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     }
 
     /**
+     * @param null|string $channel
+     *
      * @return \Psr\Log\LoggerInterface
      *
-     * @throws \RuntimeException if monolog service is not defined
+     * @throws \RuntimeException if monolog service is not defined or channel is not registered
      *
      * @api
      */
-    public function getLogger()
+    public function getLogger($channel = null)
     {
-        $logger = $this->getService('logger');
-        if ($logger) {
-            return $logger;
+        if ($channel === null) {
+            $logger = $this->getService('logger');
+            if ($logger === null) {
+                throw new \RuntimeException('MonologServiceProvider is not registered.');
+            }
+        } else {
+            /** @var ConfigResolver $resolver */
+            $resolver = $this->getService('monolog.resolver');
+            if ($resolver === null) {
+                throw new \RuntimeException('MonologServiceProvider is not registered.');
+            }
+            if (!isset($resolver->getChannels()[$channel])) {
+                throw new \RuntimeException(sprintf('Logger with ID "%s" not found.', $channel));
+            }
+            $logger = $resolver->getChannels()[$channel];
         }
-        throw new \RuntimeException('MonologServiceProvider is not registered.');
+        return $logger;
     }
 
     /**
