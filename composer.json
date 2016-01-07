@@ -2,6 +2,7 @@
   "name": "kamilsk/cilex-service-providers",
   "type": "library",
   "description": "Revised set of service providers for Cilex.",
+  "keywords": ["php cli", "cli", "cilex"],
   "homepage": "https://github.com/kamilsk/CilexServiceProviders",
   "license": "MIT",
   "authors": [

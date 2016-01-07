@@ -94,8 +94,8 @@ component:
   component_option: %some_parameter%
 ```
 
-_6._ Update your project:
+_6._ Run script:
 
 ```bash
-$ composer update
+$ composer run-script post-install-cmd
 ```

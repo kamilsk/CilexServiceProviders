@@ -40,7 +40,7 @@ $app->register(new DoctrineServiceProvider(true));
 $app->register(new DoctrineServiceProvider('sqlite'));
 ```
 
-Now access to the `\Doctrine\DBAL\Connection` instance can be obtained as follows:
+Now access to the `Doctrine\DBAL\Connection` instance can be obtained as follows:
 
 ```php
 $default = $app['db'];

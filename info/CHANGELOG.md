@@ -48,7 +48,7 @@ CHANGELOG for 2.x
     * Add support `types` directive ([#71](/../../issues/71))
   * `Monolog`'s configuration was changed
     * `path`, `level` and `bubble` became part of `arguments`
-    * `formatter` now is not a alias, use `{ type: ... }` notation instead (see [docs](/docs/MonologServiceProvider))
+    * `formatter` now is not a alias, use `{ type: ... }` notation instead (see [docs](/docs/MonologServiceProvider.md))
   * Config component has been changed
     * `$parser` is required argument for `OctoLab\Common\Config\Loader\YamlFileLoader::__construct()`
     (ex. `OctoLab\Cilex\Config\Loader\YamlFileLoader`)
@@ -65,14 +65,14 @@ CHANGELOG for 1.x
 * v1.5 (2015-11-06)
 
  * Up to 100% test coverage and resolve Scrutinizer CI recommendations ([#61](/../../issues/61))
- * Move Test in separated namespace ([#67](/../../issue/67))
+ * Move Test in separated namespace ([#67](/../../issues/67))
  * [git diff](/../../compare/v1.4.3...v1.5.1)
 
 * v1.4 (2015-06-06)
 
   * Add support for `.php` and `.json` config files ([#27](/../../issues/27))
   * Constant supports by `OctoLab\Cilex\Config\YamlConfig` ([#42](/../../issues/42))
-  * Add support for [Dipper](https://github.com/secondparty/dipper) as alternative of `\Symfony\Component\Yaml\Parser`
+  * Add support for [Dipper](https://github.com/secondparty/dipper) as alternative of `Symfony\Component\Yaml\Parser`
   ([#50](/../../issues/50))
   * Add `OctoLab\Cilex\Doctrine\FileBasedMigration`, `OctoLab\Cilex\Doctrine\DriverBasedMigration` and
   `OctoLab\Cilex\Doctrine\Command\CheckMigrationCommand` ([#52](/../../issues/52))
@@ -83,7 +83,7 @@ CHANGELOG for 1.x
 * v1.3 (2015-06-01)
 
   * PHP 5.4 is deprecated now ([14 Sep 2015 is end of support](http://php.net/supported-versions.php))
-  * `OctoLab\Cilex\Command\Command::getLogger` now return `\Psr\Log\LoggerInterface` ([#36](/../../issues/36))
+  * `OctoLab\Cilex\Command\Command::getLogger` now return `Psr\Log\LoggerInterface` ([#36](/../../issues/36))
   * `cilex/cilex:~1.0` is required now ([#44](/../../issues/44))
   * `composer.lock` was removed ([#46](/../../issues/46))
   * Isolate logic of `OctoLab\Cilex\Provider\ConfigServiceProvider` in `OctoLab\Cilex\Config\YamlConfig`

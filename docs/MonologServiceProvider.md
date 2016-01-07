@@ -10,7 +10,7 @@ monolog:
       arguments: ["%root_dir%/app/logs/access.log", info, false]
       formatter: { type: json }
     error:
-      class: \Monolog\Handler\StreamHandler
+      class: Monolog\Handler\StreamHandler
       arguments: { stream: "%root_dir%/app/logs/error.log", level: error, bubble: false }
       formatter: { class: Monolog\Formatter\JsonFormatter }
   processors:
@@ -102,7 +102,7 @@ Access to the `Monolog\Handler\StreamHandler` instance:
 ```php
 // removed in 2.1
 // $handler = $app['monolog.handlers']['error'];
-// use instead
+// use example below
 $handler = $app['monolog.resolver']->getHandlers()['error'];
 ```
 
@@ -118,7 +118,7 @@ access to the `Symfony\Bridge\Monolog\Handler\ConsoleHandler` instance:
 ```php
 // removed in 2.1
 // $console = $app['monolog.handlers']['console'];
-// use instead
+// use example below
 $handler = $app['monolog.resolver']->getHandlers()['console'];
 ```
 

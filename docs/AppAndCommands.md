@@ -133,10 +133,10 @@ Displays menu of three items:
 - [Fibonacci sequence](/tests/Command/Mock/FibonacciCommand.php)
 - Exit
 
-You can select "Hello, World" to run `$ ./console example:hello -m World`
-or "Fibonacci sequence" to execute `$ ./console example:fibonacci --size=10`
+You can select "Hello, World" to run `$ app/console example:hello -m World`
+or "Fibonacci sequence" to execute `$ app/console example:fibonacci --size=10`
 
-### Doctrine/CheckMigrationCommand
+### Doctrine\CheckMigrationCommand
 
 __Usage:__
 
@@ -172,9 +172,9 @@ Downgrade for migration 20151202142239
 ...
 ```
 
-Where `20151202142239` (as example) is `Doctrine Migration` (`\OctoLab\Common\Doctrine\Migration\FileBasedMigration`).
+Where `20151202142239` (as example) is `Doctrine Migration` (`OctoLab\Common\Doctrine\Migration\FileBasedMigration`).
 
-### Doctrine/GenerateIndexNameCommand
+### Doctrine\GenerateIndexNameCommand
 
 __Usage:__
 
@@ -187,4 +187,4 @@ $app->run();
 $ app/console example:generate-index-name --type=uniq -t table_name -c user_id,title
 ```
 
-Generates and displays name of unique index for table "table_name" and columns "(user_id, title)".
+Generates and displays name of unique index for table `table_name` and columns `(user_id, title)`.
