@@ -142,3 +142,7 @@ $app['config'] = [
     ],
 ];
 ```
+
+```php
+$app['config.raw'] instanceof \OctoLab\Common\Config\SimpleConfig::class
+```

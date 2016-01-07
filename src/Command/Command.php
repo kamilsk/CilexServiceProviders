@@ -18,7 +18,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     protected $namespace;
 
     /**
-     * @param string $namespace
+     * @param null|string $namespace
      *
      * @throws \LogicException
      *
@@ -53,7 +53,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     }
 
     /**
-     * @param string $path Is a key or path in a special format (e.g. "some:component:config") of configuration
+     * @param null|string $path Is a key or path in a special format (e.g. "some:component:config") of configuration
      * @param mixed $default Default value if a key or path is cannot be resolved
      *
      * @return array|mixed

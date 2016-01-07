@@ -2,7 +2,7 @@
 
 ## Application
 
-`\OctoLab\Cilex\Application::register($provider, array $values = [])` prevents register the same Service Provider twice.
+`OctoLab\Cilex\Application::register($provider, array $values = [])` prevents register the same Service Provider twice.
 
 ## Commands
 
@@ -10,11 +10,97 @@
 
 Useful shortcut methods:
 
-- `\OctoLab\Cilex\Command\Command::getContainer()` return `\Pimple` (e.g. `\Cilex\Application`)
-- `\OctoLab\Cilex\Command\Command::getService($name)` return registered service
-- `\OctoLab\Cilex\Command\Command::getConfig()` return application configuration (`$app['config']`)
-- `\OctoLab\Cilex\Command\Command::getDbConnection()` return default connection (`$app['db']`)
-- `\OctoLab\Cilex\Command\Command::getLogger()` return `\Psr\Log\LoggerInterface` (`$app['logger']`)
+- `OctoLab\Cilex\Command\Command::getContainer()` return `Pimple` (e.g. `Cilex\Application`)
+- `OctoLab\Cilex\Command\Command::getService($name)` return registered service
+- `OctoLab\Cilex\Command\Command::getConfig()` return application configuration (`$app['config']`)
+- `OctoLab\Cilex\Command\Command::getDbConnection()` return default connection (`$app['db']`)
+- `OctoLab\Cilex\Command\Command::getLogger()` return `Psr\Log\LoggerInterface` (`$app['logger']`)
+
+__New features in version 2.1:__
+
+- `OctoLab\Cilex\Command\Command::getConfig($path = null, $default = null)`
+
+```php
+// $app['config'] === ['path' => ['to' => ['config' => 'value']]]
+
+if ($command->getConfig('path:to:config', 'default') === 'value') {
+    echo 'Path works correctly.';
+} else {
+    echo 'Value "default" was used.';
+}
+
+// will output
+// Path works correctly.
+```
+
+- `OctoLab\Cilex\Command\Command::getDbConnection($alias = null)`
+
+```yml
+doctrine:
+  dbal:
+    connections:
+      mysql:
+        driver:   pdo_mysql
+        host:     localhost
+        port:     3306
+        dbname:   database
+        username: user
+        password: pass
+      sqlite:
+        driver:   pdo_sqlite
+        memory:   true
+        dbname:   database
+        username: user
+        password: pass
+```
+
+```php
+if ($command->getDbConnection('mysql') === $app['dbs']['mysql']) {
+    echo 'Alias works correctly.';
+} else {
+    throw new Exception();
+}
+
+// will output
+// Alias works correctly.
+```
+
+- `OctoLab\Cilex\Command\Command::getLogger($channel = null)`
+
+```yml
+monolog:
+  default_channel: logger
+  channels:
+    db:
+      name: logger
+      handlers:
+      - info
+    service:
+      id: logger
+      handlers:
+      - type: chrome_php
+        arguments: [info, true]
+      - id: info
+        formatter: { type: json }
+        processors:
+        - { type: uid, arguments: { length: 7 } }
+  handlers:
+    info:
+      type: stream
+      arguments: ["%root_dir%/app/logs/info.log", info, true]
+      formatter: { type: normalizer }
+```
+
+```php
+if ($command->getLogger('db') === $app['monolog.resolver']->getChannels()['db']) {
+    echo 'Logger ID works correctly.';
+} else {
+    throw new Exception();
+}
+
+// will output
+// Logger ID works correctly.
+```
 
 ### PresetCommand
 
@@ -38,7 +124,7 @@ $app->run();
 ```
 
 ```bash
-$ ./console example:menu
+$ app/console example:menu
 ```
 
 Displays menu of three items:
@@ -60,9 +146,9 @@ $app->run();
 ```
 
 ```bash
-$ ./console example:check /path/to/migration.sql
+$ app/console example:check /path/to/migration.sql
 # or
-$ ./console example:check 20151202142239
+$ app/console example:check 20151202142239
 ```
 
 Displays contents of these migrations.
@@ -98,7 +184,7 @@ $app->run();
 ```
 
 ```bash
-$ ./console example:generate-index-name --type=uniq -t table_name -c user_id,title
+$ app/console example:generate-index-name --type=uniq -t table_name -c user_id,title
 ```
 
 Generates and displays name of unique index for table "table_name" and columns "(user_id, title)".

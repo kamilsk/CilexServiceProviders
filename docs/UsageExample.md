@@ -73,7 +73,7 @@ _2._ Set `composer.json`:
 
 _3._ Create a file `/path/to/parameters.yml.dist` and specify a necessary parameters:
 
-```yaml
+```yml
 parameters:
   some_parameter: some_value
 ```
@@ -86,7 +86,7 @@ $ echo '/path/to/parameters.yml' >> .gitignore
 
 _5._ Use these settings in `config.yml`:
 
-```yaml
+```yml
 imports:
   - { resource: relative/path/to/parameters.yml }
 

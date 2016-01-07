@@ -27,7 +27,7 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
             && class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')
             && interface_exists('Symfony\Component\EventDispatcher\EventSubscriberInterface')
         ) {
-            $this->consoleHandler = is_string($initConsoleHandler) ? (string) $initConsoleHandler : 'console';
+            $this->consoleHandler = is_string($initConsoleHandler) ? $initConsoleHandler : 'console';
         }
     }
 

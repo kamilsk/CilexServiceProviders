@@ -29,7 +29,7 @@ $ git remote add upstream git@github.com:kamilsk/CilexServiceProviders.git
 ### Composer (for use in project)
 
 ```bash
-$ composer require kamilsk/cilex-service-providers:~2.0
+$ composer require kamilsk/cilex-service-providers:~2.1
 ```
 
 ## Pulse of repository

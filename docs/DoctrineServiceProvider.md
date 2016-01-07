@@ -22,7 +22,7 @@ doctrine:
         password: pass
     types:
       enum: string
-      custom: \Your\Custom\Type # extends \Doctrine\DBAL\Types\Type
+      custom: Your\Custom\Type # extends Doctrine\DBAL\Types\Type
 ```
 
 ## Usage
