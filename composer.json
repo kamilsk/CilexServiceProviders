@@ -6,7 +6,7 @@
   "homepage": "https://github.com/kamilsk/CilexServiceProviders",
   "license": "MIT",
   "authors": [
-    { "name": "Kamil Samigullin", "email": "kamil@samigullin.info", "role": "Author" }
+    { "name": "Kamil Samigullin", "email": "kamil@samigullin.info", "role": "lead" }
   ],
   "require": {
     "php": ">=5.5",
@@ -42,7 +42,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.2-dev"
+      "dev-master": "2.2.x-dev"
     }
   }
 }
