@@ -113,10 +113,22 @@ class MonologServiceProviderTest extends TestCase
         $app->register($config);
         $app->register(new MonologServiceProvider(false));
         self::assertFalse(isset($app['monolog.resolver']->getHandlers()['console']));
+        // restored bc
+        try {
+            self::assertFalse(isset($app['monolog.handlers']['console']));
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(false);
+        }
         $app = new Application('Test');
         $app->register($config);
         $app->register(new MonologServiceProvider());
         self::assertTrue(isset($app['monolog.resolver']->getHandlers()['console']));
+        // restored bc
+        try {
+            self::assertTrue(isset($app['monolog.handlers']['console']));
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(false);
+        }
     }
 
     /**

@@ -65,6 +65,9 @@ class MonologServiceProvider extends Cilex\MonologServiceProvider
             $app['monolog'] = $app::share(function () use ($app) {
                 return $app['monolog.resolver']->getDefaultChannel();
             });
+            $app['monolog.handlers'] = $app::share(function () use ($app) {
+                return $app['monolog.resolver']->getHandlers();
+            });
         }
         $app['logger'] = $app::share(function () use ($app) {
             return $app['monolog'];

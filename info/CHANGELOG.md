@@ -12,9 +12,7 @@ CHANGELOG for 2.x
     * `OctoLab\Cilex\Command\Command::getLogger` ([#80](/../../issues/80), [docs](/docs/AppAndCommands.md))
     * `OctoLab\Cilex\ServiceProvider\MonologServiceProvider::__construct` ([docs](/docs/MonologServiceProvider.md))
   * Fix bug with full support of configuration in json ([#76](/../../issues/76))
-  * Backward incompatibility
-    * `monolog.handlers` was removed from container, use `$app['monolog.resolver']->getHandlers()` instead
-  * [git diff](/../../compare/2.0...2.1)
+  * [git diff](/../../compare/2.0...2.1.1)
 
 * 2.0 (2015-12-24)
   * Remove all deprecated functionality
