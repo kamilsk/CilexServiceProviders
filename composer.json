@@ -11,7 +11,7 @@
   "require": {
     "php": ">=5.5",
     "cilex/cilex": "~1.0",
-    "kamilsk/common": "~1.1"
+    "kamilsk/common": "1.2.x-dev"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",

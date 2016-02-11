@@ -1,6 +1,10 @@
 CHANGELOG for 2.x
 =================
 
+## [Unreleased]
+### Changed
+- [git diff](/../../compare/2.1.1...master)
+
 * 2.1 (2016-01-07)
 
   * Support multichannel for `Monolog` like [Monolog Cascade](https://github.com/theorchard/monolog-cascade)
