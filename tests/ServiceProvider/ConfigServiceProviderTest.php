@@ -76,7 +76,6 @@ class ConfigServiceProviderTest extends TestCase
         $expected = [
             'component' => [
                 'parameter' => sprintf('%s/path/to/%s', dirname(__DIR__), 'test.txt'),
-                'options' => [1, 2, 3],
             ],
         ];
         self::assertEquals($expected, $app['config']);
