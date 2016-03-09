@@ -1,9 +1,13 @@
-CHANGELOG for 2.x
-=================
+[CHANGELOG](http://keepachangelog.com)
+======================================
+
+# Version 3
 
 ## [Unreleased]
 ### Changed
 - [git diff](/../../compare/2.1.1...master)
+
+# Version 2
 
 * 2.1 (2016-01-07)
 
@@ -61,8 +65,7 @@ CHANGELOG for 2.x
     * `OctoLab\Cilex\Application::register()` prevent register service twice ([#74](/../../issues/74))
   * [git diff](/../../compare/1.x...2.0)
 
-CHANGELOG for 1.x
-=================
+# Version 1
 
 * v1.5 (2015-11-06)
 

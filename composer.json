@@ -11,38 +11,37 @@
   "require": {
     "php": ">=5.5",
     "cilex/cilex": "~1.0",
-    "kamilsk/common": "1.2.x-dev"
+    "kamilsk/common": "~2.0"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
     "monolog/monolog": "~1.0",
     "php-school/cli-menu": "~1.0",
-    "secondparty/dipper": "*",
-    "symfony/config": "^2.0",
-    "symfony/event-dispatcher": "~2.0",
-    "symfony/monolog-bridge": "~2.0",
-    "symfony/yaml": "^2.0"
+    "symfony/config": "~2.0|~3.0",
+    "symfony/event-dispatcher": "~2.0|~3.0",
+    "symfony/monolog-bridge": "~2.0|~3.0",
+    "symfony/yaml": "~2.0|~3.0"
   },
   "suggest": {
     "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
-    "doctrine/migrations": "optional for DoctrineServiceProvider (~1.0 is recommended)",
-    "monolog/monolog": "for MonologServiceProvider (~1.0 is recommended)",
-    "php-school/cli-menu": "for PresentCommand (~1.0 is recommended, php 5.6+ is required)",
-    "secondparty/dipper": "as alternative of Symfony Yaml parser (stable version is recommended)",
-    "symfony/config": "for ConfigServiceProvider (~2.0 is recommended)",
-    "symfony/event-dispatcher": "needed when using log messages in console commands (~2.0 is recommended)",
-    "symfony/monolog-bridge": "optional for MonologServiceProvider (~2.0 is recommended)",
-    "symfony/yaml": "for ConfigServiceProvider (~2.0 is recommended)"
+    "doctrine/migrations": "optional for use OctoLab\\**\\Doctrine\\*Migration* (~1.0 is recommended)",
+    "incenteev/composer-parameter-handler": "to handle parameters.yml (~2.0 is recommended)",
+    "monolog/monolog": "for use MonologServiceProvider (~1.0 is recommended)",
+    "php-school/cli-menu": "for PresentCommand (~1.0 is recommended, PHP 5.6+ is required)",
+    "symfony/config": "for use ConfigServiceProvider (~3.0 is recommended)",
+    "symfony/event-dispatcher": "needed when using log messages in console commands (~3.0 is recommended)",
+    "symfony/monolog-bridge": "optional for MonologServiceProvider (~3.0 is recommended)",
+    "symfony/yaml": "for use ConfigServiceProvider (~3.0 is recommended)"
   },
   "autoload": {
     "psr-4": { "OctoLab\\Cilex\\": "src/" }
   },
   "autoload-dev": {
-    "psr-4": { "Test\\OctoLab\\Cilex\\": "tests/" }
+    "psr-4": { "OctoLab\\Cilex\\": "tests/" }
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.2.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   }
 }
