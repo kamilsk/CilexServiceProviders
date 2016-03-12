@@ -1,6 +1,6 @@
 > # Cilex Service Providers
 >
-> Revised set of service providers for Cilex.
+> Revised set of service providers for [Cilex](https://github.com/Cilex/Cilex).
 
 ## What's inside
 
@@ -14,9 +14,11 @@
 
 ### [Usage example](docs/UsageExample.md)
 
+## [Documentation](http://kamilsk.github.io/CilexServiceProviders/)
+
 ## Installation
 
-### Git (for participate in development)
+### Git (development)
 
 [Fork it before](https://github.com/kamilsk/CilexServiceProviders/fork).
 
@@ -26,7 +28,7 @@ $ cd CilexServiceProviders && composer install
 $ git remote add upstream git@github.com:kamilsk/CilexServiceProviders.git
 ```
 
-### Composer (for use in project)
+### Composer (production)
 
 ```bash
 $ composer require kamilsk/cilex-service-providers:~2.1
@@ -34,7 +36,7 @@ $ composer require kamilsk/cilex-service-providers:~2.1
 
 ## Pulse of repository
 
-### [Changelog](info/CHANGELOG.md)
+### [Changelog](CHANGELOG.md)
 
 ### General information
 
@@ -69,7 +71,7 @@ $ composer require kamilsk/cilex-service-providers:~2.1
 
 ## Contributing
 
-Please see [CONTRIBUTING](info/CONTRIBUTING.md) and [CONDUCT](info/CONDUCT.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
 
 ## Security
 
@@ -77,4 +79,4 @@ If you discover any security related issues, please email feedback@octolab.org i
 
 ## License
 
-The MIT License (MIT). Please see [License File](info/LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
