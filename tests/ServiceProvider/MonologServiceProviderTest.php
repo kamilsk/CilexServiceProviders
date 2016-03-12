@@ -3,7 +3,9 @@
 namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
+use Monolog\Logger;
 use OctoLab\Cilex\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -12,83 +14,36 @@ class MonologServiceProviderTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider monologConfigProvider
+     * @dataProvider applicationProvider
      *
-     * @param ConfigServiceProvider $config
+     * @param Application $app
      */
-    public function configSupport(ConfigServiceProvider $config)
+    public function registerSuccess(Application $app)
     {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider(false));
-        $logs = [
-            $app['config']['monolog:handlers:file:arguments'][0],
-        ];
-        $messages = [
-            'Info level message.',
-        ];
-        $monolog = $app['monolog'];
-        $monolog->info($messages[0]);
-        self::assertContains($messages[0], file_get_contents($logs[0]));
-        foreach ($logs as $log) {
-            unlink($log);
-        }
+        $app->register($this->getConfigServiceProviderForMonolog());
+        $app->register(new MonologServiceProvider());
+        self::assertInstanceOf(Logger::class, $app['monolog']);
+        self::assertInstanceOf(LoggerInterface::class, $app['logger']);
+        self::assertEquals($app['monolog'], $app['logger']);
+        self::assertInstanceOf(Logger::class, $app['loggers']['app']);
+        self::assertInstanceOf(Logger::class, $app['loggers']['debug']);
+        self::assertInstanceOf(Logger::class, $app['loggers']['db']);
+        self::assertEquals($app['logger'], $app['loggers'][$app['config']['monolog:default_channel']]);
     }
 
     /**
      * @test
-     * @dataProvider monologConfigProvider
+     * @dataProvider applicationProvider
      *
-     * @param ConfigServiceProvider $config
+     * @param Application $app
      */
-//    public function nameSupport(ConfigServiceProvider $config)
-//    {
-//        $appName = 'TEST';
-//        // set name by default way
-//        $app = new Application($appName);
-//        $app->register($config);
-//        $log = $app['config']['monolog:handlers:file:arguments'][0];
-//        $app['monolog.name'] = 'MONOLOG';
-//        $app->register(new MonologServiceProvider(false));
-//        $monolog = $app['monolog'];
-//        $monolog->info('message');
-//        self::assertNotContains($appName, file_get_contents($log));
-//        self::assertContains($app['monolog.name'], file_get_contents($log));
-//        unlink($log);
-//        // set name by Application
-//        $app = new Application($appName);
-//        $app->register($config);
-//        $app->register(new MonologServiceProvider(false));
-//        $monolog = $app['monolog'];
-//        $monolog->info('message');
-//        self::assertContains($appName, file_get_contents($log));
-//        unlink($log);
-//        // set name by config
-//        $app = new Application($appName);
-//        $app->register($config);
-//        $config = $app['config'];
-//        $config['monolog']['name'] = 'CONFIG';
-//        $app['config'] = $config;
-//        $app->register(new MonologServiceProvider(false));
-//        $monolog = $app['monolog'];
-//        $monolog->info('message');
-//        self::assertNotContains($appName, file_get_contents($log));
-//        self::assertContains($app['config']['monolog:name'], file_get_contents($log));
-//        unlink($log);
-//    }
-
-    /**
-     * @test
-     * @dataProvider monologConfigProvider
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function aliasSupport(ConfigServiceProvider $config)
+    public function registerFailure(Application $app)
     {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider());
-        self::assertInstanceOf('\Monolog\Logger', $app['monolog']);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $app['logger']);
+        try {
+            $app->register(new MonologServiceProvider());
+            self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(true);
+        }
     }
 }

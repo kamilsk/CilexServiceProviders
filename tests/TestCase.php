@@ -3,6 +3,7 @@
 namespace OctoLab\Cilex;
 
 use Cilex\Application as CilexApplication;
+use OctoLab\Cilex\ServiceProvider;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -19,6 +20,33 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             [new Application('test')],
         ];
     }
+
+    /**
+     * @param string $config
+     * @param string $extension
+     * @param array $placeholders
+     *
+     * @return ServiceProvider\ConfigServiceProvider
+     */
+    public function getConfigServiceProvider($config, $extension, array $placeholders = ['placeholder' => 'test'])
+    {
+        return new ServiceProvider\ConfigServiceProvider($this->getConfigPath($config, $extension), $placeholders);
+    }
+
+    /**
+     * @return ServiceProvider\ConfigServiceProvider
+     */
+    public function getConfigServiceProviderForMonolog()
+    {
+        return $this->getConfigServiceProvider('monolog/config', 'yml', ['root_dir' => __DIR__]);
+    }
+
+
+
+
+
+
+
 
     /**
      * @return array<int,ServiceProvider\ConfigServiceProvider[]>

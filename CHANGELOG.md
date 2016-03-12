@@ -4,23 +4,31 @@
 # Version 3
 
 ## [Unreleased]
+### Added
+- services
+  - `config` contains `Common\Config\SimpleConfig` with `ArrayAccess` implementation
+  - `loggers` contains `Common\Monolog\LoggerLocator`
+
 ### Changed
+- configs
+  - `monolog` now has a stricter format ([docs](/docs/MonologServiceProvider.md))
+- methods
+  - `Command\Command::initConsoleHandler` changed signature: it waits `$channel` instead of `$handlers`
 - packages
   - `kamilsk/common` is up
   - `symfony/config` is up
   - `symfony/event-dispatcher` is up
   - `symfony/monolog-bridge` is up
   - `symfony/yaml` is up
-- methods
-  - `Command\Command::initConsoleHandler` change signature: it waits `$channel` instead of `$handlers`
 - [git diff](/../../compare/2.1.1...master)
 
 ### Removed
 - config
   - `monolog:name`
+  - `monolog.name` now ignored, use `console.name` or channel's `name` option in configuration
 - methods
-  - `ServiceProvider\MonologServiceProvider::__construct()`
   - `Command\Command::initConsoleHandler()`
+  - `ServiceProvider\MonologServiceProvider::__construct()`
 - services
   - `config.raw`, use `config` instead
   - `monolog.resolver`, use `loggers` instead

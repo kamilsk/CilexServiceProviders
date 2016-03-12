@@ -30,7 +30,7 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function registerJsonSuccess(CilexApplication $app)
     {
-        $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'json'), ['placeholder' => 'test']));
+        $app->register($this->getConfigServiceProvider('config', 'json'));
         foreach ($this->expected as $key => $value) {
             self::assertEquals($value, $app['config'][$key]);
         }
@@ -44,7 +44,7 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function registerPhpSuccess(CilexApplication $app)
     {
-        $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'php'), ['placeholder' => 'test']));
+        $app->register($this->getConfigServiceProvider('config', 'php'));
         foreach ($this->expected as $key => $value) {
             self::assertEquals($value, $app['config'][$key]);
         }
@@ -58,7 +58,7 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function registerYamlSuccess(CilexApplication $app)
     {
-        $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'yml'), ['placeholder' => 'test']));
+        $app->register($this->getConfigServiceProvider('config', 'yml'));
         foreach ($this->expected as $key => $value) {
             self::assertEquals($value, $app['config'][$key]);
         }
@@ -71,10 +71,10 @@ class ConfigServiceProviderTest extends TestCase
      *
      * @param CilexApplication $app
      */
-    public function registerFail(CilexApplication $app)
+    public function registerFailure(CilexApplication $app)
     {
         try {
-            $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'xml')));
+            $app->register($this->getConfigServiceProvider('config', 'xml'));
             $app->offsetGet('config');
             self::fail(sprintf('%s exception expected.', \DomainException::class));
         } catch (\DomainException $e) {
