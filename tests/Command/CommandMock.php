@@ -1,8 +1,6 @@
 <?php
 
-namespace Test\OctoLab\Cilex\Command\Mock;
-
-use OctoLab\Cilex\Command\Command;
+namespace OctoLab\Cilex\Command;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>

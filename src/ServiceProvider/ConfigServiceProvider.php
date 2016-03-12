@@ -4,18 +4,17 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
-use OctoLab\Common\Config\JsonConfig;
-use OctoLab\Common\Config\Loader\JsonFileLoader;
-use OctoLab\Common\Config\Loader\YamlFileLoader;
-use OctoLab\Common\Config\Parser\SymfonyYamlParser;
+use OctoLab\Common\Config\FileConfig;
+use OctoLab\Common\Config\Loader\FileLoader;
+use OctoLab\Common\Config\Loader\Parser\JsonParser;
+use OctoLab\Common\Config\Loader\Parser\YamlParser;
 use OctoLab\Common\Config\SimpleConfig;
-use OctoLab\Common\Config\YamlConfig;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * @author Kamil Samigullin <kamil@samigullin.info>
- *
  * @see \Cilex\Provider\ConfigServiceProvider
+ *
+ * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class ConfigServiceProvider implements ServiceProviderInterface
 {
@@ -40,41 +39,34 @@ class ConfigServiceProvider implements ServiceProviderInterface
      * @param Application $app
      *
      * @throws \InvalidArgumentException
+     * @throws \Exception
      * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
      * @throws \Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceException
      * @throws \DomainException
-     * @throws \RuntimeException
      *
      * @api
      */
     public function register(Application $app)
     {
-        $app['config.raw'] = $app::share(function () {
+        $app['config'] = $app::share(function () {
             switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
                 case 'yml':
-                    $config = (new YamlConfig(new YamlFileLoader(new FileLocator(), new SymfonyYamlParser())))
-                        ->load($this->filename)
-                        ->replace($this->placeholders)
+                    $config = (new FileConfig(new FileLoader(new FileLocator(), new YamlParser())))
+                        ->load($this->filename, $this->placeholders)
                     ;
                     break;
                 case 'php':
-                    $config = (new SimpleConfig(include $this->filename))
-                        ->replace($this->placeholders)
-                    ;
+                    $config = (new SimpleConfig(include $this->filename, $this->placeholders));
                     break;
                 case 'json':
-                    $config = (new JsonConfig(new JsonFileLoader(new FileLocator())))
-                        ->load($this->filename)
-                        ->replace($this->placeholders)
+                    $config = (new FileConfig(new FileLoader(new FileLocator(), new JsonParser())))
+                        ->load($this->filename, $this->placeholders)
                     ;
                     break;
                 default:
                     throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));
             }
             return $config;
-        });
-        $app['config'] = $app::share(function () use ($app) {
-            return $app['config.raw']->toArray();
         });
     }
 }

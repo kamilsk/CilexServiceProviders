@@ -1,17 +1,14 @@
 <?php
 
-namespace Test\OctoLab\Cilex\Command;
+namespace OctoLab\Cilex\Command;
 
 use Cilex\Application;
 use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
 use OctoLab\Cilex\ServiceProvider\DoctrineServiceProvider;
 use OctoLab\Cilex\ServiceProvider\MonologServiceProvider;
-use Test\OctoLab\Cilex\TestCase;
-use Symfony\Component\Console\Output\NullOutput;
+use OctoLab\Cilex\TestCase;
 
 /**
- * phpunit tests/Command/CommandTest.php
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class CommandTest extends TestCase
@@ -175,7 +172,7 @@ class CommandTest extends TestCase
         $app = new Application('Test');
         $command = $this->getCommandMock();
         $app->command($command);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('default'));
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('unknown'));
     }
 
     /**
@@ -191,36 +188,19 @@ class CommandTest extends TestCase
         $app->register(new MonologServiceProvider());
         $command = $this->getCommandMock();
         $app->command($command);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('default'));
-    }
-
-    /**
-     * @test
-     * @dataProvider monologConfigProvider
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function initConsoleHandler(ConfigServiceProvider $config)
-    {
-        $output = new NullOutput();
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider(true));
-        $command = $this->getCommandMock();
-        $app->command($command);
-        $command->initConsoleHandler($output);
+        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('app'));
     }
 
     /**
      * @param string $name
      * @param string|null $namespace
      *
-     * @return Mock\CommandMock
+     * @return Command
      */
     private function getCommandMock($name = 'test', $namespace = null)
     {
-        /** @var Mock\CommandMock $instance */
-        $instance = (new \ReflectionClass(Mock\CommandMock::class))->newInstanceWithoutConstructor();
+        /** @var Command $instance */
+        $instance = (new \ReflectionClass(CommandMock::class))->newInstanceWithoutConstructor();
         $reflection = (new \ReflectionObject($instance));
         if (null !== $namespace) {
             $property = $reflection->getProperty('namespace');

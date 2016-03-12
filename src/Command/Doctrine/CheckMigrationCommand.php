@@ -37,9 +37,8 @@ final class CheckMigrationCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $migration = $input->getArgument('migration');
-        $parser = new Parser();
         if (is_file($migration)) {
-            $queries = $parser->extractSql(file_get_contents($migration));
+            $queries = Parser::extractSql(file_get_contents($migration));
             if (!empty($queries)) {
                 $output->writeln(sprintf('<comment>Migration %s contains</comment>', $migration));
                 $this->printQueries($queries, $output);
@@ -68,7 +67,7 @@ final class CheckMigrationCommand extends AbstractCommand
                     if ($files) {
                         $output->writeln(sprintf('<comment>%s for migration %s</comment>', ucfirst($name), $migration));
                         foreach ($files as $file) {
-                            $queries = $parser->extractSql(file_get_contents($instance->getFullPath($file)));
+                            $queries = Parser::extractSql(file_get_contents($instance->getFullPath($file)));
                             $this->printQueries($queries, $output);
                         }
                     }

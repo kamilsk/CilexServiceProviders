@@ -1,16 +1,11 @@
 <?php
 
-namespace Test\OctoLab\Cilex\ServiceProvider;
+namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
-use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
-use OctoLab\Cilex\ServiceProvider\MonologServiceProvider;
-use OctoLab\Common\Monolog\Util\ConfigResolver;
-use Test\OctoLab\Cilex\TestCase;
+use OctoLab\Cilex\TestCase;
 
 /**
- * phpunit tests/ServiceProvider/MonologServiceProviderTest.php
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class MonologServiceProviderTest extends TestCase
@@ -27,18 +22,14 @@ class MonologServiceProviderTest extends TestCase
         $app->register($config);
         $app->register(new MonologServiceProvider(false));
         $logs = [
-            $app['config']['monolog']['handlers']['access']['arguments'][0],
-            $app['config']['monolog']['handlers']['error']['arguments']['stream'],
+            $app['config']['monolog:handlers:file:arguments'][0],
         ];
         $messages = [
             'Info level message.',
-            'Error level message.',
         ];
         $monolog = $app['monolog'];
         $monolog->info($messages[0]);
-        $monolog->error($messages[1]);
         self::assertContains($messages[0], file_get_contents($logs[0]));
-        self::assertContains($messages[1], file_get_contents($logs[1]));
         foreach ($logs as $log) {
             unlink($log);
         }
@@ -50,41 +41,41 @@ class MonologServiceProviderTest extends TestCase
      *
      * @param ConfigServiceProvider $config
      */
-    public function nameSupport(ConfigServiceProvider $config)
-    {
-        $appName = 'TEST';
-        // set name by default way
-        $app = new Application($appName);
-        $app->register($config);
-        $log = $app['config']['monolog']['handlers']['access']['arguments'][0];
-        $app['monolog.name'] = 'MONOLOG';
-        $app->register(new MonologServiceProvider(false));
-        $monolog = $app['monolog'];
-        $monolog->info('message');
-        self::assertNotContains($appName, file_get_contents($log));
-        self::assertContains($app['monolog.name'], file_get_contents($log));
-        unlink($log);
-        // set name by Application
-        $app = new Application($appName);
-        $app->register($config);
-        $app->register(new MonologServiceProvider(false));
-        $monolog = $app['monolog'];
-        $monolog->info('message');
-        self::assertContains($appName, file_get_contents($log));
-        unlink($log);
-        // set name by config
-        $app = new Application($appName);
-        $app->register($config);
-        $config = $app['config'];
-        $config['monolog']['name'] = 'CONFIG';
-        $app['config'] = $config;
-        $app->register(new MonologServiceProvider(false));
-        $monolog = $app['monolog'];
-        $monolog->info('message');
-        self::assertNotContains($appName, file_get_contents($log));
-        self::assertContains($app['config']['monolog']['name'], file_get_contents($log));
-        unlink($log);
-    }
+//    public function nameSupport(ConfigServiceProvider $config)
+//    {
+//        $appName = 'TEST';
+//        // set name by default way
+//        $app = new Application($appName);
+//        $app->register($config);
+//        $log = $app['config']['monolog:handlers:file:arguments'][0];
+//        $app['monolog.name'] = 'MONOLOG';
+//        $app->register(new MonologServiceProvider(false));
+//        $monolog = $app['monolog'];
+//        $monolog->info('message');
+//        self::assertNotContains($appName, file_get_contents($log));
+//        self::assertContains($app['monolog.name'], file_get_contents($log));
+//        unlink($log);
+//        // set name by Application
+//        $app = new Application($appName);
+//        $app->register($config);
+//        $app->register(new MonologServiceProvider(false));
+//        $monolog = $app['monolog'];
+//        $monolog->info('message');
+//        self::assertContains($appName, file_get_contents($log));
+//        unlink($log);
+//        // set name by config
+//        $app = new Application($appName);
+//        $app->register($config);
+//        $config = $app['config'];
+//        $config['monolog']['name'] = 'CONFIG';
+//        $app['config'] = $config;
+//        $app->register(new MonologServiceProvider(false));
+//        $monolog = $app['monolog'];
+//        $monolog->info('message');
+//        self::assertNotContains($appName, file_get_contents($log));
+//        self::assertContains($app['config']['monolog:name'], file_get_contents($log));
+//        unlink($log);
+//    }
 
     /**
      * @test
@@ -99,51 +90,5 @@ class MonologServiceProviderTest extends TestCase
         $app->register(new MonologServiceProvider());
         self::assertInstanceOf('\Monolog\Logger', $app['monolog']);
         self::assertInstanceOf('\Psr\Log\LoggerInterface', $app['logger']);
-    }
-
-    /**
-     * @test
-     * @dataProvider monologConfigProvider
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function consoleHandler(ConfigServiceProvider $config)
-    {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider(false));
-        self::assertFalse(isset($app['monolog.resolver']->getHandlers()['console']));
-        // restored bc
-        try {
-            self::assertFalse(isset($app['monolog.handlers']['console']));
-        } catch (\InvalidArgumentException $e) {
-            self::assertTrue(false);
-        }
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider());
-        self::assertTrue(isset($app['monolog.resolver']->getHandlers()['console']));
-        // restored bc
-        try {
-            self::assertTrue(isset($app['monolog.handlers']['console']));
-        } catch (\InvalidArgumentException $e) {
-            self::assertTrue(false);
-        }
-    }
-
-    /**
-     * @test
-     * @dataProvider monologCascadeConfigProvider
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function cascadeSupport(ConfigServiceProvider $config)
-    {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider());
-        /** @var ConfigResolver $resolver */
-        $resolver = $app['monolog.resolver'];
-        self::assertEquals($resolver->getDefaultChannel(), $app['monolog']);
     }
 }

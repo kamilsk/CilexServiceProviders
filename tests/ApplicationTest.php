@@ -1,14 +1,10 @@
 <?php
 
-namespace Test\OctoLab\Cilex;
+namespace OctoLab\Cilex;
 
-use Cilex\Application as OldApplication;
-use OctoLab\Cilex\Application as NewApplication;
-use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
+use Cilex\Application as CilexApplication;
 
 /**
- * phpunit tests/ApplicationTest.php
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class ApplicationTest extends TestCase
@@ -18,11 +14,9 @@ class ApplicationTest extends TestCase
      */
     public function registerNew()
     {
-        $app = new NewApplication('Test');
-        $app->register(new ConfigServiceProvider($this->getConfigPath()));
-        self::assertNotEmpty($app->offsetGet('config'));
-        $app->register(new ConfigServiceProvider($this->getConfigPath('empty')));
-        self::assertNotEmpty($app->offsetGet('config'));
+        $app = new Application('Test');
+        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath()));
+        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath('empty')));
     }
 
     /**
@@ -30,10 +24,8 @@ class ApplicationTest extends TestCase
      */
     public function registerOld()
     {
-        $app = new OldApplication('Test');
-        $app->register(new ConfigServiceProvider($this->getConfigPath()));
-        self::assertNotEmpty($app->offsetGet('config'));
-        $app->register(new ConfigServiceProvider($this->getConfigPath('empty')));
-        self::assertEmpty($app->offsetGet('config'));
+        $app = new CilexApplication('Test');
+        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath()));
+        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath('empty')));
     }
 }

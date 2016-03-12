@@ -1,10 +1,8 @@
 <?php
 
-namespace Test\OctoLab\Cilex;
+namespace OctoLab\Cilex;
 
 /**
- * phpunit tests/ClassAvailabilityTest.php
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class ClassAvailabilityTest extends \PHPUnit_Framework_TestCase

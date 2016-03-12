@@ -2,9 +2,7 @@
 
 namespace OctoLab\Cilex\Command;
 
-use OctoLab\Common\Monolog\Util\ConfigResolver;
-use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
-use Symfony\Component\Console\Output\OutputInterface;
+use OctoLab\Common\Monolog\Util\LoggerLocator;
 
 /**
  * @method \Cilex\Provider\Console\ContainerAwareApplication getApplication()
@@ -62,15 +60,12 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      */
     public function getConfig($path = null, $default = null)
     {
+        $config = $this->getService('config');
         if ($path === null) {
-            $config = $this->getService('config');
             return $config ?: [];
+        } else {
+            return $config[$path] ?: $default;
         }
-        $rawConfig = $this->getService('config.raw');
-        if ($rawConfig) {
-            $config = $rawConfig[$path];
-        }
-        return isset($config) ? $config : $default;
     }
 
     /**
@@ -106,28 +101,21 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      * @return \Psr\Log\LoggerInterface
      *
      * @throws \RuntimeException if monolog service is not defined or channel is not registered
+     * @throws \OutOfRangeException
      *
      * @api
      */
     public function getLogger($channel = null)
     {
-        if ($channel === null) {
-            $logger = $this->getService('logger');
-            if ($logger === null) {
-                throw new \RuntimeException('MonologServiceProvider is not registered.');
-            }
-        } else {
-            /** @var ConfigResolver $resolver */
-            $resolver = $this->getService('monolog.resolver');
-            if ($resolver === null) {
-                throw new \RuntimeException('MonologServiceProvider is not registered.');
-            }
-            if (!isset($resolver->getChannels()[$channel])) {
-                throw new \RuntimeException(sprintf('Logger with ID "%s" not found.', $channel));
-            }
-            $logger = $resolver->getChannels()[$channel];
+        /** @var LoggerLocator $loggers */
+        $loggers = $this->getService('loggers');
+        if ($loggers === null) {
+            throw new \RuntimeException('MonologServiceProvider is not registered.');
         }
-        return $logger;
+        if ($channel !== null && !isset($loggers[$channel])) {
+            throw new \RuntimeException(sprintf('Logger with ID "%s" not found.', $channel));
+        }
+        return $channel === null ? $loggers->getDefaultChannel() : $loggers[$channel];
     }
 
     /**
@@ -147,42 +135,5 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
             return parent::setName($name);
         }
         return parent::setName(sprintf('%s:%s', $this->namespace, $name));
-    }
-
-    /**
-     * Set OutputInterface for ConsoleHandler.
-     *
-     * @param OutputInterface $output
-     * @param string $handler
-     *
-     * @return $this
-     *
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
-     * @throws \DomainException
-     * @throws \UnexpectedValueException
-     *
-     * @uses \Symfony\Bridge\Monolog\Handler\ConsoleHandler
-     *
-     * @api
-     */
-    public function initConsoleHandler(OutputInterface $output, $handler = 'console')
-    {
-        /** @var ConfigResolver $resolver */
-        $resolver = $this->getService('monolog.resolver');
-        if ($resolver === null) {
-            throw new \RuntimeException('MonologServiceProvider is not registered.');
-        }
-        if (!isset($resolver->getHandlers()[$handler])) {
-            throw new \DomainException(sprintf('Handler with ID "%s" not found.', $handler));
-        }
-        $consoleHandler = $resolver->getHandlers()[$handler];
-        if (!$consoleHandler instanceof ConsoleHandler) {
-            throw new \UnexpectedValueException(
-                sprintf('Handler with ID "%s" is not an instance of %s', $handler, ConsoleHandler::class)
-            );
-        }
-        $consoleHandler->setOutput($output);
-        return $this;
     }
 }

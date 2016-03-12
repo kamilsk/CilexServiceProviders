@@ -1,14 +1,30 @@
 monolog:
+  channels:
+    app:
+      arguments: { name: APP }
+      handlers:
+      - file
+      - chrome
+    db:
+      name: app
+      handlers:
+      - file
+      processors:
+      - memory
+      - time
   handlers:
-    access:
+    file:
       type: stream
-      arguments: ["%root_dir%/app/logs/access.log", info, false]
-      formatter: { type: json }
-    error:
-      class: \Monolog\Handler\StreamHandler
-      arguments: { stream: "%root_dir%/app/logs/error.log", level: error, bubble: false }
-      formatter: { class: \Monolog\Formatter\JsonFormatter }
+      arguments: ["%root_dir%/info.log", info, true]
+    chrome:
+      type: chrome_php
+      arguments: { level: info, bubble: true }
+      formatter: chrome
   processors:
-    - { type: memory_peak_usage }
-    - { type: uid, arguments: { length: 7 } }
-    - { class: \OctoLab\Common\Monolog\Processor\TimeExecutionProcessor }
+    memory:
+      type: memory_usage
+    time:
+      class: OctoLab\Common\Monolog\Processor\TimeExecutionProcessor
+  formatters:
+    chrome:
+      type: chrome_php

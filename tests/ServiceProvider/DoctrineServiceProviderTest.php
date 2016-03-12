@@ -1,16 +1,12 @@
 <?php
 
-namespace Test\OctoLab\Cilex\ServiceProvider;
+namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Doctrine\DBAL\Types\Type;
-use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
-use OctoLab\Cilex\ServiceProvider\DoctrineServiceProvider;
-use Test\OctoLab\Cilex\TestCase;
+use OctoLab\Cilex\TestCase;
 
 /**
- * phpunit tests/ServiceProvider/DoctrineServiceProviderTest.php
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class DoctrineServiceProviderTest extends TestCase

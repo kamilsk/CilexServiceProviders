@@ -1,5 +1,5 @@
 <?php
-return OctoLab\Common\Config\Util\ArrayHelper::merge(
+return OctoLab\Common\Util\ArrayHelper::merge(
     include __DIR__ . '/parameters.php',
     include __DIR__ . '/component/config.php',
     [

@@ -1,19 +1,14 @@
 <?php
 
-namespace Test\OctoLab\Cilex\Command;
+namespace OctoLab\Cilex\Command;
 
 use Cilex\Application;
-use OctoLab\Cilex\Command\PresetCommand;
 use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
+use OctoLab\Cilex\TestCase;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Test\OctoLab\Cilex\Command\Mock\FibonacciCommand;
-use Test\OctoLab\Cilex\Command\Mock\HelloCommand;
-use Test\OctoLab\Cilex\TestCase;
 
 /**
- * phpunit tests/Command/PresetCommandTest.php
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class PresetCommandTest extends TestCase

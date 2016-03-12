@@ -51,8 +51,7 @@ class DoctrineServiceProvider extends Cilex\DoctrineServiceProvider
             $app['dbs.options'] = $connections;
         }
         if (isset($app['config']['doctrine']['dbal']['types'])) {
-            $resolver = new ConfigResolver();
-            $resolver->resolve($app['config']['doctrine']['dbal']);
+            ConfigResolver::resolve($app['config']['doctrine']['dbal']);
         }
         if ($this->helperConnection) {
             $dbs = $app->offsetGet('dbs');

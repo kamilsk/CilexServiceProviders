@@ -1,8 +1,6 @@
 <?php
 
-namespace Test\OctoLab\Cilex;
-
-use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
+namespace OctoLab\Cilex;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -15,7 +13,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     public function doctrineConfigProvider()
     {
         return [
-            [new ConfigServiceProvider($this->getConfigPath('doctrine/config'))],
+            [new ServiceProvider\ConfigServiceProvider($this->getConfigPath('doctrine/config'))],
         ];
     }
 
@@ -25,7 +23,12 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     public function monologConfigProvider()
     {
         return [
-            [new ConfigServiceProvider($this->getConfigPath('monolog/config'), ['root_dir' => __DIR__])],
+            [
+                new ServiceProvider\ConfigServiceProvider(
+                    $this->getConfigPath('monolog/config'),
+                    ['root_dir' => __DIR__]
+                )
+            ],
         ];
     }
 
@@ -35,7 +38,12 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     public function monologCascadeConfigProvider()
     {
         return [
-            [new ConfigServiceProvider($this->getConfigPath('monolog/cascade'), ['root_dir' => __DIR__])],
+            [
+                new ServiceProvider\ConfigServiceProvider(
+                    $this->getConfigPath('monolog/cascade'),
+                    ['root_dir' => __DIR__]
+                )
+            ],
         ];
     }
 
