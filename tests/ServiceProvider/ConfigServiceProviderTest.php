@@ -2,7 +2,7 @@
 
 namespace OctoLab\Cilex\ServiceProvider;
 
-use Cilex\Application;
+use Cilex\Application as CilexApplication;
 use OctoLab\Cilex\TestCase;
 
 /**
@@ -10,174 +10,75 @@ use OctoLab\Cilex\TestCase;
  */
 class ConfigServiceProviderTest extends TestCase
 {
+    /** @var array */
+    private $expected = [
+        'app' => [
+            'placeholder_parameter' => 'test',
+            'constant' => E_ALL,
+        ],
+        'component' => [
+            'parameter' => 'base component\'s parameter will be overwritten by root config',
+            'base_parameter' => 'base parameter will not be overwritten',
+        ],
+    ];
+
     /**
-     * @return Application[]
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param CilexApplication $app
      */
-    public function applicationProvider()
+    public function registerJsonSuccess(CilexApplication $app)
     {
-        return [
-            [new Application('Test')],
-        ];
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'json'), ['placeholder' => 'test']));
+        foreach ($this->expected as $key => $value) {
+            self::assertEquals($value, $app['config'][$key]);
+        }
     }
 
     /**
      * @test
      * @dataProvider applicationProvider
      *
-     * @param Application $app
+     * @param CilexApplication $app
      */
-//    public function substituteParameters(Application $app)
-//    {
-//        $app->register(new ConfigServiceProvider($this->getConfigPath('config_parameters')));
-//        $expected = [
-//            'component' => [
-//                'parameter' => 'test_parameter',
-//                'another_parameter' => 'test_another_parameter',
-//            ],
-//        ];
-//        self::assertEquals($expected, $app['config']);
-//    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     *
-     * @param Application $app
-     */
-//    public function substitutePlaceholders(Application $app)
-//    {
-//        $app->register(new ConfigServiceProvider($this->getConfigPath('config_placeholders'), [
-//            'another_parameter' => 'test_placeholder',
-//        ]));
-//        $expected = [
-//            'component' => [
-//                'parameter' => 'test_parameter',
-//                'another_parameter' => 'test_placeholder',
-//            ],
-//        ];
-//        self::assertEquals($expected, $app['config']);
-//    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     *
-     * @param Application $app
-     */
-//    public function overrideParameters(Application $app)
-//    {
-//        $app->register(new ConfigServiceProvider($this->getConfigPath('config_override'), [
-//            'root_dir' => dirname(__DIR__),
-//            'file' => 'test.txt',
-//        ]));
-//        $expected = [
-//            'component' => [
-//                'parameter' => sprintf('%s/path/to/%s', dirname(__DIR__), 'test.txt'),
-//            ],
-//        ];
-//        self::assertEquals($expected, $app['config']);
-//    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     *
-     * @param Application $app
-     */
-//    public function combineParametersAndPlaceholders(Application $app)
-//    {
-//        $app->register(
-//            new ConfigServiceProvider($this->getConfigPath(), ['placeholder' => 'placeholder'])
-//        );
-//        $expected = [
-//            'component' => [
-//                'base_parameter' => 'base parameter will not be overwritten',
-//                'parameter' => 'base component\'s parameter will be overwritten by root config',
-//                'placeholder_parameter' => 'placeholder',
-//                'constant' => E_ALL,
-//            ],
-//        ];
-//        self::assertEquals($expected, $app['config']);
-//    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     *
-     * @param Application $app
-     */
-//    public function phpConfigSupport(Application $app)
-//    {
-//        $app->register(
-//            new ConfigServiceProvider($this->getConfigPath('config', 'php'), ['placeholder' => 'placeholder'])
-//        );
-//        $expected = [
-//            'component' => [
-//                'base_parameter' => 'base parameter will not be overwritten',
-//                'parameter' => 'base component\'s parameter will be overwritten by root config',
-//                'placeholder_parameter' => 'placeholder',
-//                'constant' => E_ALL,
-//            ],
-//        ];
-//        self::assertEquals($expected, $app['config']);
-//    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     *
-     * @param Application $app
-     */
-//    public function jsonConfigSupport(Application $app)
-//    {
-//        $app->register(
-//            new ConfigServiceProvider($this->getConfigPath('config', 'json'), ['placeholder' => 'placeholder'])
-//        );
-//        $expected = [
-//            'component' => [
-//                'base_parameter' => 'base parameter will not be overwritten',
-//                'parameter' => 'base component\'s parameter will be overwritten by root config',
-//                'placeholder_parameter' => 'placeholder',
-//                'constant' => E_ALL,
-//            ],
-//        ];
-//        self::assertEquals($expected, $app['config']);
-//    }
-
-    /**
-     * @test
-     */
-//    public function equivalence()
-//    {
-//        $php = new Application('PHP');
-//        $php->register(
-//            new ConfigServiceProvider($this->getConfigPath('config', 'php'), ['placeholder' => 'placeholder'])
-//        );
-//        $json = new Application('JSON');
-//        $json->register(
-//            new ConfigServiceProvider($this->getConfigPath('config', 'json'), ['placeholder' => 'placeholder'])
-//        );
-//        $yml = new Application('YAML');
-//        $yml->register(
-//            new ConfigServiceProvider($this->getConfigPath(), ['placeholder' => 'placeholder'])
-//        );
-//        self::assertEquals($php['config'], $json['config']);
-//        self::assertEquals($yml['config'], $json['config']);
-//        self::assertEquals($php['config'], $yml['config']);
-//    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     * @expectedException \DomainException
-     *
-     * @param Application $app
-     */
-    public function throwDomainException(Application $app)
+    public function registerPhpSuccess(CilexApplication $app)
     {
-        $app->register(
-            new ConfigServiceProvider($this->getConfigPath('config', 'xml'), ['placeholder' => 'placeholder'])
-        );
-        $app->offsetGet('config');
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'php'), ['placeholder' => 'test']));
+        foreach ($this->expected as $key => $value) {
+            self::assertEquals($value, $app['config'][$key]);
+        }
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param CilexApplication $app
+     */
+    public function registerYamlSuccess(CilexApplication $app)
+    {
+        $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'yml'), ['placeholder' => 'test']));
+        foreach ($this->expected as $key => $value) {
+            self::assertEquals($value, $app['config'][$key]);
+        }
+    }
+
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param CilexApplication $app
+     */
+    public function registerFail(CilexApplication $app)
+    {
+        try {
+            $app->register(new ConfigServiceProvider($this->getConfigPath('config', 'xml')));
+            $app->offsetGet('config');
+            self::fail(sprintf('%s exception expected.', \DomainException::class));
+        } catch (\DomainException $e) {
+            self::assertTrue(true);
+        }
     }
 }

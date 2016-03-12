@@ -4,6 +4,7 @@ namespace OctoLab\Cilex\Command;
 
 use PhpSchool\CliMenu\CliMenuBuilder;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -56,17 +57,21 @@ final class PresetCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @throws \InvalidArgumentException
      */
     protected function configure()
     {
-        $this->setName('menu');
+        $this
+            ->setName('menu')
+            ->setDescription('')
+            ->addOption('dump', null, InputOption::VALUE_NONE, 'Output configured commands.')
+        ;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @throws \RuntimeException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException

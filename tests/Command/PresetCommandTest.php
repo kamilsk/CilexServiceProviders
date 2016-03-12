@@ -21,7 +21,7 @@ class PresetCommandTest extends TestCase
         if (defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='))) {
             $app = new Application('Test');
             $command = new PresetCommand('test');
-            $app->register(new ConfigServiceProvider($this->getConfigPath('component/cli-menu')));
+            $app->register(new ConfigServiceProvider($this->getConfigPath('cli-menu/config')));
             $app->command($command);
             $expected = [
                 'title' => 'Test CLI Menu',
@@ -59,7 +59,7 @@ class PresetCommandTest extends TestCase
     {
         if (defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='))) {
             $app = new Application('Test');
-            $app->register(new ConfigServiceProvider($this->getConfigPath('component/cli-menu')));
+            $app->register(new ConfigServiceProvider($this->getConfigPath('cli-menu/config')));
             $command = new PresetCommand('test');
             $app->command($command);
             $app->command(new HelloCommand('test'));

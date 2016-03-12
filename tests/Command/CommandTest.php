@@ -71,7 +71,7 @@ class CommandTest extends TestCase
         $app->register(new ConfigServiceProvider($this->getConfigPath()));
         $command = $this->getCommandMock('test', 'mock');
         $app->command($command);
-        self::assertEquals(E_ALL, $command->getConfig('component:constant'));
+        self::assertEquals(E_ALL, $command->getConfig('app:constant'));
     }
 
     /**

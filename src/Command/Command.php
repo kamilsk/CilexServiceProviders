@@ -2,8 +2,6 @@
 
 namespace OctoLab\Cilex\Command;
 
-use OctoLab\Common\Monolog\Util\LoggerLocator;
-
 /**
  * @method \Cilex\Provider\Console\ContainerAwareApplication getApplication()
  * @see \Cilex\Command\Command
@@ -107,7 +105,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      */
     public function getLogger($channel = null)
     {
-        /** @var LoggerLocator $loggers */
+        /** @var \OctoLab\Common\Monolog\LoggerLocator $loggers */
         $loggers = $this->getService('loggers');
         if ($loggers === null) {
             throw new \RuntimeException('MonologServiceProvider is not registered.');

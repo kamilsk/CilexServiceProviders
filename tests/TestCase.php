@@ -2,13 +2,26 @@
 
 namespace OctoLab\Cilex;
 
+use Cilex\Application as CilexApplication;
+
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return array[]
+     * @return array<int,CilexApplication[]>
+     */
+    public function applicationProvider()
+    {
+        return [
+            [new CilexApplication('test')],
+            [new Application('test')],
+        ];
+    }
+
+    /**
+     * @return array<int,ServiceProvider\ConfigServiceProvider[]>
      */
     public function doctrineConfigProvider()
     {
@@ -18,7 +31,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return array[]
+     * @return array<int,ServiceProvider\ConfigServiceProvider[]>
      */
     public function monologConfigProvider()
     {
@@ -26,21 +39,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             [
                 new ServiceProvider\ConfigServiceProvider(
                     $this->getConfigPath('monolog/config'),
-                    ['root_dir' => __DIR__]
-                )
-            ],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    public function monologCascadeConfigProvider()
-    {
-        return [
-            [
-                new ServiceProvider\ConfigServiceProvider(
-                    $this->getConfigPath('monolog/cascade'),
                     ['root_dir' => __DIR__]
                 )
             ],

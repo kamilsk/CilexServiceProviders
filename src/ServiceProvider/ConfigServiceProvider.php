@@ -4,11 +4,7 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
-use OctoLab\Common\Config\FileConfig;
-use OctoLab\Common\Config\Loader\FileLoader;
-use OctoLab\Common\Config\Loader\Parser\JsonParser;
-use OctoLab\Common\Config\Loader\Parser\YamlParser;
-use OctoLab\Common\Config\SimpleConfig;
+use OctoLab\Common\Config;
 use Symfony\Component\Config\FileLocator;
 
 /**
@@ -51,17 +47,15 @@ class ConfigServiceProvider implements ServiceProviderInterface
         $app['config'] = $app::share(function () {
             switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
                 case 'yml':
-                    $config = (new FileConfig(new FileLoader(new FileLocator(), new YamlParser())))
-                        ->load($this->filename, $this->placeholders)
-                    ;
+                    $loader = new Config\Loader\FileLoader(new FileLocator(), new Config\Loader\Parser\YamlParser());
+                    $config = (new Config\FileConfig($loader))->load($this->filename, $this->placeholders);
                     break;
                 case 'php':
-                    $config = (new SimpleConfig(include $this->filename, $this->placeholders));
+                    $config = (new Config\SimpleConfig(include $this->filename, $this->placeholders));
                     break;
                 case 'json':
-                    $config = (new FileConfig(new FileLoader(new FileLocator(), new JsonParser())))
-                        ->load($this->filename, $this->placeholders)
-                    ;
+                    $loader = new Config\Loader\FileLoader(new FileLocator(), new Config\Loader\Parser\JsonParser());
+                    $config = (new Config\FileConfig($loader))->load($this->filename, $this->placeholders);
                     break;
                 default:
                     throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));
