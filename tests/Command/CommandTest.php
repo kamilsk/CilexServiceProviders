@@ -3,10 +3,10 @@
 namespace OctoLab\Cilex\Command;
 
 use Cilex\Application;
-use OctoLab\Cilex\ServiceProvider\ConfigServiceProvider;
-use OctoLab\Cilex\ServiceProvider\DoctrineServiceProvider;
-use OctoLab\Cilex\ServiceProvider\MonologServiceProvider;
+use Doctrine\DBAL\Connection;
+use OctoLab\Cilex\ServiceProvider;
 use OctoLab\Cilex\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -16,199 +16,92 @@ class CommandTest extends TestCase
     /**
      * @test
      */
-    public function commandNamespace()
+    public function construct()
     {
-        $command = $this->getCommandMock('test');
-        self::assertEquals('test', $command->getName());
-        $command = $this->getCommandMock('test', 'mock');
-        self::assertEquals('mock:test', $command->getName());
+        $command = new CommandMock();
+        self::assertEquals('mock', $command->getName());
     }
 
     /**
      * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
      */
-    public function getContainer()
+    public function getContainer(Application $app)
     {
-        $app = new Application('Test');
-        $command = $this->getCommandMock('test', 'mock');
-        $app->command($command);
+        $app->command($command = new CommandMock());
         self::assertInstanceOf(\Pimple::class, $command->getContainer());
     }
 
     /**
      * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
      */
-    public function getService()
+    public function getService(Application $app)
     {
-        $app = new Application('Test');
-        $command = $this->getCommandMock('test', 'mock');
-        $app->command($command);
+        $app->command($command = new CommandMock());
         $app['service'] = function () {
-            return 'service';
+            return 'instance';
         };
-        self::assertEquals('service', $command->getService('service'));
+        self::assertEquals('instance', $command->getService('service'));
     }
 
     /**
      * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
      */
-    public function getConfig()
+    public function getConfig(Application $app)
     {
-        $app = new Application('Test');
-        $expected = ['empty' => true];
-        $app->register(new ConfigServiceProvider($this->getConfigPath()), ['config' => $expected]);
-        $command = $this->getCommandMock('test', 'mock');
-        $app->command($command);
-        self::assertEquals($expected, $command->getConfig());
-    }
-
-    /**
-     * @test
-     */
-    public function getConfigByPath()
-    {
-        $app = new Application('Test');
-        $app->register(new ConfigServiceProvider($this->getConfigPath()));
-        $command = $this->getCommandMock('test', 'mock');
-        $app->command($command);
+        $app->register($this->getConfigServiceProvider('config', 'yml'));
+        $app->command($command = new CommandMock());
         self::assertEquals(E_ALL, $command->getConfig('app:constant'));
+        self::assertEquals($command->getConfig('app:constant'), $command->getConfig()['app:constant']);
+        self::assertEquals('fail', $command->getConfig('unknown', 'fail'));
     }
 
     /**
      * @test
-     * @expectedException \RuntimeException
-     */
-    public function getDbConnectionFail()
-    {
-        $app = new Application('Test');
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
-    }
-
-    /**
-     * @test
-     * @dataProvider doctrineConfigProvider
+     * @dataProvider applicationProvider
      *
-     * @param ConfigServiceProvider $config
+     * @param Application $app
      */
-    public function getDbConnectionSuccess(ConfigServiceProvider $config)
+    public function getDbConnection(Application $app)
     {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new DoctrineServiceProvider());
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection());
+        $app->register($this->getConfigServiceProviderForDoctrine());
+        $app->register(new ServiceProvider\DoctrineServiceProvider());
+        $app->command($command = new CommandMock());
+        self::assertInstanceOf(Connection::class, $command->getDbConnection());
+        self::assertInstanceOf(Connection::class, $command->getDbConnection('sqlite'));
     }
 
     /**
      * @test
-     * @dataProvider doctrineConfigProvider
-     * @expectedException \InvalidArgumentException
+     * @dataProvider applicationProvider
      *
-     * @param ConfigServiceProvider $config
+     * @param Application $app
      */
-    public function getDbConnectionByAliasFail(ConfigServiceProvider $config)
+    public function getLogger(Application $app)
     {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new DoctrineServiceProvider());
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection('undefined'));
+        $app->register($this->getConfigServiceProviderForMonolog());
+        $app->register(new ServiceProvider\MonologServiceProvider());
+        $app->command($command = new CommandMock());
+        self::assertInstanceOf(LoggerInterface::class, $command->getLogger());
+        self::assertInstanceOf(LoggerInterface::class, $command->getLogger('debug'));
     }
 
     /**
      * @test
-     * @dataProvider doctrineConfigProvider
-     *
-     * @param ConfigServiceProvider $config
      */
-    public function getDbConnectionByAliasSuccess(ConfigServiceProvider $config)
+    public function setNameTest()
     {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new DoctrineServiceProvider());
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Doctrine\DBAL\Connection', $command->getDbConnection('sqlite'));
-    }
-
-    /**
-     * @test
-     * @expectedException \RuntimeException
-     */
-    public function getLoggerFail()
-    {
-        $app = new Application('Test');
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
-    }
-
-    /**
-     * @test
-     * @dataProvider monologConfigProvider
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function getLoggerSuccess(ConfigServiceProvider $config)
-    {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider());
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger());
-    }
-
-    /**
-     * @test
-     * @expectedException \RuntimeException
-     */
-    public function getLoggerByIdFail()
-    {
-        $app = new Application('Test');
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('unknown'));
-    }
-
-    /**
-     * @test
-     * @dataProvider monologConfigProvider
-     *
-     * @param ConfigServiceProvider $config
-     */
-    public function getLoggerByIdSuccess(ConfigServiceProvider $config)
-    {
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new MonologServiceProvider());
-        $command = $this->getCommandMock();
-        $app->command($command);
-        self::assertInstanceOf('\Psr\Log\LoggerInterface', $command->getLogger('app'));
-    }
-
-    /**
-     * @param string $name
-     * @param string|null $namespace
-     *
-     * @return Command
-     */
-    private function getCommandMock($name = 'test', $namespace = null)
-    {
-        /** @var Command $instance */
-        $instance = (new \ReflectionClass(CommandMock::class))->newInstanceWithoutConstructor();
-        $reflection = (new \ReflectionObject($instance));
-        if (null !== $namespace) {
-            $property = $reflection->getProperty('namespace');
-            $property->setAccessible(true);
-            $property->setValue($instance, $namespace);
-        }
-        $instance->setName($name);
-        $reflection->getConstructor()->invoke($instance);
-        return $instance;
+        $command = new CommandMock('test');
+        self::assertEquals('test:mock', $command->getName());
+        $command->setName('success');
+        self::assertEquals('test:success', $command->getName());
     }
 }

@@ -14,7 +14,9 @@
 - configs
   - `monolog` now has a stricter format ([docs](/docs/MonologServiceProvider.md))
 - methods
-  - `Command\Command::initConsoleHandler` changed signature: it waits `$channel` instead of `$handlers`
+  - `Command\Command::getConfig()` changed return value
+  - `Command\Command::getDbConnection()` changed throws
+  - `Command\Command::getLogger()` changed throws
 - packages
   - `kamilsk/common` is up
   - `symfony/config` is up
@@ -28,7 +30,7 @@
   - `monolog:name`
 - methods
   - `Command\Command::initConsoleHandler()`
-  - `ServiceProvider\DoctrineServiceProvider::__construct()`, `doctrine:dbal:default_connection` used instead
+  - `ServiceProvider\DoctrineServiceProvider::__construct()`
   - `ServiceProvider\MonologServiceProvider::__construct()`
 - services
   - `config.raw`, use `config` instead

@@ -2,7 +2,7 @@
 
 ## Application
 
-`OctoLab\Cilex\Application::register($provider, array $values = [])` prevents register the same Service Provider twice.
+`Application::register($provider, array $values = [])` prevents register the same Service Provider twice.
 
 ## Commands
 
@@ -10,15 +10,15 @@
 
 Useful shortcut methods:
 
-- `OctoLab\Cilex\Command\Command::getContainer()` return `Pimple` (e.g. `Cilex\Application`)
-- `OctoLab\Cilex\Command\Command::getService($name)` return registered service
-- `OctoLab\Cilex\Command\Command::getConfig()` return application configuration (`$app['config']`)
-- `OctoLab\Cilex\Command\Command::getDbConnection()` return default connection (`$app['db']`)
-- `OctoLab\Cilex\Command\Command::getLogger()` return `Psr\Log\LoggerInterface` (`$app['logger']`)
+- `Command\Command::getContainer()` return `Pimple` (e.g. `Cilex\Application`)
+- `Command\Command::getService($name)` return registered service
+- `Command\Command::getConfig()` return application configuration (`$app['config']`)
+- `Command\Command::getDbConnection()` return default connection (`$app['db']`)
+- `Command\Command::getLogger()` return `Psr\Log\LoggerInterface` (`$app['logger']`)
 
 __New features in version 2.1:__
 
-- `OctoLab\Cilex\Command\Command::getConfig($path = null, $default = null)`
+- `Command\Command::getConfig($path = null, $default = null)`
 
 ```php
 // $app['config'] === ['path' => ['to' => ['config' => 'value']]]
@@ -33,7 +33,7 @@ if ($command->getConfig('path:to:config', 'default') === 'value') {
 // Path works correctly.
 ```
 
-- `OctoLab\Cilex\Command\Command::getDbConnection($alias = null)`
+- `Command\Command::getDbConnection($alias = null)`
 
 ```yml
 doctrine:
@@ -65,7 +65,7 @@ if ($command->getDbConnection('mysql') === $app['dbs']['mysql']) {
 // Alias works correctly.
 ```
 
-- `OctoLab\Cilex\Command\Command::getLogger($channel = null)`
+- `Command\Command::getLogger($channel = null)`
 
 ```yml
 monolog:

@@ -7,4 +7,8 @@ namespace OctoLab\Cilex\Command;
  */
 class CommandMock extends Command
 {
+    protected function configure()
+    {
+        $this->setName('mock');
+    }
 }

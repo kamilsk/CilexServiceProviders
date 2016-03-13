@@ -49,10 +49,10 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     }
 
     /**
-     * @param null|string $path Is a key or path in a special format (e.g. "some:component:config") of configuration
-     * @param mixed $default Default value if a key or path is cannot be resolved
+     * @param null|string $path is a key or path in a special format (e.g. "some:component:config") of configuration
+     * @param mixed $default default value if a key or path is cannot be resolved
      *
-     * @return array|mixed
+     * @return \ArrayAccess|mixed
      *
      * @api
      */
@@ -71,26 +71,17 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @return \Doctrine\DBAL\Connection
      *
-     * @throws \RuntimeException if doctrine service is not defined
-     * @throws \InvalidArgumentException if the identifier (alias) is not defined
+     * @throws \InvalidArgumentException if "connection"/"connections" or the identifier (alias) are not defined
      *
      * @api
      */
     public function getDbConnection($alias = null)
     {
-        $connection = null;
         if ($alias === null) {
-            $connection = $this->getService('connection');
+            return $this->getContainer()->offsetGet('connection');
         } else {
-            $dbs = $this->getService('connections');
-            if ($dbs instanceof \Pimple) {
-                $connection = $dbs->offsetGet($alias);
-            }
+            return $this->getContainer()->offsetGet('connections')[$alias];
         }
-        if ($connection) {
-            return $connection;
-        }
-        throw new \RuntimeException('DoctrineServiceProvider is not registered.');
     }
 
     /**
@@ -98,22 +89,18 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @return \Psr\Log\LoggerInterface
      *
-     * @throws \RuntimeException if monolog service is not defined or channel is not registered
+     * @throws \InvalidArgumentException if "logger"/"loggers" are not defined
      * @throws \OutOfRangeException
      *
      * @api
      */
     public function getLogger($channel = null)
     {
-        /** @var \OctoLab\Common\Monolog\LoggerLocator $loggers */
-        $loggers = $this->getService('loggers');
-        if ($loggers === null) {
-            throw new \RuntimeException('MonologServiceProvider is not registered.');
+        if ($channel === null) {
+            return $this->getContainer()->offsetGet('logger');
+        } else {
+            return $this->getContainer()->offsetGet('loggers')[$channel];
         }
-        if ($channel !== null && !isset($loggers[$channel])) {
-            throw new \RuntimeException(sprintf('Logger with ID "%s" not found.', $channel));
-        }
-        return $channel === null ? $loggers->getDefaultChannel() : $loggers[$channel];
     }
 
     /**

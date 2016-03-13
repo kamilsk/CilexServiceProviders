@@ -59,31 +59,4 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         return sprintf('%s/app/config/%s.%s', __DIR__, $config, $extension);
     }
-
-    // ~~~ refactoring
-
-    /**
-     * @return array<int,ServiceProvider\ConfigServiceProvider[]>
-     */
-    public function doctrineConfigProvider()
-    {
-        return [
-            [new ServiceProvider\ConfigServiceProvider($this->getConfigPath('doctrine/config'))],
-        ];
-    }
-
-    /**
-     * @return array<int,ServiceProvider\ConfigServiceProvider[]>
-     */
-    public function monologConfigProvider()
-    {
-        return [
-            [
-                new ServiceProvider\ConfigServiceProvider(
-                    $this->getConfigPath('monolog/config'),
-                    ['root_dir' => __DIR__]
-                )
-            ],
-        ];
-    }
 }
