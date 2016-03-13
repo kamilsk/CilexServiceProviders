@@ -12,20 +12,21 @@ class ApplicationTest extends TestCase
     /**
      * @test
      */
-    public function registerNew()
+    public function register()
     {
-        $app = new Application('Test');
-        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath()));
-        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath('empty')));
-    }
-
-    /**
-     * @test
-     */
-    public function registerOld()
-    {
-        $app = new CilexApplication('Test');
-        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath()));
-        $app->register(new ServiceProvider\ConfigServiceProvider($this->getConfigPath('empty')));
+        $app = new CilexApplication('test');
+        self::assertEquals(0, ServiceProvider\CountedServiceProviderMock::getCounter());
+        $app->register(new ServiceProvider\CountedServiceProviderMock());
+        $app->register(new ServiceProvider\CountedServiceProviderMock());
+        $app->register(new ServiceProvider\CountedServiceProviderMock());
+        self::assertEquals(3, ServiceProvider\CountedServiceProviderMock::getCounter());
+        ServiceProvider\CountedServiceProviderMock::resetCounter();
+        self::assertEquals(0, ServiceProvider\CountedServiceProviderMock::getCounter());
+        $app = new Application('test');
+        $app->register(new ServiceProvider\CountedServiceProviderMock());
+        $app->register(new ServiceProvider\CountedServiceProviderMock());
+        $app->register(new ServiceProvider\CountedServiceProviderMock());
+        self::assertEquals(1, ServiceProvider\CountedServiceProviderMock::getCounter());
+        ServiceProvider\CountedServiceProviderMock::resetCounter();
     }
 }

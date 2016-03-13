@@ -7,7 +7,7 @@ namespace OctoLab\Cilex;
  */
 class Application extends \Cilex\Application
 {
-    /** @var array */
+    /** @var array<string,bool> */
     private $registry = [];
 
     /**

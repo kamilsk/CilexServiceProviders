@@ -41,6 +41,8 @@ final class PresetCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
+     * @return int
+     *
      * @throws \RuntimeException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\LogicException
