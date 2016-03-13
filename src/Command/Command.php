@@ -80,9 +80,9 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     {
         $connection = null;
         if ($alias === null) {
-            $connection = $this->getService('db');
+            $connection = $this->getService('connection');
         } else {
-            $dbs = $this->getService('dbs');
+            $dbs = $this->getService('connections');
             if ($dbs instanceof \Pimple) {
                 $connection = $dbs->offsetGet($alias);
             }

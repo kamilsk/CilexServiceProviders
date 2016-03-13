@@ -3,6 +3,7 @@
 namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Type;
 use OctoLab\Cilex\TestCase;
 
@@ -13,48 +14,55 @@ class DoctrineServiceProviderTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider doctrineConfigProvider
+     * @dataProvider applicationProvider
      *
-     * @param ConfigServiceProvider $config
+     * @param Application $app
      */
-    public function configSupport(ConfigServiceProvider $config)
+    public function registerSuccess(Application $app)
     {
-        $app = new Application('Test');
-        $app->register($config);
+        $app->register($this->getConfigServiceProviderForDoctrine());
         $app->register(new DoctrineServiceProvider());
-        self::assertEquals($app['config']['doctrine']['dbal']['connections'], $app['dbs.options']);
-        self::assertEquals($app['config']['doctrine']['dbal']['default_connection'], $app['dbs.default']);
-        self::assertTrue(Type::hasType('enum'));
+        self::assertInstanceOf(Connection::class, $app['connection']);
+        self::assertInstanceOf(Connection::class, $app['connections']['mysql']);
+        self::assertInstanceOf(Connection::class, $app['connections']['sqlite']);
+        self::assertEquals($app['connection'], $app['connections'][$app['config']['doctrine:dbal:default_connection']]);
+        foreach ($app['config']['doctrine:dbal:types'] as $type => $_) {
+            self::assertTrue(Type::hasType($type));
+        }
+        self::assertEquals($app['connection'], $app['console']->getHelperSet()->get('connection')->getConnection());
     }
 
     /**
      * @test
-     * @dataProvider doctrineConfigProvider
+     * @dataProvider applicationProvider
      *
-     * @param ConfigServiceProvider $config
+     * @param Application $app
      */
-    public function helperConnectionSupport(ConfigServiceProvider $config)
+    public function registerFailure(Application $app)
     {
-        // default behavior
-        $app = new Application('Test');
-        $app->register($config);
+        try {
+            $app->register(new DoctrineServiceProvider());
+            self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(true);
+        }
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function registerEmpty(Application $app)
+    {
+        $app->register($this->getConfigServiceProvider('config', 'yml'));
         $app->register(new DoctrineServiceProvider());
-        self::assertFalse($app->offsetGet('console')->getHelperSet()->has('connection'));
-        // default connection
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new DoctrineServiceProvider(true));
-        self::assertEquals(
-            $app->offsetGet('db'),
-            $app->offsetGet('console')->getHelperSet()->get('connection')->getConnection()
-        );
-        // specified connection
-        $app = new Application('Test');
-        $app->register($config);
-        $app->register(new DoctrineServiceProvider('sqlite'));
-        self::assertEquals(
-            $app->offsetGet('dbs')['sqlite'],
-            $app->offsetGet('console')->getHelperSet()->get('connection')->getConnection()
-        );
+        try {
+            $app->offsetGet('connection');
+            self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
+        } catch (\InvalidArgumentException $e) {
+            self::assertTrue(true);
+        }
     }
 }

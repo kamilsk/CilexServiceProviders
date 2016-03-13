@@ -28,7 +28,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @return ServiceProvider\ConfigServiceProvider
      */
-    public function getConfigServiceProvider($config, $extension, array $placeholders = ['placeholder' => 'test'])
+    protected function getConfigServiceProvider($config, $extension, array $placeholders = ['placeholder' => 'test'])
     {
         return new ServiceProvider\ConfigServiceProvider($this->getConfigPath($config, $extension), $placeholders);
     }
@@ -36,17 +36,31 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @return ServiceProvider\ConfigServiceProvider
      */
-    public function getConfigServiceProviderForMonolog()
+    protected function getConfigServiceProviderForMonolog()
     {
         return $this->getConfigServiceProvider('monolog/config', 'yml', ['root_dir' => __DIR__]);
     }
 
+    /**
+     * @return ServiceProvider\ConfigServiceProvider
+     */
+    protected function getConfigServiceProviderForDoctrine()
+    {
+        return $this->getConfigServiceProvider('doctrine/config', 'yml');
+    }
 
+    /**
+     * @param string $config
+     * @param string $extension
+     *
+     * @return string
+     */
+    protected function getConfigPath($config = 'config', $extension = 'yml')
+    {
+        return sprintf('%s/app/config/%s.%s', __DIR__, $config, $extension);
+    }
 
-
-
-
-
+    // ~~~ refactoring
 
     /**
      * @return array<int,ServiceProvider\ConfigServiceProvider[]>
@@ -71,16 +85,5 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
                 )
             ],
         ];
-    }
-
-    /**
-     * @param string $config
-     * @param string $extension
-     *
-     * @return string
-     */
-    protected function getConfigPath($config = 'config', $extension = 'yml')
-    {
-        return sprintf('%s/app/config/%s.%s', __DIR__, $config, $extension);
     }
 }

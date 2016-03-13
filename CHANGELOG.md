@@ -6,7 +6,8 @@
 ## [Unreleased]
 ### Added
 - services
-  - `config` contains `Common\Config\SimpleConfig` with `ArrayAccess` implementation
+  - `config` contains `Common\Config\SimpleConfig` with `ArrayAccess` implementation instead `array`
+  - `connection` and `connections` contain `Doctrine\DBAL\Connection` and `Pimple` respectively
   - `loggers` contains `Common\Monolog\LoggerLocator`
 
 ### Changed
@@ -25,14 +26,17 @@
 ### Removed
 - config
   - `monolog:name`
-  - `monolog.name` now ignored, use `console.name` or channel's `name` option in configuration
 - methods
   - `Command\Command::initConsoleHandler()`
+  - `ServiceProvider\DoctrineServiceProvider::__construct()`, `doctrine:dbal:default_connection` used instead
   - `ServiceProvider\MonologServiceProvider::__construct()`
 - services
   - `config.raw`, use `config` instead
-  - `monolog.resolver`, use `loggers` instead
+  - `db` and `dbs`, use `connection` and `connections` instead respectively
+  - `monolog`, use `logger` instead
+  - `monolog.name` now ignored, use `console.name` or channel's `name` option in configuration
   - `monolog.handlers`, is no logger supported
+  - `monolog.resolver`, use `loggers` instead
 - packages
   - `secondparty/dipper`
 

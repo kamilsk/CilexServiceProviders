@@ -8,8 +8,6 @@ use OctoLab\Common\Config;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * @see \Cilex\Provider\ConfigServiceProvider
- *
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
 class ConfigServiceProvider implements ServiceProviderInterface

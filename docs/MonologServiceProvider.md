@@ -22,10 +22,10 @@ monolog:
   handlers:
     file:
       type: stream
-      arguments: ["%root_dir%/info.log", info, true]
+      arguments: ["%root_dir%/app/logs/info.log", info, true]
     stream:
       type: stream
-      arguments: ["%root_dir%/debug.log", debug]
+      arguments: ["%root_dir%/app/logs/debug.log", debug]
       formatter: json
     chrome:
       type: chrome_php
@@ -54,8 +54,6 @@ $app->register(new MonologServiceProvider());
 Now access to the `Monolog\Logger` instance can be obtained as follows:
 
 ```php
-$logger = $app['monolog'];
-// or
 $logger = $app['logger'];
 // or
 $logger = $app['loggers']->getDefaultChannel();

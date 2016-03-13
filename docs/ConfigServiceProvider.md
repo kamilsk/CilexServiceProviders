@@ -2,27 +2,74 @@
 
 ## Supported formats
 
-* PHP
 * JSON
+* PHP
 * YAML
+
+### Example configuration on JSON
+
+```php
+$app->register(new ConfigServiceProvider('/path/to/config.json', ['placeholder' => 'example']));
+```
+
+_General_:
+
+```json
+{
+  "imports": [
+    { "resource": "parameters.json" },
+    "component/config.json"
+  ],
+  "app": {
+    "placeholder_parameter": "%placeholder%",
+    "constant": "const(E_ALL)"
+  },
+  "component": {
+    "parameter": "base component's parameter will be overwritten by root config"
+  }
+}
+```
+
+_Parameters_:
+
+```json
+{
+  "parameters": {
+    "parameter": "will overwrite parameter"
+  }
+}
+```
+
+_Component_:
+
+```json
+{
+  "component": {
+    "parameter": "base component's parameter will be overwritten by component config",
+    "base_parameter": "base parameter will not be overwritten"
+  }
+}
+```
 
 ### Example configuration on PHP
 
 ```php
-$app->register(new ConfigServiceProvider('/path/to/config.php', ['placeholder' => 'placeholder']));
+$app->register(new ConfigServiceProvider('/path/to/config.php', ['placeholder' => 'example']));
 ```
 
 _General_:
 
 ```php
-return OctoLab\Common\Config\Util\ArrayHelper::merge(
+return OctoLab\Common\Util\ArrayHelper::merge(
     include __DIR__ . '/parameters.php',
     include __DIR__ . '/component/config.php',
     [
-        'component' => [
-            'parameter' => 'base component\'s parameter will be overwritten by root config',
+        'app' => [
             'placeholder_parameter' => '%placeholder%',
             'constant' => E_ALL,
+        ],
+        'component' => [
+            'parameter' => 'base component\'s parameter will be overwritten by root config',
         ],
     ]
 );
@@ -43,59 +90,16 @@ _Component_:
 ```php
 return [
     'component' => [
-        'base_parameter' => 'base parameter will not be overwritten',
         'parameter' => 'base component\'s parameter will be overwritten by component config',
+        'base_parameter' => 'base parameter will not be overwritten',
     ],
 ];
-```
-
-### Example configuration on JSON
-
-```php
-$app->register(new ConfigServiceProvider('/path/to/config.json', ['placeholder' => 'placeholder']));
-```
-
-_General_:
-
-```json
-{
-  "imports": [
-    { "resource": "parameters.json" },
-    { "resource": "component/config.json" }
-  ],
-  "component": {
-    "parameter": "base component's parameter will be overwritten by root config",
-    "placeholder_parameter": "%placeholder%",
-    "constant": "const(E_ALL)"
-  }
-}
-```
-
-_Parameters_:
-
-```json
-{
-  "parameters": {
-    "parameter": "will overwrite parameter"
-  }
-}
-```
-
-_Component_:
-
-```json
-{
-  "component": {
-    "base_parameter": "base parameter will not be overwritten",
-    "parameter": "base component's parameter will be overwritten by component config"
-  }
-}
 ```
 
 ### Example configuration on YAML
 
 ```php
-$app->register(new ConfigServiceProvider('/path/to/config.yml', ['placeholder' => 'placeholder']));
+$app->register(new ConfigServiceProvider('/path/to/config.yml', ['placeholder' => 'example']));
 ```
 
 _General_:
@@ -103,12 +107,14 @@ _General_:
 ```yml
 imports:
   - { resource: parameters.yml }
-  - { resource: component/config.yml }
+  - component/config.yml
+
+app:
+  placeholder_parameter: %placeholder%
+  constant: const(E_ALL)
 
 component:
   parameter: "base component's parameter will be overwritten by root config"
-  placeholder_parameter: %placeholder%
-  constant: const(E_ALL)
 ```
 
 _Parameters_:
@@ -122,8 +128,8 @@ _Component_:
 
 ```yml
 component:
-  base_parameter: "base parameter will not be overwritten"
   parameter: "base component's parameter will be overwritten by component config"
+  base_parameter: "base parameter will not be overwritten"
 ```
 
 ---
@@ -134,15 +140,15 @@ _Result_:
 
 ```php
 $app['config'] = [
-    'component' => [
-        'base_parameter' => 'base parameter will not be overwritten',
-        'parameter' => 'base component\'s parameter will be overwritten by root config',
-        'placeholder_parameter' => 'placeholder',
+    'app' => [
+        'placeholder_parameter' => 'example',
         'constant' => E_ALL,
     ],
+    'component' => [
+        'parameter' => 'base component\'s parameter will be overwritten by root config',
+        'base_parameter' => 'base parameter will not be overwritten',
+    ],
 ];
-```
-
-```php
-$app['config.raw'] instanceof \OctoLab\Common\Config\SimpleConfig::class
+// usage
+echo $app['config']['app:placeholder_parameter']; // output "example"
 ```

@@ -5,7 +5,6 @@
 ```yml
 doctrine:
   dbal:
-    default_connection: mysql
     connections:
       mysql:
         driver:   pdo_mysql
@@ -20,6 +19,7 @@ doctrine:
         dbname:   database
         username: user
         password: pass
+    default_connection: mysql
     types:
       enum: string
       custom: Your\Custom\Type # extends Doctrine\DBAL\Types\Type
@@ -29,22 +29,14 @@ doctrine:
 
 ```php
 $app->register(new ConfigServiceProvider('/path/to/config.yml'));
-
-// if you won't to use ConnectionHelper ($app->offsetGet('console')->getHelperSet()->get('connection')->getConnection())
 $app->register(new DoctrineServiceProvider());
-
-// if you want to use ConnectionHelper with default connection
-$app->register(new DoctrineServiceProvider(true));
-
-// if you want to use ConnectionHelper with specified connection
-$app->register(new DoctrineServiceProvider('sqlite'));
 ```
 
 Now access to the `Doctrine\DBAL\Connection` instance can be obtained as follows:
 
 ```php
-$default = $app['db'];
-$mysql = $app['dbs']['mysql'];
+$default = $app['connection'];
+$mysql = $app['connections']['mysql'];
 // in this case $default === $mysql
-$sqlite = $app['dbs']['sqlite'];
+$sqlite = $app['connections']['sqlite'];
 ```

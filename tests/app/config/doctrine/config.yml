@@ -1,6 +1,5 @@
 doctrine:
   dbal:
-    default_connection: mysql
     connections:
       mysql:
         driver:   pdo_mysql
@@ -15,5 +14,6 @@ doctrine:
         dbname:   database
         username: user
         password: pass
+    default_connection: mysql
     types:
       enum: string

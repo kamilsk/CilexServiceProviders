@@ -22,10 +22,13 @@ class MonologServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $config = $app->offsetGet('config');
+        if (!isset($config['monolog'])) {
+            return;
+        }
         $app['loggers'] = $app::share(function () use ($app, $config) {
             return new LoggerLocator($config['monolog'], $app['console.name']);
         });
-        $app['monolog'] = $app['logger'] = $app::share(function () use ($app) {
+        $app['logger'] = $app::share(function () use ($app) {
             return $app['loggers']->getDefaultChannel();
         });
     }

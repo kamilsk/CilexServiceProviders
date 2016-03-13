@@ -1,4 +1,2 @@
-/tests/app/logs/*
-!tests/app/logs/.gitkeep
 /vendor/
 /composer.lock
