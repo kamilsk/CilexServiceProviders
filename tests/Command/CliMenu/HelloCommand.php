@@ -1,9 +1,10 @@
 <?php
 
-namespace OctoLab\Cilex\Command;
+namespace OctoLab\Cilex\Command\CliMenu;
 
+use OctoLab\Cilex\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -11,12 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class HelloCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
-        $this->setName('hello')->addOption('message', 'm', InputOption::VALUE_REQUIRED, 'Welcome message');
+        $this->setName('hello')->addArgument('message', InputArgument::REQUIRED, 'Welcome message.');
     }
 
     /**
@@ -24,7 +22,7 @@ class HelloCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf('Hello, %s', $input->getOption('message')));
+        $output->writeln(sprintf('Hello, %s', $input->getArgument('message')));
         return 0;
     }
 }

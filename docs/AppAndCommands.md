@@ -10,15 +10,15 @@
 
 Useful shortcut methods:
 
-- `Command\Command::getContainer()` return `Pimple` (e.g. `Cilex\Application`)
+- `Command\Command::getContainer()` return `Pimple`
 - `Command\Command::getService($name)` return registered service
-- `Command\Command::getConfig()` return application configuration (`$app['config']`)
-- `Command\Command::getDbConnection()` return default connection (`$app['db']`)
-- `Command\Command::getLogger()` return `Psr\Log\LoggerInterface` (`$app['logger']`)
+- `Command\Command::getConfig($path)` return application configuration (`$app['config']` or `$app['config'][$path]`)
+- `Command\Command::getDbConnection($id)` return DBAL connection (`$app['connection']` or `$app['connections'][$id]`)
+- `Command\Command::getLogger($id)` return `Psr\Log\LoggerInterface` (`$app['logger']` or `$app['loggers'][$id]`)
 
-__New features in version 2.1:__
+#### Usage
 
-- `Command\Command::getConfig($path = null, $default = null)`
+`Command\Command::getConfig($path = null, $default = null)`
 
 ```php
 // $app['config'] === ['path' => ['to' => ['config' => 'value']]]
@@ -33,7 +33,7 @@ if ($command->getConfig('path:to:config', 'default') === 'value') {
 // Path works correctly.
 ```
 
-- `Command\Command::getDbConnection($alias = null)`
+`Command\Command::getDbConnection($alias = null)`
 
 ```yml
 doctrine:
@@ -52,10 +52,13 @@ doctrine:
         dbname:   database
         username: user
         password: pass
+    default_connection: mysql
+    types:
+      enum: string
 ```
 
 ```php
-if ($command->getDbConnection('mysql') === $app['dbs']['mysql']) {
+if ($command->getDbConnection('mysql') === $app['connections']['mysql']) {
     echo 'Alias works correctly.';
 } else {
     throw new Exception();
@@ -65,41 +68,59 @@ if ($command->getDbConnection('mysql') === $app['dbs']['mysql']) {
 // Alias works correctly.
 ```
 
-- `Command\Command::getLogger($channel = null)`
+`Command\Command::getLogger($channel = null)`
 
 ```yml
 monolog:
-  default_channel: logger
   channels:
+    app:
+      handlers:
+      - file
+    debug:
+      arguments: { name: dev }
+      handlers:
+      - chrome
     db:
-      name: logger
+      name: app
       handlers:
-      - info
-    service:
-      id: logger
-      handlers:
-      - type: chrome_php
-        arguments: [info, true]
-      - id: info
-        formatter: { type: json }
-        processors:
-        - { type: uid, arguments: { length: 7 } }
+      - file
+      processors:
+      - memory
+      - time
   handlers:
-    info:
+    file:
       type: stream
-      arguments: ["%root_dir%/app/logs/info.log", info, true]
-      formatter: { type: normalizer }
+      arguments: ["%root_dir%/app/info.log", info, true]
+    stream:
+      type: stream
+      arguments: ["%root_dir%/app/debug.log", debug]
+      formatter: json
+    chrome:
+      type: chrome_php
+      arguments: { level: info, bubble: true }
+      formatter: chrome
+  processors:
+    memory:
+      type: memory_usage
+    time:
+      class: OctoLab\Common\Monolog\Processor\TimeExecutionProcessor
+  formatters:
+    json:
+      type: json
+    chrome:
+      type: chrome_php
+  default_channel: app
 ```
 
 ```php
-if ($command->getLogger('db') === $app['monolog.resolver']->getChannels()['db']) {
-    echo 'Logger ID works correctly.';
+if ($command->getLogger('debug') === $app['loggers']['debug']) {
+    echo 'Alias works correctly.';
 } else {
     throw new Exception();
 }
 
 // will output
-// Logger ID works correctly.
+// Alias works correctly.
 ```
 
 ### PresetCommand
@@ -110,8 +131,8 @@ if ($command->getLogger('db') === $app['monolog.resolver']->getChannels()['db'])
 cli_menu:
   title: CLI Menu
   items:
-  - { text: "Hello, World", callable: example:hello, options: { message: World } }
-  - { text: Fibonacci sequence, callable: example:fibonacci, options: { size: 10 } }
+  - { text: "Hello, World", callable: test:hello, arguments: { message: World } }
+  - { text: Fibonacci sequence, callable: test:fibonacci, options: { size: 10 } }
 ```
 
 #### Usage
@@ -129,12 +150,24 @@ $ app/console example:menu
 
 Displays menu of three items:
 
-- [Hello, World](/tests/Command/Mock/HelloCommand.php)
-- [Fibonacci sequence](/tests/Command/Mock/FibonacciCommand.php)
+- [Hello, World](/tests/Command/CliMenu/HelloCommand.php)
+- [Fibonacci sequence](/tests/Command/CliMenu/FibonacciCommand.php)
 - Exit
 
 You can select "Hello, World" to run `$ app/console example:hello -m World`
 or "Fibonacci sequence" to execute `$ app/console example:fibonacci --size=10`
+
+```bash
+$ app/console example:menu --dump
+```
+
+Will output:
+
+```
+Total commands: 2
+ - example:hello World
+ - example:fibonacci --size=10
+```
 
 ### Doctrine\CheckMigrationCommand
 

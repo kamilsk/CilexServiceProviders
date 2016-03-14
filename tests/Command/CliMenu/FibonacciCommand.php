@@ -1,7 +1,8 @@
 <?php
 
-namespace OctoLab\Cilex\Command;
+namespace OctoLab\Cilex\Command\CliMenu;
 
+use OctoLab\Cilex\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,12 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class FibonacciCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
-        $this->setName('fibonacci')->addOption('size', null, InputOption::VALUE_OPTIONAL, 'Sequence size', 100);
+        $this->setName('fibonacci')->addOption('size', 's', InputOption::VALUE_REQUIRED, 'Sequence size.', 100);
     }
 
     /**
@@ -26,9 +24,11 @@ class FibonacciCommand extends Command
     {
         $size = $input->getOption('size');
         $sequence = [];
+        $i = 0;
         foreach ($this->getFibonacciSequence() as $number) {
             $sequence[] = $number;
-            if (count($sequence) >= $size) {
+            $i++;
+            if ($i >= $size) {
                 break;
             }
         }

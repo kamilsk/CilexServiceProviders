@@ -12,17 +12,23 @@
 
 ### Changed
 - configs
-  - `monolog` now has a stricter format ([docs](/docs/MonologServiceProvider.md))
+  - `monolog` now has a stricter format ([docs](/docs/MonologServiceProvider.md#configuration-example))
 - methods
-  - `Command\Command::getConfig()` changed return value
-  - `Command\Command::getDbConnection()` changed throws
-  - `Command\Command::getLogger()` changed throws
+  - `Command\Command::getConfig()` has changed return value
+  - `Command\Command::getDbConnection()` has changed throws
+  - `Command\Command::getLogger()` has changed throws
+- commands
+  - `Command\PresetCommand` was moved to `Command\CliMenu\PresetCommand` and was refactored
+  ([docs](/docs/docs/AppAndCommands.md#presetcommand))
 - packages
   - `kamilsk/common` is up
   - `symfony/config` is up
   - `symfony/event-dispatcher` is up
   - `symfony/monolog-bridge` is up
   - `symfony/yaml` is up
+- services
+  - `ServiceProvider\DoctrineServiceProvider` now incompatible with `Cilex\Provider\DoctrineServiceProvider`
+  - `ServiceProvider\MonologServiceProvider` now incompatible with `Cilex\Provider\MonologServiceProvider`
 - [git diff](/../../compare/2.1.1...master)
 
 ### Removed
@@ -30,6 +36,7 @@
   - `monolog:name`
 - methods
   - `Command\Command::initConsoleHandler()`
+  - `Command\PresetCommand::getConfig()`, use `path` option instead
   - `ServiceProvider\DoctrineServiceProvider::__construct()`
   - `ServiceProvider\MonologServiceProvider::__construct()`
 - services
