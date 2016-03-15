@@ -3,7 +3,7 @@
 
 # Version 3
 
-## [Unreleased]
+## [3.0] - 2016-03-15
 ### Added
 - services
   - `config` contains `Common\Config\SimpleConfig` with `ArrayAccess` implementation instead `array`
@@ -29,7 +29,7 @@
 - services
   - `ServiceProvider\DoctrineServiceProvider` now incompatible with `Cilex\Provider\DoctrineServiceProvider`
   - `ServiceProvider\MonologServiceProvider` now incompatible with `Cilex\Provider\MonologServiceProvider`
-- [git diff](/../../compare/2.1.1...master)
+- [git diff](/../../compare/2.1.1...3.0)
 
 ### Removed
 - config
