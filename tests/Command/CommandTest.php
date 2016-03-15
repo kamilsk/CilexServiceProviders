@@ -7,6 +7,7 @@ use Doctrine\DBAL\Connection;
 use OctoLab\Cilex\ServiceProvider;
 use OctoLab\Cilex\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -103,5 +104,22 @@ class CommandTest extends TestCase
         self::assertEquals('test:mock', $command->getName());
         $command->setName('success');
         self::assertEquals('test:success', $command->getName());
+    }
+
+    /**
+     * @test
+     * @dataProvider applicationProvider
+     *
+     * @param Application $app
+     */
+    public function setUpMonologBridge(Application $app)
+    {
+        $app->register($this->getConfigServiceProviderForMonolog());
+        $app->register(new ServiceProvider\MonologServiceProvider());
+        $app->command($command = new CommandMock());
+        $output = new BufferedOutput();
+        $command->setUpMonologBridge($output);
+        $command->getLogger()->error('test');
+        self::assertNotEmpty($output->fetch());
     }
 }

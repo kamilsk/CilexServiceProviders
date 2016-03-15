@@ -19,6 +19,7 @@ monolog:
       processors:
       - memory
       - time
+  default_channel: app
   handlers:
     file:
       type: stream
@@ -41,7 +42,6 @@ monolog:
       type: json
     chrome:
       type: chrome_php
-  default_channel: app
 ```
 
 ## Usage

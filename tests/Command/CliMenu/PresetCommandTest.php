@@ -27,11 +27,11 @@ class PresetCommandTest extends TestCase
             $app->command(new HelloCommand('test'));
             $app->command(new FibonacciCommand('test'));
             $input = new ArgvInput([], $command->getDefinition());
-            $buffer = new BufferedOutput();
-            self::assertEquals(0, $command->runMenuItem('Hello, World', $input, $buffer));
-            self::assertContains('Hello, World', $buffer->fetch());
-            self::assertEquals(0, $command->runMenuItem('Fibonacci sequence', $input, $buffer));
-            self::assertContains('Fibonacci sequence: 1, 1, 2, 3, 5, 8, 13, 21, 34, 55', $buffer->fetch());
+            $output = new BufferedOutput();
+            self::assertEquals(0, $command->runMenuItem('Hello, World', $input, $output));
+            self::assertContains('Hello, World', $output->fetch());
+            self::assertEquals(0, $command->runMenuItem('Fibonacci sequence', $input, $output));
+            self::assertContains('Fibonacci sequence: 1, 1, 2, 3, 5, 8, 13, 21, 34, 55', $output->fetch());
         } else {
             self::assertFalse(false);
         }
@@ -53,15 +53,15 @@ class PresetCommandTest extends TestCase
             $app->command(new FibonacciCommand('test'));
             $reflection = (new \ReflectionObject($command))->getMethod('execute');
             $reflection->setAccessible(true);
-            $buffer = new BufferedOutput();
+            $output = new BufferedOutput();
             $input = new ArgvInput([], $command->getDefinition());
-            self::assertEquals(0, $reflection->invoke($command, $input, $buffer));
-            $buffer->fetch();
+            self::assertEquals(0, $reflection->invoke($command, $input, $output));
+            $output->fetch();
             $input = new ArgvInput([$command->getName(), '--dump'], $command->getDefinition());
-            self::assertEquals(0, $reflection->invoke($command, $input, $buffer));
+            self::assertEquals(0, $reflection->invoke($command, $input, $output));
             self::assertContains(
                 "Total commands: 2\n - test:hello World\n - test:fibonacci --size=10",
-                $buffer->fetch()
+                $output->fetch()
             );
         } else {
             self::assertFalse(false);

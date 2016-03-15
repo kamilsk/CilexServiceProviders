@@ -2,6 +2,8 @@
 
 namespace OctoLab\Cilex\Command;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * @method \Cilex\Provider\Console\ContainerAwareApplication getApplication()
  * @see \Cilex\Command\Command
@@ -120,5 +122,17 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
             return parent::setName($name);
         }
         return parent::setName(sprintf('%s:%s', $this->namespace, $name));
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return bool
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setUpMonologBridge(OutputInterface $output)
+    {
+        call_user_func($this->getContainer()->offsetGet('monolog.bridge'), $output);
     }
 }

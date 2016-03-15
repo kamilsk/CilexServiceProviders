@@ -28,7 +28,7 @@ class ConfigServiceProviderTest extends TestCase
      *
      * @param CilexApplication $app
      */
-    public function registerJsonSuccess(CilexApplication $app)
+    public function registerJson(CilexApplication $app)
     {
         $app->register($this->getConfigServiceProvider('config', 'json'));
         foreach ($this->expected as $key => $value) {
@@ -42,7 +42,7 @@ class ConfigServiceProviderTest extends TestCase
      *
      * @param CilexApplication $app
      */
-    public function registerPhpSuccess(CilexApplication $app)
+    public function registerPhp(CilexApplication $app)
     {
         $app->register($this->getConfigServiceProvider('config', 'php'));
         foreach ($this->expected as $key => $value) {
@@ -56,7 +56,7 @@ class ConfigServiceProviderTest extends TestCase
      *
      * @param CilexApplication $app
      */
-    public function registerYamlSuccess(CilexApplication $app)
+    public function registerYaml(CilexApplication $app)
     {
         $app->register($this->getConfigServiceProvider('config', 'yml'));
         foreach ($this->expected as $key => $value) {
@@ -71,7 +71,7 @@ class ConfigServiceProviderTest extends TestCase
      *
      * @param CilexApplication $app
      */
-    public function registerFailure(CilexApplication $app)
+    public function registerUnsupported(CilexApplication $app)
     {
         try {
             $app->register($this->getConfigServiceProvider('config', 'xml'));
