@@ -30,7 +30,7 @@ class DoctrineServiceProvider implements ServiceProviderInterface
             return;
         }
         ConfigResolver::resolve($config['doctrine:dbal']);
-        $app['connections'] = $app::share(function () use ($app, $config) {
+        $app['connections'] = $app::share(function () use ($config) {
             $connections = new \Pimple();
             foreach ($config['doctrine:dbal:connections'] as $id => $params) {
                 $connections->offsetSet(

@@ -22,7 +22,7 @@ class PresetCommandTest extends TestCase
     {
         if ($this->isValidEnvironment()) {
             $app->register($this->getConfigServiceProviderForCliMenu());
-            $command = new PresetCommand('test');
+            $command = $this->getPresetCommand();
             $app->command($command);
             $app->command(new HelloCommand('test'));
             $app->command(new FibonacciCommand('test'));
@@ -47,7 +47,7 @@ class PresetCommandTest extends TestCase
     {
         if ($this->isValidEnvironment()) {
             $app->register($this->getConfigServiceProviderForCliMenu());
-            $command = new PresetCommand('test');
+            $command = $this->getPresetCommand();
             $app->command($command);
             $app->command(new HelloCommand('test'));
             $app->command(new FibonacciCommand('test'));
@@ -66,6 +66,18 @@ class PresetCommandTest extends TestCase
         } else {
             self::assertFalse(false);
         }
+    }
+
+    /**
+     * @return PresetCommand
+     */
+    private function getPresetCommand()
+    {
+        $command = new PresetCommand('test');
+        $reflection = (new \ReflectionObject($command))->getProperty('dirtyHack');
+        $reflection->setAccessible(true);
+        $reflection->setValue($command, true);
+        return $command;
     }
 
     /**

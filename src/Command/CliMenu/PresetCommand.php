@@ -16,6 +16,8 @@ final class PresetCommand extends Command
 {
     /** @var MenuBuilder */
     private $menuBuilder;
+    /** @var bool hack for unit tests */
+    private $dirtyHack = false;
 
     /**
      * @param string $item
@@ -56,6 +58,7 @@ final class PresetCommand extends Command
      *
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \PhpSchool\CliMenu\Exception\InvalidTerminalException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -163,12 +166,11 @@ final class PresetCommand extends Command
 
     /**
      * @param MenuBuilder $builder
+     *
+     * @throws \PhpSchool\CliMenu\Exception\InvalidTerminalException
      */
     private function openMenu(MenuBuilder $builder)
     {
-        try {
-            $builder->build()->open();
-        } catch (\PhpSchool\CliMenu\Exception\InvalidTerminalException $e) {
-        }
+        !$this->dirtyHack && $builder->build()->open();
     }
 }

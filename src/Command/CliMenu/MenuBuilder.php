@@ -39,7 +39,7 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
     }
 
     /**
-     * @return callable[]
+     * @return array<string,callable>
      */
     public function getItemCallbacks()
     {
