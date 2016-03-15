@@ -12,7 +12,7 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - composer install --ignore-platform-reqs
+  - composer install
 
 notifications:
   slack: octolab:1eMS7IqOArBipiu31jYVd0cN
