@@ -17,6 +17,8 @@
   - `Command\Command::getConfig()` has changed return value
   - `Command\Command::getDbConnection()` has changed throws
   - `Command\Command::getLogger()` has changed throws
+  - `Command\Doctrine\CheckMigrationCommand::configure()` now calls `parent::configure()`
+
 - commands
   - `Command\PresetCommand` was moved to `Command\CliMenu\PresetCommand` and was refactored
   ([docs](/docs/AppAndCommands.md#presetcommand))

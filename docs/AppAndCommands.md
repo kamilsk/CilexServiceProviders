@@ -168,7 +168,9 @@ Total commands: 2
 
 ### Doctrine\CheckMigrationCommand
 
-__Usage:__
+Displays contents of FileBasedMigration.
+
+#### Usage
 
 ```php
 $app->command(new CheckMigrationCommand('example'));
@@ -179,6 +181,8 @@ $app->run();
 $ app/console example:check /path/to/migration.sql
 # or
 $ app/console example:check 20151202142239
+# or
+$ app/console example:check Your\Migration\Version
 ```
 
 Displays contents of these migrations.
@@ -193,11 +197,11 @@ Migration /path/to/migration.sql contains
 Or
 
 ```
-Upgrade for migration 20151202142239
+Upgrade for migration (20151202142239|Your\Migration\Version)
 1. ...
 2. ...
 ...
-Downgrade for migration 20151202142239
+Downgrade for migration (20151202142239|Your\Migration\Version)
 1. ...
 ...
 ```
