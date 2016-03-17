@@ -79,12 +79,4 @@ class PresetCommandTest extends TestCase
         $reflection->setValue($command, true);
         return $command;
     }
-
-    /**
-     * @return bool
-     */
-    private function isValidEnvironment()
-    {
-        return defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='));
-    }
 }

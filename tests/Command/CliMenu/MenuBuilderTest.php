@@ -2,10 +2,12 @@
 
 namespace OctoLab\Cilex\Command\CliMenu;
 
+use OctoLab\Cilex\TestCase;
+
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class MenuBuilderTest extends \PHPUnit_Framework_TestCase
+class MenuBuilderTest extends TestCase
 {
     /**
      * @test
@@ -44,13 +46,5 @@ class MenuBuilderTest extends \PHPUnit_Framework_TestCase
         } else {
             self::assertFalse(false);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    private function isValidEnvironment()
-    {
-        return defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='));
     }
 }

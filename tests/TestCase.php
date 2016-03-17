@@ -67,4 +67,12 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         return sprintf('%s/app/config/%s.%s', __DIR__, $config, $extension);
     }
+
+    /**
+     * @return bool
+     */
+    protected function isValidEnvironment()
+    {
+        return defined('HHVM_VERSION') || (defined('PHP_VERSION') && version_compare(PHP_VERSION, '5.6', '>='));
+    }
 }

@@ -29,8 +29,7 @@ if ($command->getConfig('path:to:config', 'default') === 'value') {
     echo 'Value "default" was used.';
 }
 
-// will output
-// Path works correctly.
+// will output "Path works correctly."
 ```
 
 `Command\Command::getDbConnection($alias = null)`
@@ -64,8 +63,7 @@ if ($command->getDbConnection('mysql') === $app['connections']['mysql']) {
     throw new Exception();
 }
 
-// will output
-// Alias works correctly.
+// will output "Alias works correctly."
 ```
 
 `Command\Command::getLogger($channel = null)`
@@ -119,8 +117,7 @@ if ($command->getLogger('debug') === $app['loggers']['debug']) {
     throw new Exception();
 }
 
-// will output
-// Alias works correctly.
+// will output "Alias works correctly."
 ```
 
 ### PresetCommand
@@ -209,7 +206,9 @@ Where `20151202142239` (as example) is `Doctrine Migration` (`OctoLab\Common\Doc
 
 ### Doctrine\GenerateIndexNameCommand
 
-__Usage:__
+The command generates and displays name of index (unique, foreign or usual).
+
+#### Usage
 
 ```php
 $app->command(new GenerateIndexNameCommand('example'));
@@ -218,6 +217,6 @@ $app->run();
 
 ```bash
 $ app/console example:generate-index-name --type=uniq -t table_name -c user_id,title
-```
 
-Generates and displays name of unique index for table `table_name` and columns `(user_id, title)`.
+// will output "Index name: UNIQ_14F53ECDA76ED3952B36786B"
+```

@@ -19,7 +19,7 @@
   - `Command\Command::getLogger()` has changed throws
 - commands
   - `Command\PresetCommand` was moved to `Command\CliMenu\PresetCommand` and was refactored
-  ([docs](/docs/docs/AppAndCommands.md#presetcommand))
+  ([docs](/docs/AppAndCommands.md#presetcommand))
 - packages
   - `kamilsk/common` is up
   - `symfony/config` is up
