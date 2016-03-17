@@ -89,10 +89,10 @@ monolog:
   handlers:
     file:
       type: stream
-      arguments: ["%root_dir%/app/info.log", info, true]
+      arguments: ["%root_dir%/app/logs/info.log", info, true]
     stream:
       type: stream
-      arguments: ["%root_dir%/app/debug.log", debug]
+      arguments: ["%root_dir%/app/logs/debug.log", debug]
       formatter: json
     chrome:
       type: chrome_php
