@@ -4,6 +4,8 @@
 
 ## What's inside
 
+### [Features](docs/Features.md)
+
 ### [Application and commands](docs/AppAndCommands.md)
 
 ### [ConfigServiceProvider](docs/ConfigServiceProvider.md)

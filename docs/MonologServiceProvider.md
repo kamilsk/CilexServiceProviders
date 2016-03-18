@@ -12,6 +12,7 @@ monolog:
       arguments: { name: dev }
       handlers:
       - chrome
+      - desktop
     db:
       name: app
       handlers:
@@ -32,6 +33,9 @@ monolog:
       type: chrome_php
       arguments: { level: info, bubble: true }
       formatter: chrome
+    desktop:
+      class: OctoLab\Common\Monolog\Handler\DesktopNotificationHandler
+      arguments: ["Desktop Notification"]
   processors:
     memory:
       type: memory_usage
