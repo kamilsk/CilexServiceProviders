@@ -49,7 +49,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
                     $config = (new Config\FileConfig($loader))->load($this->filename, $this->placeholders);
                     break;
                 case 'php':
-                    $config = (new Config\SimpleConfig(include $this->filename, $this->placeholders));
+                    $config = (new Config\SimpleConfig(require $this->filename, $this->placeholders));
                     break;
                 case 'json':
                     $loader = new Config\Loader\FileLoader(new FileLocator(), new Config\Loader\Parser\JsonParser());

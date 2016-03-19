@@ -5,7 +5,7 @@
 
 ## [Unreleased]
 ### Changed
-- [git diff](/../../compare/3.0.1...master)
+- [git diff](/../../compare/3.0.2...master)
 
 ## [3.0] - 2016-03-15
 ### Added
@@ -22,7 +22,6 @@
   - `Command\Command::getDbConnection()` has changed throws
   - `Command\Command::getLogger()` has changed throws
   - `Command\Doctrine\CheckMigrationCommand::configure()` now calls `parent::configure()`
-
 - commands
   - `Command\PresetCommand` was moved to `Command\CliMenu\PresetCommand` and was refactored
   ([docs](/docs/AppAndCommands.md#presetcommand))
@@ -35,7 +34,7 @@
 - services
   - `ServiceProvider\DoctrineServiceProvider` now incompatible with `Cilex\Provider\DoctrineServiceProvider`
   - `ServiceProvider\MonologServiceProvider` now incompatible with `Cilex\Provider\MonologServiceProvider`
-- [git diff](/../../compare/2.1.1...3.0)
+- [git diff](/../../compare/2.1.1...3.0.2)
 
 ### Removed
 - config
@@ -109,7 +108,7 @@
   (ex. `OctoLab\Cilex\Config\Loader\YamlFileLoader`)
   - `$app` was removed from `OctoLab\Common\Monolog\Util\ConfigResolver`
   (ex. `OctoLab\Cilex\Monolog\ConfigResolver`)
-- [git diff](/../../compare/1.x...2.0)
+- [git diff](/../../compare/v1.5.1...2.0)
 
 ### Removed
 - all marked deprecated functionality
