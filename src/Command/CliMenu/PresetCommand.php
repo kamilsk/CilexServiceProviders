@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class PresetCommand extends Command
 {
-    /** @var MenuBuilder */
+    /** @var MenuBuilder|null */
     private $menuBuilder;
     /** @var bool hack for unit tests */
     private $dirtyHack = false;
@@ -87,14 +87,48 @@ final class PresetCommand extends Command
             $config = $this->getConfig($input->getOption('path'));
             $this->menuBuilder = (new MenuBuilder())->setTitle($config['title']);
             foreach ($config['items'] as $item) {
-                $this->menuBuilder->addItem($item['text'], function ($dump = false) use ($item, $output) {
-                    $command = $this->getApplication()->get($item['callable']);
-                    $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
-                    return $dump ? sprintf('%s %s', $command->getName(), $input) : $command->execute($input, $output);
-                });
+                $this->menuBuilder->addItem($item['text'], $this->getCallback($item, $output));
             }
         }
         return $this->menuBuilder;
+    }
+
+    /**
+     * @param array $item
+     * @param OutputInterface $output
+     *
+     * @return \Closure
+     *
+     * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Console\Exception\LogicException
+     */
+    private function getCallback(array $item, OutputInterface $output)
+    {
+        if (isset($item['commands'])) {
+            // - text: Install demo content
+            //   commands:
+            //   - { name: "command:name", options: { ... }, arguments: { ... } }
+            $items = $item['commands'];
+            return function ($dump = false) use ($items, $output) {
+                $result = [];
+                foreach ($items as $item) {
+                    $command = $this->getApplication()->get($item['name']);
+                    $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
+                    $result[] = $dump
+                        ? sprintf('%s %s', $command->getName(), $input)
+                        : $command->execute($input, $output);
+                }
+                return $dump ? $result : call_user_func_array('max', $result);
+            };
+        } else {
+            // - { text: "Hello, World", callable: test:hello, arguments: { message: World } }
+            return function ($dump = false) use ($item, $output) {
+                $command = $this->getApplication()->get($item['callable']);
+                $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
+                return $dump ? [sprintf('%s %s', $command->getName(), $input)] : $command->execute($input, $output);
+            };
+        }
     }
 
     /**
@@ -107,7 +141,7 @@ final class PresetCommand extends Command
      */
     private function getArgvIntputForMenuItem(InputDefinition $definition, array $item)
     {
-        $argv = [$item['callable']];
+        $argv = [0];
         if (!empty($item['options'])) {
             $argv = array_merge($argv, $this->getOptions($definition, $item['options']));
         }
@@ -160,7 +194,11 @@ final class PresetCommand extends Command
         $commands = $builder->getItemCallbacks();
         $output->writeln(sprintf('Total commands: %d', count($commands)));
         foreach ($commands as $command) {
-            $output->writeln(' - ' . $command(true));
+            $result = $command(true);
+            array_walk($result, function ($entry) use ($output) {
+                $output->writeln(' - ' . $entry);
+            });
+            $output->writeln('');
         }
     }
 

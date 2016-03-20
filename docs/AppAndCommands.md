@@ -128,8 +128,24 @@ if ($command->getLogger('debug') === $app['loggers']['debug']) {
 cli_menu:
   title: CLI Menu
   items:
-  - { text: "Hello, World", callable: test:hello, arguments: { message: World } }
-  - { text: Fibonacci sequence, callable: test:fibonacci, options: { size: 10 } }
+  - { text: "Hello, World", callable: "test:hello", arguments: { message: World } }
+  - { text: Fibonacci sequence, callable: "test:fibonacci", options: { size: 10 } }
+```
+
+##### New in version 3.1
+
+```yml
+cli_menu:
+  title: CLI Menu
+  items:
+  - { text: "Hello, World", callable: "test:hello", arguments: { message: World } }
+  - { text: Fibonacci sequence, callable: "test:fibonacci", options: { size: 10 } }
+  - text: Fibonacci sequences
+    commands:
+    - { name: "test:fibonacci", options: { size: 1 } }
+    - { name: "test:fibonacci", options: { size: 2 } }
+    - { name: "test:fibonacci", options: { size: 3 } }
+    - { name: "test:fibonacci", options: { size: 5 } }
 ```
 
 #### Usage

@@ -60,7 +60,7 @@ class PresetCommandTest extends TestCase
             $input = new ArgvInput([$command->getName(), '--dump'], $command->getDefinition());
             self::assertEquals(0, $reflection->invoke($command, $input, $output));
             self::assertContains(
-                "Total commands: 2\n - test:hello World\n - test:fibonacci --size=10",
+                "Total commands: 3\n - test:hello World\n\n - test:fibonacci --size=10\n\n - test:fibonacci --size=1\n",
                 $output->fetch()
             );
         } else {

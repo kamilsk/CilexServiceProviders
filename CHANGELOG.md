@@ -4,6 +4,10 @@
 # Version 3
 
 ## [Unreleased]
+### Added
+- configs
+  - `Command\CliMenu\PresetCommand` now supports batch commands ([docs](/docs/AppAndCommands.md#new-in-version-3.1))
+
 ### Changed
 - [git diff](/../../compare/3.0.2...master)
 
