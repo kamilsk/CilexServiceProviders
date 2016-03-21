@@ -16,6 +16,8 @@ use OctoLab\Common\Doctrine\Util\ConfigResolver;
 class DoctrineServiceProvider implements ServiceProviderInterface
 {
     /**
+     * @quality:method [B]
+     *
      * @param Application $app
      *
      * @throws \Doctrine\DBAL\DBALException

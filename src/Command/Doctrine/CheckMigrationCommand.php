@@ -27,6 +27,8 @@ final class CheckMigrationCommand extends AbstractCommand
     }
 
     /**
+     * @quality:method [C]
+     *
      * @param InputInterface $input
      * @param OutputInterface $output
      *

@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MonologServiceProvider implements ServiceProviderInterface
 {
     /**
+     * @quality:method [B]
+     *
      * @param Application $app
      *
      * @throws \InvalidArgumentException
@@ -38,8 +40,8 @@ class MonologServiceProvider implements ServiceProviderInterface
                 if (class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')
                     && interface_exists('Symfony\Component\EventDispatcher\EventSubscriberInterface')) {
                     $consoleHandler = new ConsoleHandler($output);
-                    foreach ($app['loggers']->keys() as $key) {
-                        $app['loggers'][$key]->pushHandler($consoleHandler);
+                    foreach ($app['loggers'] as $logger) {
+                        $logger->pushHandler($consoleHandler);
                     }
                 }
             };

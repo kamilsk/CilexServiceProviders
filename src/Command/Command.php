@@ -127,9 +127,9 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     /**
      * @param OutputInterface $output
      *
-     * @return bool
-     *
      * @throws \InvalidArgumentException
+     *
+     * @api
      */
     public function setUpMonologBridge(OutputInterface $output)
     {

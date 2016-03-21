@@ -12,6 +12,8 @@ class Application extends \Cilex\Application
 
     /**
      * {@inheritdoc}
+     *
+     * @api
      */
     public function register($provider, array $values = [])
     {

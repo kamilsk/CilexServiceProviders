@@ -94,6 +94,8 @@ final class PresetCommand extends Command
     }
 
     /**
+     * @quality:method [B]
+     *
      * @param array $item
      * @param OutputInterface $output
      *
@@ -106,9 +108,6 @@ final class PresetCommand extends Command
     private function getCallback(array $item, OutputInterface $output)
     {
         if (isset($item['commands'])) {
-            // - text: Install demo content
-            //   commands:
-            //   - { name: "command:name", options: { ... }, arguments: { ... } }
             $items = $item['commands'];
             return function ($dump = false) use ($items, $output) {
                 $result = [];
@@ -122,7 +121,6 @@ final class PresetCommand extends Command
                 return $dump ? $result : call_user_func_array('max', $result);
             };
         } else {
-            // - { text: "Hello, World", callable: test:hello, arguments: { message: World } }
             return function ($dump = false) use ($item, $output) {
                 $command = $this->getApplication()->get($item['callable']);
                 $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);

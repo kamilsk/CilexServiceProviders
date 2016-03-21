@@ -16,6 +16,8 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      * @param bool $showItemExtra
      *
      * @return $this
+     *
+     * @api
      */
     public function addItem($text, callable $itemCallable, $showItemExtra = false)
     {
@@ -29,6 +31,8 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      * @return callable
      *
      * @throws \InvalidArgumentException
+     *
+     * @api
      */
     public function getItemCallback($text)
     {
@@ -40,6 +44,8 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
 
     /**
      * @return array<string,callable>
+     *
+     * @api
      */
     public function getItemCallbacks()
     {
