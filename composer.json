@@ -11,7 +11,7 @@
   "require": {
     "php": ">=5.5",
     "cilex/cilex": "~1.0",
-    "kamilsk/common": "~2.1"
+    "kamilsk/common": "^2.1.4"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
@@ -27,7 +27,6 @@
   "suggest": {
     "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
     "doctrine/migrations": "optional for use OctoLab\\**\\Doctrine\\*Migration* (~1.0 is recommended)",
-    "incenteev/composer-parameter-handler": "optional for handle parameters.yml (~2.0 is recommended)",
     "jolicode/jolinotif": "optional for show desktop notification (~1.0 is recommended)",
     "league/climate": "optional for colorize output (~3.0 is recommended)",
     "monolog/monolog": "for use MonologServiceProvider (~1.0 is recommended)",

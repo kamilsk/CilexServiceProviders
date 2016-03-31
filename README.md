@@ -14,8 +14,6 @@
 
 ### [MonologServiceProvider](docs/MonologServiceProvider.md)
 
-### [Usage example](docs/UsageExample.md)
-
 ## [Documentation](http://kamilsk.github.io/CilexServiceProviders/)
 
 ## Installation
@@ -43,7 +41,7 @@ $ composer require kamilsk/cilex-service-providers:~3.0
 ### General information
 
 [![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
-[![HHVM status](http://hhvm.h4cc.de/badge/kamilsk/cilex-service-providers.svg?style=flat)](http://hhvm.h4cc.de/package/kamilsk/cilex-service-providers)
+[![Tests status](http://php-eye.com/badge/kamilsk/CilexServiceProviders/tested.svg)](http://php-eye.com/package/kamilsk/cilex-service-providers)
 [![Latest stable version](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![License](https://poser.pugx.org/kamilsk/cilex-service-providers/license.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 

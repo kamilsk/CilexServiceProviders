@@ -4,6 +4,7 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
+use OctoLab\Cilex\Command\Config\DumpCommand;
 use OctoLab\Common\Config;
 use Symfony\Component\Config\FileLocator;
 
@@ -37,6 +38,7 @@ class ConfigServiceProvider implements ServiceProviderInterface
      * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
      * @throws \Symfony\Component\Config\Exception\FileLoaderImportCircularReferenceException
      * @throws \DomainException
+     * @throws \LogicException
      *
      * @api
      */
@@ -60,5 +62,6 @@ class ConfigServiceProvider implements ServiceProviderInterface
             }
             return $config;
         });
+        $app->command(new DumpCommand('config'));
     }
 }

@@ -5,10 +5,16 @@
 
 ## [Unreleased]
 ### Added
+- commands
+  - `Command\Config\DumpCommand` for dump `$app['config']` to console
 - configs
   - `Command\CliMenu\PresetCommand` now supports batch commands ([docs](/docs/AppAndCommands.md#new-in-version-3.1))
 
 ### Changed
+- methods
+  - `Command\Command::getConfig()` now return `Common\Config\SimpleConfig` or mixed if path is passed
+- services
+  - `ServiceProvider\ConfigServiceProvider` now register `Command\Config\DumpCommand` as `config:dump`
 - [git diff](/../../compare/3.0.2...master)
 
 ## [3.0] - 2016-03-15

@@ -152,3 +152,31 @@ $app['config'] = [
 // usage
 echo $app['config']['app:placeholder_parameter']; // output "example"
 ```
+
+## Command `config:dump`
+
+```bash
+$ app/console config:dump
+```
+
+Displays contents of registered configuration.
+
+```yaml
+component:
+    parameter: 'base component''s parameter will be overwritten by root config'
+    base_parameter: 'base parameter will not be overwritten'
+app:
+    placeholder_parameter: test
+    constant: 32767
+```
+
+```bash
+$ app/console config:dump -p app
+```
+
+Displays only `app` section.
+
+```yaml
+placeholder_parameter: test
+constant: 32767
+```

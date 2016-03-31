@@ -54,7 +54,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      * @param null|string $path is a key or path in a special format (e.g. "some:component:config") of configuration
      * @param mixed $default default value if a key or path is cannot be resolved
      *
-     * @return \ArrayAccess|mixed
+     * @return \OctoLab\Common\Config\SimpleConfig|mixed
      *
      * @api
      */

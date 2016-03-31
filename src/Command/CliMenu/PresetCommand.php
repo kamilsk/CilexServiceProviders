@@ -38,11 +38,6 @@ final class PresetCommand extends Command
         return call_user_func($this->getMenuBuilder($input, $output)->getItemCallback($item));
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \InvalidArgumentException
-     */
     protected function configure()
     {
         $this

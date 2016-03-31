@@ -177,9 +177,15 @@ $ app/console example:menu --dump
 Will output:
 
 ```
-Total commands: 2
+Total commands: 3
  - example:hello World
+
  - example:fibonacci --size=10
+
+ - example:fibonacci --size=1
+ - example:fibonacci --size=2
+ - example:fibonacci --size=3
+ - example:fibonacci --size=5
 ```
 
 ### Doctrine\CheckMigrationCommand
