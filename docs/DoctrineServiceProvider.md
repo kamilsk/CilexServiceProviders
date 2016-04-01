@@ -11,13 +11,13 @@ doctrine:
         host:     localhost
         port:     3306
         dbname:   database
-        user: user
+        user:     user
         password: pass
       sqlite:
         driver:   pdo_sqlite
         memory:   true
         dbname:   database
-        user: user
+        user:     user
         password: pass
     default_connection: mysql
     types:

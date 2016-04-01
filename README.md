@@ -4,8 +4,6 @@
 
 ## What's inside
 
-### [Features](docs/Features.md)
-
 ### [Application and commands](docs/AppAndCommands.md)
 
 ### [ConfigServiceProvider](docs/ConfigServiceProvider.md)
@@ -13,6 +11,8 @@
 ### [DoctrineServiceProvider](docs/DoctrineServiceProvider.md)
 
 ### [MonologServiceProvider](docs/MonologServiceProvider.md)
+
+### [Features](docs/Features.md)
 
 ## [Documentation](http://kamilsk.github.io/CilexServiceProviders/)
 
@@ -58,9 +58,6 @@ $ composer require kamilsk/cilex-service-providers:~3.0
 [![Total downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Monthly downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/monthly.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Daily downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/daily.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
-
-[![Pull requests](http://issuestats.com/github/kamilsk/CilexServiceProviders/badge/pr?style=flat)](http://issuestats.com/github/kamilsk/CilexServiceProviders)
-[![Issues](http://issuestats.com/github/kamilsk/CilexServiceProviders/badge/issue?style=flat)](http://issuestats.com/github/kamilsk/CilexServiceProviders)
 
 [![Total references](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
 
