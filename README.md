@@ -58,7 +58,6 @@ $ composer require kamilsk/cilex-service-providers:~3.0
 [![Total downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/downloads.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Monthly downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/monthly.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Daily downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/daily.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
-
 [![Total references](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
 
 ### Feedback
