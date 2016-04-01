@@ -31,6 +31,8 @@ class ConfigServiceProvider implements ServiceProviderInterface
     }
 
     /**
+     * @quality:method [B]
+     *
      * @param Application $app
      *
      * @throws \InvalidArgumentException
@@ -45,17 +47,18 @@ class ConfigServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['config'] = $app::share(function () {
-            switch (strtolower(pathinfo($this->filename, PATHINFO_EXTENSION))) {
+            $ext = strtolower(pathinfo($this->filename, PATHINFO_EXTENSION));
+            switch ($ext) {
                 case 'yml':
-                    $loader = new Config\Loader\FileLoader(new FileLocator(), new Config\Loader\Parser\YamlParser());
+                case 'json':
+                    $parser = $ext === 'yml'
+                        ? new Config\Loader\Parser\YamlParser()
+                        : new Config\Loader\Parser\JsonParser();
+                    $loader = new Config\Loader\FileLoader(new FileLocator(), $parser);
                     $config = (new Config\FileConfig($loader))->load($this->filename, $this->placeholders);
                     break;
                 case 'php':
                     $config = (new Config\SimpleConfig(require $this->filename, $this->placeholders));
-                    break;
-                case 'json':
-                    $loader = new Config\Loader\FileLoader(new FileLocator(), new Config\Loader\Parser\JsonParser());
-                    $config = (new Config\FileConfig($loader))->load($this->filename, $this->placeholders);
                     break;
                 default:
                     throw new \DomainException(sprintf('File "%s" is not supported.', $this->filename));

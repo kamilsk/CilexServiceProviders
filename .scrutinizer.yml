@@ -8,6 +8,10 @@ build:
           file: code-coverage
           format: php-clover
 
+filter:
+  excluded_paths:
+    - tests/*
+
 checks:
   php:
     uppercase_constants: true
@@ -64,6 +68,10 @@ checks:
     prefer_while_loop_over_for_loop: true
     properties_in_camelcaps: true
 
-filter:
-  excluded_paths:
-    - tests/*
+coding_style:
+  php:
+    spaces:
+      before_parentheses:
+        closure_definition: true
+      around_operators:
+        concatenation: true
