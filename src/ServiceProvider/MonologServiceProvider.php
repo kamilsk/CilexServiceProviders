@@ -29,13 +29,13 @@ class MonologServiceProvider implements ServiceProviderInterface
         if (!isset($config['monolog'])) {
             return;
         }
-        $app['loggers'] = $app::share(function () use ($app, $config) {
+        $app['loggers'] = $app::share(function (Application $app) use ($config) {
             return new LoggerLocator($config['monolog'], $app['console.name']);
         });
-        $app['logger'] = $app::share(function () use ($app) {
+        $app['logger'] = $app::share(function (Application $app) {
             return $app['loggers']->getDefaultChannel();
         });
-        $app['monolog.bridge'] = $app::share(function () use ($app) {
+        $app['monolog.bridge'] = $app::share(function (Application $app) {
             return function (OutputInterface $output) use ($app) {
                 if (class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')
                     && interface_exists('Symfony\Component\EventDispatcher\EventSubscriberInterface')) {

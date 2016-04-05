@@ -42,7 +42,7 @@ class DoctrineServiceProvider implements ServiceProviderInterface
             }
             return $connections;
         });
-        $app['connection'] = $app::share(function () use ($app, $config) {
+        $app['connection'] = $app::share(function (Application $app) use ($config) {
             $ids = $app['connections']->keys();
             $default = $config['doctrine:dbal:default_connection'] ?: current($ids);
             return $app['connections'][$default];
