@@ -34,6 +34,10 @@ $ git remote add upstream git@github.com:kamilsk/CilexServiceProviders.git
 $ composer require kamilsk/cilex-service-providers:~3.0
 ```
 
+## Demo
+
+### [Tinkoff Currency Analyst](https://github.com/kamilsk/TinkoffCurrencyAnalyst)
+
 ## Pulse of repository
 
 ### [Changelog](CHANGELOG.md)
