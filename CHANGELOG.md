@@ -3,7 +3,7 @@
 
 # Version 3
 
-## [Unreleased]
+## [3.1] - 2016-04-10
 ### Added
 - commands
   - `Command\Config\DumpCommand` for dump `$app['config']` to console
@@ -17,7 +17,7 @@
   - `Command\Command::getConfig()` now return `Common\Config\SimpleConfig` or mixed if path is passed
 - services
   - `ServiceProvider\ConfigServiceProvider` now register `Command\Config\DumpCommand` as `config:dump`
-- [git diff](/../../compare/3.0.2...master)
+- [git diff](/../../compare/3.0.2...3.1)
 
 ## [3.0] - 2016-03-15
 ### Added
