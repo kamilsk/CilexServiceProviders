@@ -16,6 +16,10 @@
 
 ## [Documentation](http://kamilsk.github.io/CilexServiceProviders/)
 
+## Usage example
+
+### [Tinkoff Currency Analyst](https://github.com/kamilsk/TinkoffCurrencyAnalyst)
+
 ## Installation
 
 ### Git (development)
@@ -33,10 +37,6 @@ $ git remote add upstream git@github.com:kamilsk/CilexServiceProviders.git
 ```bash
 $ composer require kamilsk/cilex-service-providers:~3.0
 ```
-
-## Demo
-
-### [Tinkoff Currency Analyst](https://github.com/kamilsk/TinkoffCurrencyAnalyst)
 
 ## Pulse of repository
 

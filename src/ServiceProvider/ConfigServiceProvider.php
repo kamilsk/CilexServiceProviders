@@ -5,13 +5,12 @@ namespace OctoLab\Cilex\ServiceProvider;
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
 use OctoLab\Cilex\Command\Config\DumpCommand;
+use OctoLab\Kilex\ServiceProvider\ConfigServiceProvider as KilexConfigServiceProvider;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class ConfigServiceProvider
-    extends \OctoLab\Kilex\ServiceProvider\ConfigServiceProvider
-    implements ServiceProviderInterface
+class ConfigServiceProvider extends KilexConfigServiceProvider implements ServiceProviderInterface
 {
     /**
      * @param Application $app
@@ -27,7 +26,7 @@ class ConfigServiceProvider
      */
     public function register(Application $app)
     {
-        parent::init($app);
+        $this->setup($app);
         $app->command(new DumpCommand('config'));
     }
 }

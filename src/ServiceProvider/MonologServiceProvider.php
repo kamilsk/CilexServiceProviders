@@ -4,47 +4,23 @@ namespace OctoLab\Cilex\ServiceProvider;
 
 use Cilex\Application;
 use Cilex\ServiceProviderInterface;
-use OctoLab\Common\Monolog\LoggerLocator;
-use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
-use Symfony\Component\Console\Output\OutputInterface;
+use OctoLab\Kilex\ServiceProvider\MonologServiceProvider as KilexMonologServiceProvider;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class MonologServiceProvider implements ServiceProviderInterface
+class MonologServiceProvider extends KilexMonologServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @quality:method [B]
-     *
      * @param Application $app
      *
-     * @throws \OutOfRangeException
+     * @throws \InvalidArgumentException
      *
      * @api
      */
     public function register(Application $app)
     {
-        if (!$app->offsetExists('config') || !isset($app->offsetGet('config')['monolog'])) {
-            return;
-        }
-        $config = $app->offsetGet('config');
-        $app['loggers'] = $app::share(function (Application $app) use ($config) {
-            return new LoggerLocator($config['monolog'], $app['console.name']);
-        });
-        $app['logger'] = $app::share(function (Application $app) {
-            return $app['loggers']->getDefaultChannel();
-        });
-        $app['monolog.bridge'] = $app::share(function (Application $app) {
-            return function (OutputInterface $output) use ($app) {
-                if (class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')
-                    && interface_exists('Symfony\Component\EventDispatcher\EventSubscriberInterface')) {
-                    $consoleHandler = new ConsoleHandler($output);
-                    /** @var \Monolog\Logger $logger */
-                    foreach ($app['loggers'] as $logger) {
-                        $logger->pushHandler($consoleHandler);
-                    }
-                }
-            };
-        });
+        $this->setup($app);
+        $app['app.name'] = $app['console.name'];
     }
 }
