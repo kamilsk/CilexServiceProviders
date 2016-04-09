@@ -16,7 +16,7 @@
 
 ## [Documentation](http://kamilsk.github.io/CilexServiceProviders/)
 
-## Usage example
+## Example of usages
 
 ### [Tinkoff Currency Analyst](https://github.com/kamilsk/TinkoffCurrencyAnalyst)
 

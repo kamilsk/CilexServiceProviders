@@ -12,7 +12,7 @@
     "php": ">=5.5",
     "cilex/cilex": "~1.0",
     "kamilsk/common": "^2.1.4",
-    "kamilsk/kilex": "1.x-dev"
+    "kamilsk/kilex": "~1.0"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
