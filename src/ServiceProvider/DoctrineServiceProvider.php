@@ -21,16 +21,15 @@ class DoctrineServiceProvider implements ServiceProviderInterface
      * @param Application $app
      *
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \InvalidArgumentException
      *
      * @api
      */
     public function register(Application $app)
     {
-        $config = $app->offsetGet('config');
-        if (!isset($config['doctrine'])) {
+        if (!$app->offsetExists('config') || !isset($app->offsetGet('config')['doctrine'])) {
             return;
         }
+        $config = $app->offsetGet('config');
         ConfigResolver::resolve($config['doctrine:dbal']);
         $app['connections'] = $app::share(function () use ($config) {
             $connections = new \Pimple();

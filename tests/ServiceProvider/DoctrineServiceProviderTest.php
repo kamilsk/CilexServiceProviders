@@ -38,25 +38,8 @@ class DoctrineServiceProviderTest extends TestCase
      *
      * @param Application $app
      */
-    public function registerFailure(Application $app)
-    {
-        try {
-            $app->register(new DoctrineServiceProvider());
-            self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
-        } catch (\InvalidArgumentException $e) {
-            self::assertTrue(true);
-        }
-    }
-
-    /**
-     * @test
-     * @dataProvider applicationProvider
-     *
-     * @param Application $app
-     */
     public function registerEmpty(Application $app)
     {
-        $app->register($this->getConfigServiceProvider('config', 'yml'));
         $app->register(new DoctrineServiceProvider());
         try {
             $app->offsetGet('connection');

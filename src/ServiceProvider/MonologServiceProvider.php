@@ -18,17 +18,16 @@ class MonologServiceProvider implements ServiceProviderInterface
      *
      * @param Application $app
      *
-     * @throws \InvalidArgumentException
      * @throws \OutOfRangeException
      *
      * @api
      */
     public function register(Application $app)
     {
-        $config = $app->offsetGet('config');
-        if (!isset($config['monolog'])) {
+        if (!$app->offsetExists('config') || !isset($app->offsetGet('config')['monolog'])) {
             return;
         }
+        $config = $app->offsetGet('config');
         $app['loggers'] = $app::share(function (Application $app) use ($config) {
             return new LoggerLocator($config['monolog'], $app['console.name']);
         });
@@ -40,6 +39,7 @@ class MonologServiceProvider implements ServiceProviderInterface
                 if (class_exists('Symfony\Bridge\Monolog\Handler\ConsoleHandler')
                     && interface_exists('Symfony\Component\EventDispatcher\EventSubscriberInterface')) {
                     $consoleHandler = new ConsoleHandler($output);
+                    /** @var \Monolog\Logger $logger */
                     foreach ($app['loggers'] as $logger) {
                         $logger->pushHandler($consoleHandler);
                     }

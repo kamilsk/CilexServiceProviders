@@ -21,7 +21,7 @@ class DumpCommandTest extends TestCase
      */
     public function execute(Application $app)
     {
-        $app->register($this->getConfigServiceProvider('config', 'yml'));
+        $app->register($this->getConfigServiceProvider());
         /** @var Command $command */
         $command = $app['console']->get('config:dump');
         $reflection = (new \ReflectionObject($command))->getMethod('execute');

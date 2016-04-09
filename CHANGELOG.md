@@ -9,6 +9,8 @@
   - `Command\Config\DumpCommand` for dump `$app['config']` to console
 - configs
   - `Command\CliMenu\PresetCommand` now supports batch commands ([docs](/docs/AppAndCommands.md#new-in-version-3.1))
+- package
+  - `kamilsk/kilex`
 
 ### Changed
 - methods

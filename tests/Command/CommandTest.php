@@ -58,7 +58,7 @@ class CommandTest extends TestCase
      */
     public function getConfig(Application $app)
     {
-        $app->register($this->getConfigServiceProvider('config', 'yml'));
+        $app->register($this->getConfigServiceProvider());
         $app->command($command = new CommandMock());
         self::assertEquals(E_ALL, $command->getConfig('app:constant'));
         self::assertEquals($command->getConfig('app:constant'), $command->getConfig()['app:constant']);
