@@ -3,7 +3,6 @@
 namespace OctoLab\Cilex;
 
 use Cilex\Application as CilexApplication;
-use OctoLab\Cilex\ServiceProvider;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>

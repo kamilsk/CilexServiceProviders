@@ -27,7 +27,7 @@ final class CountedServiceProviderMock implements ServiceProviderInterface
     }
 
     /**
-     * @param Application $app
+     * {@inheritdoc}
      */
     public function register(Application $app)
     {

@@ -89,8 +89,6 @@ final class PresetCommand extends Command
     }
 
     /**
-     * @quality:method [B]
-     *
      * @param array $item
      * @param OutputInterface $output
      *
@@ -99,6 +97,8 @@ final class PresetCommand extends Command
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
+     *
+     * @quality:method [B]
      */
     private function getCallback(array $item, OutputInterface $output)
     {

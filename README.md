@@ -32,10 +32,16 @@ $ cd CilexServiceProviders && composer install
 $ git remote add upstream git@github.com:kamilsk/CilexServiceProviders.git
 ```
 
+#### Mirror
+
+```bash
+$ git remote add mirror git@bitbucket.org:kamilsk/cilexserviceproviders.git
+```
+
 ### Composer (production)
 
 ```bash
-$ composer require kamilsk/cilex-service-providers:~3.0
+$ composer require kamilsk/cilex-service-providers:~3.1
 ```
 
 ## Pulse of repository

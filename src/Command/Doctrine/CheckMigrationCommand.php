@@ -27,8 +27,6 @@ final class CheckMigrationCommand extends AbstractCommand
     }
 
     /**
-     * @quality:method [C]
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      *
@@ -37,6 +35,8 @@ final class CheckMigrationCommand extends AbstractCommand
      * @throws \InvalidArgumentException
      * @throws \Doctrine\DBAL\Migrations\MigrationException
      * @throws \RuntimeException
+     *
+     * @quality:method [C]
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
