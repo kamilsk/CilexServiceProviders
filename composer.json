@@ -9,20 +9,19 @@
     { "name": "Kamil Samigullin", "email": "kamil@samigullin.info", "role": "lead" }
   ],
   "require": {
-    "php": ">=5.6",
+    "php": ">=7.0",
     "cilex/cilex": "~1.0",
-    "kamilsk/common": "^2.1.4",
-    "kamilsk/kilex": "~1.0"
+    "kamilsk/kilex": "~2.0"
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
     "jolicode/jolinotif": "~1.0",
     "league/climate": "~3.0",
     "php-school/cli-menu": "~1.0",
-    "symfony/config": "~2.0|~3.0",
-    "symfony/event-dispatcher": "~2.0|~3.0",
-    "symfony/monolog-bridge": "~2.0|~3.0",
-    "symfony/yaml": "~2.0|~3.0"
+    "symfony/config": "~3.0",
+    "symfony/event-dispatcher": "~3.0",
+    "symfony/monolog-bridge": "~3.0",
+    "symfony/yaml": "~3.0"
   },
   "suggest": {
     "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
@@ -44,7 +43,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.x-dev"
+      "dev-master": "3.x-dev",
+      "dev-4.x": "4.x-dev"
     }
   },
   "support": {
