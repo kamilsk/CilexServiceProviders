@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace OctoLab\Cilex\Command\Doctrine;
 
 use Doctrine\DBAL\Migrations\Tools\Console\Command\AbstractCommand;
@@ -92,10 +94,10 @@ final class CheckMigrationCommand extends AbstractCommand
      */
     private function printQueries(array $queries, OutputInterface $output)
     {
-        $count = count($queries);
+        $counter = strlen((string)count($queries));
         foreach ($queries as $i => $query) {
             $output->writeln(
-                sprintf('<info>%s. %s</info>', str_pad($i + 1, strlen($count), ' ', STR_PAD_LEFT), $query)
+                sprintf('<info>%s. %s</info>', str_pad((string)($i + 1), $counter, ' ', STR_PAD_LEFT), $query)
             );
         }
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace OctoLab\Cilex\Command\Doctrine;
 
 use OctoLab\Common\Doctrine\Migration\FileBasedMigration;
