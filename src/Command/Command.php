@@ -24,7 +24,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function __construct($namespace = null)
+    public function __construct(string $namespace = null)
     {
         $this->namespace = $namespace;
         parent::__construct();
@@ -35,7 +35,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function getContainer()
+    public function getContainer(): \Pimple
     {
         return $this->getApplication()->getContainer();
     }
@@ -60,7 +60,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function getConfig($path = null, $default = null)
+    public function getConfig(string $path = null, $default = null)
     {
         $config = $this->getService('config');
         if ($path === null) {
@@ -79,7 +79,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function getDbConnection($alias = null)
+    public function getDbConnection(string $alias = null): \Doctrine\DBAL\Connection
     {
         if ($alias === null) {
             return $this->getContainer()->offsetGet('connection');
@@ -98,7 +98,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function getLogger($channel = null)
+    public function getLogger(string $channel = null): \Psr\Log\LoggerInterface
     {
         if ($channel === null) {
             return $this->getContainer()->offsetGet('logger');
@@ -118,7 +118,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function setName($name)
+    public function setName($name): \Symfony\Component\Console\Command\Command
     {
         if (!$this->namespace) {
             return parent::setName($name);

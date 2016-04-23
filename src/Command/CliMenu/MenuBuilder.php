@@ -17,11 +17,11 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      * @param callable $itemCallable
      * @param bool $showItemExtra
      *
-     * @return $this
+     * @return MenuBuilder
      *
      * @api
      */
-    public function addItem($text, callable $itemCallable, $showItemExtra = false)
+    public function addItem($text, callable $itemCallable, $showItemExtra = false): MenuBuilder
     {
         $this->callbacks[$text] = $itemCallable;
         return parent::addItem($text, $itemCallable, $showItemExtra);
@@ -36,7 +36,7 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      *
      * @api
      */
-    public function getItemCallback($text)
+    public function getItemCallback($text): callable
     {
         if (isset($this->callbacks[$text])) {
             return $this->callbacks[$text];
@@ -49,7 +49,7 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      *
      * @api
      */
-    public function getItemCallbacks()
+    public function getItemCallbacks(): array
     {
         return $this->callbacks;
     }

@@ -22,7 +22,7 @@ class FibonacciCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $size = $input->getOption('size');
         $sequence = [];
@@ -41,7 +41,7 @@ class FibonacciCommand extends Command
     /**
      * @return \Generator
      */
-    private function getFibonacciSequence()
+    private function getFibonacciSequence(): \Generator
     {
         $i = 0;
         $k = 1;

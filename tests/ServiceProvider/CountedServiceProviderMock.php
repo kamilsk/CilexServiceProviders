@@ -18,7 +18,7 @@ final class CountedServiceProviderMock implements ServiceProviderInterface
     /**
      * @return int
      */
-    public static function getCounter()
+    public static function getCounter(): int
     {
         return self::$counter;
     }

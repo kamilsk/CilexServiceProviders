@@ -35,7 +35,7 @@ final class GenerateIndexNameCommand extends Command
      *
      * @throws \InvalidArgumentException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $availableTypes = ['uniq', 'fk', 'idx'];
         $type = strtolower($input->getOption('type'));
@@ -62,7 +62,7 @@ final class GenerateIndexNameCommand extends Command
      *
      * @see \Doctrine\DBAL\Schema\AbstractAsset::_generateIdentifierName
      */
-    private function generateIdentifierName(array $columnNames, $prefix = '', $maxSize = 30)
+    private function generateIdentifierName(array $columnNames, string $prefix = '', int $maxSize = 30): string
     {
         $hash = implode('', array_map(function ($column) {
             return dechex(crc32($column));

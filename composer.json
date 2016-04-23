@@ -15,8 +15,6 @@
   },
   "require-dev": {
     "doctrine/migrations": "~1.0",
-    "jolicode/jolinotif": "~1.0",
-    "league/climate": "~3.0",
     "php-school/cli-menu": "~1.0",
     "symfony/config": "~3.0",
     "symfony/event-dispatcher": "~3.0",
@@ -24,16 +22,14 @@
     "symfony/yaml": "~3.0"
   },
   "suggest": {
-    "doctrine/dbal": "for DoctrineServiceProvider (~2.0 is recommended)",
-    "doctrine/migrations": "optional for use OctoLab\\**\\Doctrine\\*Migration* (~1.0 is recommended)",
-    "jolicode/jolinotif": "optional for show desktop notification (~1.0 is recommended)",
-    "league/climate": "optional for colorize output (~3.0 is recommended)",
-    "monolog/monolog": "for use MonologServiceProvider (~1.0 is recommended)",
-    "php-school/cli-menu": "for PresentCommand (~1.0 is recommended, PHP 5.6+ is required)",
-    "symfony/config": "for use ConfigServiceProvider (~3.0 is recommended)",
+    "doctrine/dbal": "for using DoctrineServiceProvider (~2.0 is recommended)",
+    "doctrine/migrations": "optional for using OctoLab\\**\\Doctrine\\*Migration* (~1.0 is recommended)",
+    "monolog/monolog": "for using MonologServiceProvider (~1.0 is recommended)",
+    "php-school/cli-menu": "for using PresentCommand (~1.0 is recommended, PHP 5.6+ is required)",
+    "symfony/config": "for using ConfigServiceProvider (~3.0 is recommended)",
     "symfony/event-dispatcher": "needed when using log messages in console commands (~3.0 is recommended)",
     "symfony/monolog-bridge": "optional for MonologServiceProvider (~3.0 is recommended)",
-    "symfony/yaml": "for use ConfigServiceProvider (~3.0 is recommended)"
+    "symfony/yaml": "for using ConfigServiceProvider (~3.0 is recommended)"
   },
   "autoload": {
     "psr-4": { "OctoLab\\Cilex\\": "src/" }

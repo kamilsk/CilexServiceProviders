@@ -40,7 +40,7 @@ final class CheckMigrationCommand extends AbstractCommand
      *
      * @quality:method [C]
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $migration = $input->getArgument('migration');
         if (is_file($migration)) {

@@ -35,7 +35,7 @@ final class PresetCommand extends Command
      *
      * @api
      */
-    public function runMenuItem($item, InputInterface $input, OutputInterface $output)
+    public function runMenuItem(string $item, InputInterface $input, OutputInterface $output): int
     {
         return call_user_func($this->getMenuBuilder($input, $output)->getItemCallback($item));
     }
@@ -57,7 +57,7 @@ final class PresetCommand extends Command
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \PhpSchool\CliMenu\Exception\InvalidTerminalException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $builder = $this->getMenuBuilder($input, $output);
         if ($input->getOption('dump')) {
@@ -78,7 +78,7 @@ final class PresetCommand extends Command
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    private function getMenuBuilder(InputInterface $input, OutputInterface $output)
+    private function getMenuBuilder(InputInterface $input, OutputInterface $output): MenuBuilder
     {
         if ($this->menuBuilder === null) {
             $config = $this->getConfig($input->getOption('path'));
@@ -102,7 +102,7 @@ final class PresetCommand extends Command
      *
      * @quality:method [B]
      */
-    private function getCallback(array $item, OutputInterface $output)
+    private function getCallback(array $item, OutputInterface $output): \Closure
     {
         if (isset($item['commands'])) {
             $items = $item['commands'];
@@ -134,7 +134,7 @@ final class PresetCommand extends Command
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    private function getArgvIntputForMenuItem(InputDefinition $definition, array $item)
+    private function getArgvIntputForMenuItem(InputDefinition $definition, array $item): ArgvInput
     {
         $argv = [0];
         if (!empty($item['options'])) {
@@ -154,7 +154,7 @@ final class PresetCommand extends Command
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    private function getOptions(InputDefinition $definition, array $options)
+    private function getOptions(InputDefinition $definition, array $options): array
     {
         $argv = [];
         foreach ($options as $name => $value) {
@@ -171,7 +171,7 @@ final class PresetCommand extends Command
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    private function getArguments(InputDefinition $definition, array $arguments)
+    private function getArguments(InputDefinition $definition, array $arguments): array
     {
         $argv = [];
         foreach ($arguments as $name => $value) {

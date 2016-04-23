@@ -4,28 +4,32 @@ declare(strict_types = 1);
 
 namespace OctoLab\Cilex;
 
+use OctoLab\Common\Test\ClassAvailability;
+
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
  */
-class ClassAvailabilityTest extends \PHPUnit_Framework_TestCase
+class ClassAvailabilityTest extends ClassAvailability
 {
     /**
-     * @test
+     * {@inheritdoc}
      */
-    public function classmap()
+    protected function getClasses(): \Generator
     {
-        foreach ($this->getClasses() as $class) {
-            self::assertTrue(class_exists($class) || interface_exists($class) || trait_exists($class));
+        foreach (require dirname(__DIR__) . '/vendor/composer/autoload_classmap.php' as $class => $path) {
+            $signal = yield $class;
+            if (SIGSTOP === $signal) {
+                return;
+            }
         }
     }
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
-    private function getClasses()
+    protected function isFiltered(string $class): bool
     {
-        $classes = [];
-        $excluded = [
+        static $excluded = [
             // no dependencies
             'Symfony\\Bridge\\Monolog\\Handler\\DebugHandler' => true,
             'Symfony\\Bridge\\Monolog\\Logger' => true,
@@ -33,15 +37,8 @@ class ClassAvailabilityTest extends \PHPUnit_Framework_TestCase
             'Zend\\EventManager\\Filter\\FilterIterator' => true,
             'PackageVersions\\Installer' => true,
         ];
-        foreach (require dirname(__DIR__) . '/vendor/composer/autoload_classmap.php' as $class => $path) {
-            if (empty($excluded[$class])
-                // parent class or interface not found
-                && strpos($class, 'Cilex\Provider\Console\Adapter') === false
-                && strpos($class, 'PhpSchool\CliMenu') === false
-            ) {
-                $classes[] = $class;
-            }
-        }
-        return $classes;
+        return strpos($class, 'Cilex\\Provider\\Console\\Adapter') === 0
+            || strpos($class, 'PhpSchool\CliMenu') === 0
+            || !empty($excluded[$class]);
     }
 }

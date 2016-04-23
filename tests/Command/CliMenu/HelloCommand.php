@@ -22,7 +22,7 @@ class HelloCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln(sprintf('Hello, %s', $input->getArgument('message')));
         return 0;

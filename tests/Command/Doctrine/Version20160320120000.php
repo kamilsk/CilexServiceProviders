@@ -14,7 +14,7 @@ class Version20160320120000 extends FileBasedMigration
     /**
      * {@inheritdoc}
      */
-    public function getBasePath()
+    public function getBasePath(): string
     {
         return __DIR__ . '/migrations';
     }
@@ -22,7 +22,7 @@ class Version20160320120000 extends FileBasedMigration
     /**
      * {@inheritdoc}
      */
-    public function getMajorVersion()
+    public function getMajorVersion(): string
     {
         return '2';
     }
@@ -30,7 +30,7 @@ class Version20160320120000 extends FileBasedMigration
     /**
      * {@inheritdoc}
      */
-    public function getUpgradeMigrations()
+    public function getUpgradeMigrations(): array
     {
         return ['ISSUE-29/upgrade.sql'];
     }
@@ -38,7 +38,7 @@ class Version20160320120000 extends FileBasedMigration
     /**
      * {@inheritdoc}
      */
-    public function getDowngradeMigrations()
+    public function getDowngradeMigrations(): array
     {
         return ['ISSUE-29/downgrade.sql'];
     }
