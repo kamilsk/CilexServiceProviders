@@ -24,17 +24,17 @@ class ClassAvailabilityTest extends \PHPUnit_Framework_TestCase
     {
         $classes = [];
         $excluded = [
-            // parent class or interface not found
-            '\Symfony\Bridge\Monolog\Handler\DebugHandler' => true,
-            '\Symfony\Bridge\Monolog\Logger' => true,
-            '\Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass' => true,
-            '\Zend\EventManager\Filter\FilterIterator' => true,
+            // no dependencies
+            'Symfony\\Bridge\\Monolog\\Handler\\DebugHandler' => true,
+            'Symfony\\Bridge\\Monolog\\Logger' => true,
+            'Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass' => true,
+            'Zend\\EventManager\\Filter\\FilterIterator' => true,
+            'PackageVersions\\Installer' => true,
         ];
         foreach (require dirname(__DIR__) . '/vendor/composer/autoload_classmap.php' as $class => $path) {
-            if (empty($excluded['\\' . $class])
+            if (empty($excluded[$class])
                 // parent class or interface not found
                 && strpos($class, 'Cilex\Provider\Console\Adapter') === false
-                // php 5.6+
                 && strpos($class, 'PhpSchool\CliMenu') === false
             ) {
                 $classes[] = $class;

@@ -3,6 +3,11 @@
 
 # Version 3
 
+## [3.2.0] - LTS - 2016-04-23
+### Changed
+- PHP support is up to 5.6 version
+- [git diff](/../../compare/3.1...3.2.0)
+
 ## [3.1] - 2016-04-10
 ### Added
 - commands

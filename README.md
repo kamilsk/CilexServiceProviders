@@ -2,19 +2,7 @@
 >
 > Revised set of service providers for [Cilex](https://github.com/Cilex/Cilex).
 
-## What's inside
-
-### [Application and commands](docs/AppAndCommands.md)
-
-### [ConfigServiceProvider](docs/ConfigServiceProvider.md)
-
-### [DoctrineServiceProvider](docs/DoctrineServiceProvider.md)
-
-### [MonologServiceProvider](docs/MonologServiceProvider.md)
-
-### [Features](docs/Features.md)
-
-## [Documentation](http://kamilsk.github.io/CilexServiceProviders/)
+## [Documentation](https://github.com/kamilsk/CilexServiceProviders/wiki)
 
 ## Example of usages
 
@@ -41,10 +29,16 @@ $ git remote add mirror git@bitbucket.org:kamilsk/cilexserviceproviders.git
 ### Composer (production)
 
 ```bash
-$ composer require kamilsk/cilex-service-providers:~3.1
+$ composer require kamilsk/cilex-service-providers:~3.2
 ```
 
 ## Pulse of repository
+
+| Version / PHP | 5.5 | 5.6 | 7.0 | HHVM | Support                                           |
+|:-------------:|:---:|:---:|:---:|:----:|:--------------------------------------------------|
+| 3.1.x         | +   | +   | +   | +    | Security support and bug fixing until 10 Jul 2016 |
+| 3.2.x LTS     | -   | +   | +   | +    | Security support and bug fixing until 31 Dec 2018 |
+| 4.x           | -   | -   | +   | +    | Active support and new features until 3 Dec 2017  |
 
 ### [Changelog](CHANGELOG.md)
 
