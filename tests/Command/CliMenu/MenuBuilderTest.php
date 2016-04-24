@@ -16,8 +16,8 @@ class MenuBuilderTest extends TestCase
      */
     public function getItemCallback()
     {
-        $builder = new MenuBuilder();
-        $builder->addItem('test', function () {
+        $builder = $this->getMenuBuilder();
+        $builder->addItem('test', function () : string {
             return 'success';
         });
         self::assertEquals('success', call_user_func($builder->getItemCallback('test')));
@@ -25,7 +25,7 @@ class MenuBuilderTest extends TestCase
             self::assertEmpty(call_user_func($builder->getItemCallback('unknown')));
             self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
         } catch (\InvalidArgumentException $e) {
-            self::assertTrue(true);
+            self::assertContains('Callback for item "unknown" not found.', $e->getMessage());
         }
     }
 
@@ -34,9 +34,9 @@ class MenuBuilderTest extends TestCase
      */
     public function getItemCallbacks()
     {
-        $builder = new MenuBuilder();
+        $builder = $this->getMenuBuilder();
         self::assertCount(0, $builder->getItemCallbacks());
-        $builder->addItem('test', function () {
+        $builder->addItem('test', function () : string {
             return 'success';
         });
         self::assertCount(1, $builder->getItemCallbacks());

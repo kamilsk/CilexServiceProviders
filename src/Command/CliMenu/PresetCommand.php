@@ -18,8 +18,8 @@ final class PresetCommand extends Command
 {
     /** @var MenuBuilder|null */
     private $menuBuilder;
-    /** @var bool hack for unit tests */
-    private $dirtyHack = false;
+    /** @var bool */
+    private $isConfigured = false;
 
     /**
      * @param string $item
@@ -40,6 +40,19 @@ final class PresetCommand extends Command
         return call_user_func($this->getMenuBuilder($input, $output)->getItemCallback($item));
     }
 
+    /**
+     * @param MenuBuilder $menuBuilder
+     * @param bool $isConfigured
+     *
+     * @return PresetCommand
+     */
+    public function setMenuBuilder(MenuBuilder $menuBuilder, bool $isConfigured = false): PresetCommand
+    {
+        $this->menuBuilder = $menuBuilder;
+        $this->isConfigured = $isConfigured;
+        return $this;
+    }
+
     protected function configure()
     {
         $this
@@ -53,6 +66,7 @@ final class PresetCommand extends Command
     /**
      * {@inheritdoc}
      *
+     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \PhpSchool\CliMenu\Exception\InvalidTerminalException
@@ -63,7 +77,7 @@ final class PresetCommand extends Command
         if ($input->getOption('dump')) {
             $this->dumpCommands($builder, $output);
         } else {
-            $this->openMenu($builder);
+            $builder->build()->open();
         }
         return 0;
     }
@@ -74,18 +88,21 @@ final class PresetCommand extends Command
      *
      * @return MenuBuilder
      *
+     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
     private function getMenuBuilder(InputInterface $input, OutputInterface $output): MenuBuilder
     {
-        if ($this->menuBuilder === null) {
+        $this->menuBuilder = $this->menuBuilder ?? new MenuBuilder();
+        if (!$this->isConfigured) {
             $config = $this->getConfig($input->getOption('path'));
-            $this->menuBuilder = (new MenuBuilder())->setTitle($config['title']);
+            $this->menuBuilder->setTitle($config['title']);
             foreach ($config['items'] as $item) {
                 $this->menuBuilder->addItem($item['text'], $this->getCallback($item, $output));
             }
+            $this->isConfigured = true;
         }
         return $this->menuBuilder;
     }
@@ -126,7 +143,7 @@ final class PresetCommand extends Command
                 $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
                 $result[] = $dump
                     ? sprintf('%s %s', $command->getName(), $input)
-                    : $command->execute($input, $output);
+                    : (int)$command->execute($input, $output);
             }
             return $dump ? $result : max(...$result);
         };
@@ -147,7 +164,7 @@ final class PresetCommand extends Command
         return function (bool $dump = false) use ($item, $output) {
             $command = $this->getApplication()->get($item['callable']);
             $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
-            return $dump ? [sprintf('%s %s', $command->getName(), $input)] : $command->execute($input, $output);
+            return $dump ? [sprintf('%s %s', $command->getName(), $input)] : (int)$command->execute($input, $output);
         };
     }
 
@@ -161,13 +178,9 @@ final class PresetCommand extends Command
      */
     private function getArgvIntputForMenuItem(InputDefinition $definition, array $item): ArgvInput
     {
-        $argv = [0];
-        if (!empty($item['options'])) {
-            $argv = array_merge($argv, $this->getOptions($definition, $item['options']));
-        }
-        if (!empty($item['arguments'])) {
-            $argv = array_merge($argv, $this->getArguments($definition, $item['arguments']));
-        }
+        $argv = [null];
+        $argv = array_merge($argv, $this->getOptions($definition, $item['options'] ?? []));
+        $argv = array_merge($argv, $this->getArguments($definition, $item['arguments'] ?? []));
         return new ArgvInput($argv, $definition);
     }
 
@@ -220,15 +233,5 @@ final class PresetCommand extends Command
             });
             $output->writeln('');
         }
-    }
-
-    /**
-     * @param MenuBuilder $builder
-     *
-     * @throws \PhpSchool\CliMenu\Exception\InvalidTerminalException
-     */
-    private function openMenu(MenuBuilder $builder)
-    {
-        !$this->dirtyHack && $builder->build()->open();
     }
 }

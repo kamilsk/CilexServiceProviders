@@ -38,6 +38,7 @@ class ClassAvailabilityTest extends ClassAvailability
             'PackageVersions\\Installer' => true,
             // https://github.com/composer/composer/issues/5239
             'OctoLab\\Cilex\\Command\\extends' => true,
+            'OctoLab\\Cilex\\Command\\CliMenu\\extends' => true,
         ];
         return strpos($class, 'Cilex\\Provider\\Console\\Adapter') === 0
             || !empty($excluded[$class]);

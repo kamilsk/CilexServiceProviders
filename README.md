@@ -44,8 +44,8 @@ $ composer require kamilsk/cilex-service-providers:~4.0
 
 ### General information
 
-[![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg)](https://travis-ci.org/kamilsk/CilexServiceProviders)
-[![Tests status](http://php-eye.com/badge/kamilsk/cilex-service-providers/tested.svg)](http://php-eye.com/package/kamilsk/cilex-service-providers)
+[![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg?branch=4.x)](https://travis-ci.org/kamilsk/CilexServiceProviders)
+[![Tests status](http://php-eye.com/badge/kamilsk/cilex-service-providers/tested.svg?branch=4.x-dev)](http://php-eye.com/package/kamilsk/cilex-service-providers)
 [![Latest stable version](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![License](https://poser.pugx.org/kamilsk/cilex-service-providers/license.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 

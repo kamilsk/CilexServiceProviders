@@ -23,7 +23,8 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      */
     public function addItem($text, callable $itemCallable, $showItemExtra = false): MenuBuilder
     {
-        $this->callbacks[$text] = $itemCallable;
+
+        $this->callbacks[$this->resolveKey($text)] = $itemCallable;
         return parent::addItem($text, $itemCallable, $showItemExtra);
     }
 
@@ -36,10 +37,11 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      *
      * @api
      */
-    public function getItemCallback($text): callable
+    public function getItemCallback(string $text): callable
     {
-        if (isset($this->callbacks[$text])) {
-            return $this->callbacks[$text];
+        $key = $this->resolveKey($text);
+        if (isset($this->callbacks[$key])) {
+            return $this->callbacks[$key];
         }
         throw new \InvalidArgumentException(sprintf('Callback for item "%s" not found.', $text));
     }
@@ -52,5 +54,15 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
     public function getItemCallbacks(): array
     {
         return $this->callbacks;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    private function resolveKey(string $text): string
+    {
+        return md5($text);
     }
 }

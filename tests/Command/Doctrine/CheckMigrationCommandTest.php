@@ -10,7 +10,6 @@ use Doctrine\DBAL\Migrations\Tools\Console\Helper\ConfigurationHelper;
 use OctoLab\Cilex\ServiceProvider\DoctrineServiceProvider;
 use OctoLab\Cilex\TestCase;
 use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -50,7 +49,7 @@ EOF;
 
         $reflection = (new \ReflectionObject($command))->getMethod('execute');
         $reflection->setAccessible(true);
-        $output = new BufferedOutput();
+        $output = $this->getBufferedOutput();
         $input = new ArgvInput(
             [
                 $command->getName(),

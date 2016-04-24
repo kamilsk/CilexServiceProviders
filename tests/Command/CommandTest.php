@@ -9,7 +9,6 @@ use Doctrine\DBAL\Connection;
 use OctoLab\Cilex\ServiceProvider;
 use OctoLab\Cilex\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -110,7 +109,7 @@ class CommandTest extends TestCase
         $app->register($this->getConfigServiceProviderForMonolog());
         $app->register(new ServiceProvider\MonologServiceProvider());
         $app->command($command = $this->getCommand());
-        $output = new BufferedOutput();
+        $output = $this->getBufferedOutput();
         $command->setUpMonologBridge($output);
         $command->getLogger('debug')->error('test');
         self::assertContains('test', $output->fetch());

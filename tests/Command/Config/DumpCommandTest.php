@@ -8,7 +8,6 @@ use Cilex\Application;
 use OctoLab\Cilex\Command\Command;
 use OctoLab\Cilex\TestCase;
 use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @author Kamil Samigullin <kamil@samigullin.info>
@@ -28,7 +27,7 @@ class DumpCommandTest extends TestCase
         $command = $app['console']->get('config:dump');
         $reflection = (new \ReflectionObject($command))->getMethod('execute');
         $reflection->setAccessible(true);
-        $output = new BufferedOutput();
+        $output = $this->getBufferedOutput();
         $input = new ArgvInput([], $command->getDefinition());
         $needle = <<<EOF
 component:
