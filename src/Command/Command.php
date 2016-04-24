@@ -47,7 +47,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @api
      */
-    public function getService($name)
+    public function getService(string $name)
     {
         return $this->getApplication()->getService($name);
     }
@@ -58,15 +58,17 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      *
      * @return \OctoLab\Common\Config\SimpleConfig|mixed
      *
+     * @throws \InvalidArgumentException if "config" is not defined
+     *
      * @api
      */
     public function getConfig(string $path = null, $default = null)
     {
-        $config = $this->getService('config');
+        $config = $this->getContainer()->offsetGet('config');
         if ($path === null) {
-            return $config ?: [];
+            return $config;
         } else {
-            return $config[$path] ?: $default;
+            return $config[$path] ?? $default;
         }
     }
 
@@ -129,7 +131,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     /**
      * @param OutputInterface $output
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException if "monolog.bridge" is not defined
      *
      * @api
      */

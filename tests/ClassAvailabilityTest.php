@@ -36,9 +36,10 @@ class ClassAvailabilityTest extends ClassAvailability
             'Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass' => true,
             'Zend\\EventManager\\Filter\\FilterIterator' => true,
             'PackageVersions\\Installer' => true,
+            // https://github.com/composer/composer/issues/5239
+            'OctoLab\\Cilex\\Command\\extends' => true,
         ];
         return strpos($class, 'Cilex\\Provider\\Console\\Adapter') === 0
-            || strpos($class, 'PhpSchool\CliMenu') === 0
             || !empty($excluded[$class]);
     }
 }

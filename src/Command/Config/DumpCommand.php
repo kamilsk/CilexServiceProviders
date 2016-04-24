@@ -20,7 +20,7 @@ class DumpCommand extends Command
         $this
             ->setName('dump')
             ->setDescription('Dump application configuration ($app["config"]).')
-            ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, null)
+            ->addOption('path', 'p', InputOption::VALUE_OPTIONAL, '$app["config"][$path], supports nesting by ":"')
         ;
     }
 

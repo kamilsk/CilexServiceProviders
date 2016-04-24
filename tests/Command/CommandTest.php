@@ -18,22 +18,13 @@ class CommandTest extends TestCase
 {
     /**
      * @test
-     */
-    public function construct()
-    {
-        $command = new CommandMock();
-        self::assertEquals('mock', $command->getName());
-    }
-
-    /**
-     * @test
      * @dataProvider applicationProvider
      *
      * @param Application $app
      */
     public function getContainer(Application $app)
     {
-        $app->command($command = new CommandMock());
+        $app->command($command = $this->getCommand());
         self::assertInstanceOf(\Pimple::class, $command->getContainer());
     }
 
@@ -45,11 +36,11 @@ class CommandTest extends TestCase
      */
     public function getService(Application $app)
     {
-        $app->command($command = new CommandMock());
-        $app['service'] = function () {
+        $app->command($command = $this->getCommand());
+        $app['id'] = function () : string {
             return 'instance';
         };
-        self::assertEquals('instance', $command->getService('service'));
+        self::assertEquals('instance', $command->getService('id'));
     }
 
     /**
@@ -61,7 +52,7 @@ class CommandTest extends TestCase
     public function getConfig(Application $app)
     {
         $app->register($this->getConfigServiceProvider());
-        $app->command($command = new CommandMock());
+        $app->command($command = $this->getCommand());
         self::assertEquals(E_ALL, $command->getConfig('app:constant'));
         self::assertEquals($command->getConfig('app:constant'), $command->getConfig()['app:constant']);
         self::assertEquals('fail', $command->getConfig('unknown', 'fail'));
@@ -77,7 +68,7 @@ class CommandTest extends TestCase
     {
         $app->register($this->getConfigServiceProviderForDoctrine());
         $app->register(new ServiceProvider\DoctrineServiceProvider());
-        $app->command($command = new CommandMock());
+        $app->command($command = $this->getCommand());
         self::assertInstanceOf(Connection::class, $command->getDbConnection());
         self::assertInstanceOf(Connection::class, $command->getDbConnection('sqlite'));
     }
@@ -92,7 +83,7 @@ class CommandTest extends TestCase
     {
         $app->register($this->getConfigServiceProviderForMonolog());
         $app->register(new ServiceProvider\MonologServiceProvider());
-        $app->command($command = new CommandMock());
+        $app->command($command = $this->getCommand());
         self::assertInstanceOf(LoggerInterface::class, $command->getLogger());
         self::assertInstanceOf(LoggerInterface::class, $command->getLogger('debug'));
     }
@@ -102,7 +93,7 @@ class CommandTest extends TestCase
      */
     public function setNameTest()
     {
-        $command = new CommandMock('test');
+        $command = $this->getCommand('test');
         self::assertEquals('test:mock', $command->getName());
         $command->setName('success');
         self::assertEquals('test:success', $command->getName());
@@ -118,10 +109,26 @@ class CommandTest extends TestCase
     {
         $app->register($this->getConfigServiceProviderForMonolog());
         $app->register(new ServiceProvider\MonologServiceProvider());
-        $app->command($command = new CommandMock());
+        $app->command($command = $this->getCommand());
         $output = new BufferedOutput();
         $command->setUpMonologBridge($output);
-        $command->getLogger()->error('test');
-        self::assertNotEmpty($output->fetch());
+        $command->getLogger('debug')->error('test');
+        self::assertContains('test', $output->fetch());
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Command
+     */
+    private function getCommand(string $name = null): Command
+    {
+        return new class($name) extends Command
+        {
+            protected function configure()
+            {
+                $this->setName('mock');
+            }
+        };
     }
 }

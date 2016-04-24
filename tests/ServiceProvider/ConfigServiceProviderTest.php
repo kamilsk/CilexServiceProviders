@@ -20,8 +20,20 @@ class ConfigServiceProviderTest extends TestCase
      */
     public function register(Application $app)
     {
+        $expected = [
+            'app' => [
+                'placeholder_parameter' => 'test',
+                'constant' => E_ALL,
+            ],
+            'component' => [
+                'parameter' => 'base component\'s parameter will be overwritten by root config',
+                'base_parameter' => 'base parameter will not be overwritten',
+            ],
+        ];
         $app->register($this->getConfigServiceProvider());
-        self::assertTrue($app->offsetExists('config'));
+        foreach ($expected as $key => $value) {
+            self::assertEquals($value, $app['config'][$key]);
+        }
         self::assertTrue($app->offsetGet('console')->has('config:dump'));
     }
 }
