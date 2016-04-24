@@ -99,31 +99,56 @@ final class PresetCommand extends Command
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
-     *
-     * @quality:method [B]
      */
     private function getCallback(array $item, OutputInterface $output): \Closure
     {
-        if (isset($item['commands'])) {
-            $items = $item['commands'];
-            return function ($dump = false) use ($items, $output) {
-                $result = [];
-                foreach ($items as $item) {
-                    $command = $this->getApplication()->get($item['name']);
-                    $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
-                    $result[] = $dump
-                        ? sprintf('%s %s', $command->getName(), $input)
-                        : $command->execute($input, $output);
-                }
-                return $dump ? $result : call_user_func_array('max', $result);
-            };
-        } else {
-            return function ($dump = false) use ($item, $output) {
-                $command = $this->getApplication()->get($item['callable']);
+        return isset($item['commands'])
+            ? $this->getBatchCommandsCallback($item['commands'], $output)
+            : $this->getSingleCommandCallback($item, $output);
+    }
+
+    /**
+     * @param array $items
+     * @param OutputInterface $output
+     *
+     * @return \Closure
+     *
+     * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Console\Exception\LogicException
+     */
+    private function getBatchCommandsCallback(array $items, OutputInterface $output): \Closure
+    {
+        return function (bool $dump = false) use ($items, $output) {
+            $result = [];
+            foreach ($items as $item) {
+                $command = $this->getApplication()->get($item['name']);
                 $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
-                return $dump ? [sprintf('%s %s', $command->getName(), $input)] : $command->execute($input, $output);
-            };
-        }
+                $result[] = $dump
+                    ? sprintf('%s %s', $command->getName(), $input)
+                    : $command->execute($input, $output);
+            }
+            return $dump ? $result : max(...$result);
+        };
+    }
+
+    /**
+     * @param array $item
+     * @param OutputInterface $output
+     *
+     * @return \Closure
+     *
+     * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\Console\Exception\LogicException
+     */
+    private function getSingleCommandCallback(array $item, OutputInterface $output): \Closure
+    {
+        return function (bool $dump = false) use ($item, $output) {
+            $command = $this->getApplication()->get($item['callable']);
+            $input = $this->getArgvIntputForMenuItem($command->getDefinition(), $item);
+            return $dump ? [sprintf('%s %s', $command->getName(), $input)] : $command->execute($input, $output);
+        };
     }
 
     /**
