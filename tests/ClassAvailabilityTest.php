@@ -37,6 +37,7 @@ class ClassAvailabilityTest extends ClassAvailability
             'Zend\\EventManager\\Filter\\FilterIterator' => true,
             'PackageVersions\\Installer' => true,
             // https://github.com/composer/composer/issues/5239
+            'OctoLab\\Cilex\\extends' => true,
             'OctoLab\\Cilex\\Command\\extends' => true,
             'OctoLab\\Cilex\\Command\\CliMenu\\extends' => true,
         ];
