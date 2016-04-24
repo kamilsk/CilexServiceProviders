@@ -115,8 +115,8 @@ EOF;
                 $command->getDefinition()
             );
             $reflection->invoke($command, $input, $output);
-            self::fail(sprintf('%s exception expected.', \RuntimeException::class));
-        } catch (\RuntimeException $e) {
+            self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
+        } catch (\InvalidArgumentException $e) {
             self::assertTrue(true);
         }
     }

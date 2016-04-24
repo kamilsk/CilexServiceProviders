@@ -36,23 +36,92 @@ final class CheckMigrationCommand extends AbstractCommand
      *
      * @throws \InvalidArgumentException
      * @throws \Doctrine\DBAL\Migrations\MigrationException
-     * @throws \RuntimeException
-     *
-     * @quality:method [C]
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $migration = $input->getArgument('migration');
         if (is_file($migration)) {
-            $queries = Parser::extractSql(file_get_contents($migration));
-            if (!empty($queries)) {
-                $output->writeln(sprintf('<comment>Migration %s contains</comment>', $migration));
-                $this->printQueries($queries, $output);
+            return $this->checkFileMigration($migration, $output);
+        }
+        $class = $this->getClass($migration, $input, $output);
+        $object = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
+        if ($object instanceof FileBasedMigration) {
+            return $this->checkFileBasedMigration($object, $migration, $output);
+        } else {
+            throw new \InvalidArgumentException(sprintf(
+                'Migration must be an instance of %s. Use "--dry-run" option of %s to see its\' content instead.',
+                FileBasedMigration::class,
+                MigrateCommand::class
+            ));
+        }
+    }
+
+    /**
+     * @param string $file
+     * @param OutputInterface $output
+     *
+     * @return int
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function checkFileMigration(string $file, OutputInterface $output): int
+    {
+        $queries = Parser::extractSql(file_get_contents($file));
+        if (!empty($queries)) {
+            $output->writeln(sprintf('<comment>Migration %s contains</comment>', $file));
+            $this->printQueries($queries, $output);
+        } else {
+            $output->writeln(sprintf('<comment>Migration %s is empty</comment>', $file));
+        }
+        return 0;
+    }
+
+    /**
+     * @param FileBasedMigration $migration
+     * @param string $migrationName
+     * @param OutputInterface $output
+     *
+     * @return int
+     *
+     * @throws \InvalidArgumentException
+     */
+    private function checkFileBasedMigration(
+        FileBasedMigration $migration,
+        string $migrationName,
+        OutputInterface $output
+    ): int {
+        $methods = ['upgrade' => 'preUp', 'downgrade' => 'preDown'];
+        // the right way is to use the same schema that is passed to a real migration
+        $schema = new Schema();
+        foreach ($methods as $direction => $method) {
+            $migration->{$method}($schema);
+            if ($migration->getQueries()) {
+                $output->writeln(
+                    sprintf('<comment>%s by migration %s</comment>', ucfirst($direction), $migrationName)
+                );
+                $this->printQueries($migration->getQueries(), $output);
             } else {
-                $output->writeln(sprintf('<comment>Migration %s is empty</comment>', $migration));
+                $output->writeln(
+                    sprintf('<comment>%s by migration %s is empty</comment>', ucfirst($direction), $migrationName)
+                );
             }
-            return 0;
-        } elseif (preg_match('/^\d{14}$/', $migration)) {
+        }
+        return 0;
+    }
+
+    /**
+     * @param string $migration
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return string
+     *
+     * @throws \Doctrine\DBAL\Migrations\MigrationException
+     * @throws \InvalidArgumentException
+     */
+    private function getClass(string $migration, InputInterface $input, OutputInterface $output): string
+    {
+        if (preg_match('/^\d{14}$/', $migration)) {
             $configuration = $this->getMigrationConfiguration($input, $output);
             $configuration->validate();
             // the right way is to use $configuration->getVersion(), but it is difficult for mocking
@@ -62,28 +131,7 @@ final class CheckMigrationCommand extends AbstractCommand
         } else {
             throw new \InvalidArgumentException('Migration must be a valid file or version or class.');
         }
-        // the right way is to use the same schema that is passed to a real migration
-        $schema = new Schema();
-        $object = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
-        if ($object instanceof FileBasedMigration) {
-            $methods = ['upgrade' => 'preUp', 'downgrade' => 'preDown'];
-            foreach ($methods as $direction => $method) {
-                $object->{$method}($schema);
-                if ($object->getQueries()) {
-                    $output->writeln(
-                        sprintf('<comment>%s by migration %s</comment>', ucfirst($direction), $migration)
-                    );
-                    $this->printQueries($object->getQueries(), $output);
-                }
-            }
-        } else {
-            throw new \RuntimeException(sprintf(
-                'Migration must be an instance of %s. Use "--dry-run" option of %s to see its\' content instead.',
-                FileBasedMigration::class,
-                MigrateCommand::class
-            ));
-        }
-        return 0;
+        return $class;
     }
 
     /**
