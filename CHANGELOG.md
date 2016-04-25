@@ -8,7 +8,7 @@
 - PHP support is up to 7.0 version
 - method signature
   - all methods, where it is possible, changed scalar and return type declaration
-- [git diff](/../../compare/3.2.0...4.0.0)
+- [git diff](/../../compare/3.2.0...4.0.1)
 
 # Version 3
 
