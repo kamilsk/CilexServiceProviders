@@ -21,8 +21,7 @@ class GenerateIndexNameCommandTest extends TestCase
      */
     public function execute(Application $app)
     {
-        $command = new GenerateIndexNameCommand('test');
-        $app->command($command);
+        $app->command($command = new GenerateIndexNameCommand('test'));
         $reflection = (new \ReflectionObject($command))->getMethod('execute');
         $reflection->setAccessible(true);
         $output = $this->getBufferedOutput();
@@ -72,7 +71,7 @@ class GenerateIndexNameCommandTest extends TestCase
             $reflection->invoke($command, $input, $output);
             self::fail(sprintf('%s exception expected.', \InvalidArgumentException::class));
         } catch (\InvalidArgumentException $e) {
-            self::assertTrue(true);
+            self::assertContains('Unknown type "unknown", available types are "uniq","fk","idx".', $e->getMessage());
         }
     }
 }

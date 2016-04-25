@@ -40,6 +40,7 @@ class ClassAvailabilityTest extends ClassAvailability
             'OctoLab\\Cilex\\extends' => true,
             'OctoLab\\Cilex\\Command\\extends' => true,
             'OctoLab\\Cilex\\Command\\CliMenu\\extends' => true,
+            'OctoLab\\Cilex\\Command\\Doctrine\\extends' => true,
         ];
         return strpos($class, 'Cilex\\Provider\\Console\\Adapter') === 0
             || !empty($excluded[$class]);

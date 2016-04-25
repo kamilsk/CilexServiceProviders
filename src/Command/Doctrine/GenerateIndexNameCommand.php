@@ -14,8 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class GenerateIndexNameCommand extends Command
 {
-    const MAX_IDENTIFIER_LENGTH = 63;
-
     protected function configure()
     {
         $this
@@ -41,14 +39,14 @@ final class GenerateIndexNameCommand extends Command
         $type = strtolower($input->getOption('type'));
         if (!in_array($type, $availableTypes, true)) {
             throw new \InvalidArgumentException(
-                sprintf('Unknown type "%s", available types "%s"', $type, implode('","', $availableTypes))
+                sprintf('Unknown type "%s", available types are "%s".', $type, implode('","', $availableTypes))
             );
         }
         $tableName = $input->getOption('table');
         $columns = explode(',', $input->getOption('columns'));
         $output->writeln(sprintf(
             'Index name: %s',
-            $this->generateIdentifierName(array_merge([$tableName], $columns), $type, self::MAX_IDENTIFIER_LENGTH)
+            $this->generateIdentifierName(array_merge([$tableName], $columns), $type)
         ));
         return 0;
     }
@@ -61,6 +59,7 @@ final class GenerateIndexNameCommand extends Command
      * @return string
      *
      * @see \Doctrine\DBAL\Schema\AbstractAsset::_generateIdentifierName
+     * @see \Doctrine\DBAL\Schema\Table::_getMaxIdentifierLength
      */
     private function generateIdentifierName(array $columnNames, string $prefix = '', int $maxSize = 30): string
     {

@@ -36,6 +36,8 @@ final class CheckMigrationCommand extends AbstractCommand
      *
      * @throws \InvalidArgumentException
      * @throws \Doctrine\DBAL\Migrations\MigrationException
+     * @throws \ReflectionException
+     * @throws \TypeError
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -43,17 +45,15 @@ final class CheckMigrationCommand extends AbstractCommand
         if (is_file($migration)) {
             return $this->checkFileMigration($migration, $output);
         }
-        $class = $this->getClass($migration, $input, $output);
-        $object = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
-        if ($object instanceof FileBasedMigration) {
-            return $this->checkFileBasedMigration($object, $migration, $output);
-        } else {
-            throw new \InvalidArgumentException(sprintf(
-                'Migration must be an instance of %s. Use "--dry-run" option of %s to see its\' content instead.',
-                FileBasedMigration::class,
-                MigrateCommand::class
-            ));
+        $instance = $this->getMigrationInstance($migration, $input, $output);
+        if ($instance instanceof FileBasedMigration) {
+            return $this->checkFileBasedMigration($instance, $migration, $output);
         }
+        throw new \InvalidArgumentException(sprintf(
+            'Migration must be an instance of %s. Use "--dry-run" option of %s to see its\' content instead.',
+            FileBasedMigration::class,
+            MigrateCommand::class
+        ));
     }
 
     /**
@@ -97,7 +97,7 @@ final class CheckMigrationCommand extends AbstractCommand
             $migration->{$method}($schema);
             if ($migration->getQueries()) {
                 $output->writeln(
-                    sprintf('<comment>%s by migration %s</comment>', ucfirst($direction), $migrationName)
+                    sprintf('<comment>%s by migration %s contains</comment>', ucfirst($direction), $migrationName)
                 );
                 $this->printQueries($migration->getQueries(), $output);
             } else {
@@ -114,24 +114,29 @@ final class CheckMigrationCommand extends AbstractCommand
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return string
+     * @return \Doctrine\DBAL\Migrations\AbstractMigration
      *
-     * @throws \Doctrine\DBAL\Migrations\MigrationException
-     * @throws \InvalidArgumentException
+     * @throws \ReflectionException
+     * @throws \Doctrine\DBAL\Migrations\MigrationException if could not find migration version
+     * @throws \TypeError if it returns not instance of \Doctrine\DBAL\Migrations\AbstractMigration
      */
-    private function getClass(string $migration, InputInterface $input, OutputInterface $output): string
-    {
-        if (preg_match('/^\d{14}$/', $migration)) {
-            $configuration = $this->getMigrationConfiguration($input, $output);
-            $configuration->validate();
-            // the right way is to use $configuration->getVersion(), but it is difficult for mocking
-            $class = $configuration->getMigrationsNamespace() . '\Version' . $migration;
-        } elseif (class_exists($migration)) {
-            $class = $migration;
+    private function getMigrationInstance(
+        string $migration,
+        InputInterface $input,
+        OutputInterface $output
+    ): \Doctrine\DBAL\Migrations\AbstractMigration {
+        if (class_exists($migration)) {
+            $instance = (new \ReflectionClass($migration))->newInstanceWithoutConstructor();
         } else {
-            throw new \InvalidArgumentException('Migration must be a valid file or version or class.');
+            $configuration = $this->getMigrationConfiguration($input, $output);
+            try {
+                $instance = $configuration->getVersion($migration)->getMigration();
+            } catch (\Doctrine\DBAL\Exception\ConnectionException $e) {
+                $class = $configuration->getMigrationsNamespace() . '\\Version' . $migration;
+                $instance = (new \ReflectionClass($class))->newInstanceWithoutConstructor();
+            }
         }
-        return $class;
+        return $instance;
     }
 
     /**
