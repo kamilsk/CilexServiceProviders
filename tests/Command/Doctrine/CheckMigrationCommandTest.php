@@ -144,15 +144,12 @@ EOF;
     {
         parent::setUp();
         $this->configuration = $this->prophesize(Configuration::class);
-        $this->configuration->getVersion('20160320120000')->willReturn(
-            new class
+        $this->configuration->getVersion('20160320120000')->willReturn(new class {
+            public function getMigration(): Version20160320120000
             {
-                public function getMigration(): Version20160320120000
-                {
-                    return (new \ReflectionClass(Version20160320120000::class))->newInstanceWithoutConstructor();
-                }
+                return (new \ReflectionClass(Version20160320120000::class))->newInstanceWithoutConstructor();
             }
-        );
+        });
         $this->configuration->getVersion('20160320000000')->will(function (array $args) {
             $configuration = new Configuration(new Connection([
                 'driver' => 'pdo_mysql',
