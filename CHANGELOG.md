@@ -3,7 +3,11 @@
 
 # Version 4
 
-## [4.0.0] - 2016-04-24
+## [4.1.0] - Unreleased
+### Changed
+- [git diff](/../../compare/4.0.1...4.x)
+
+## [4.0.x] - 2016-04-24
 ### Changed
 - PHP support is up to 7.0 version
 - method signature
