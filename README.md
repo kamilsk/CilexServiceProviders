@@ -2,6 +2,9 @@
 >
 > Revised set of service providers for [Cilex](https://github.com/Cilex/Cilex).
 
+[![Patreon](https://img.shields.io/badge/patreon-donate-orange.svg)](https://www.patreon.com/octolab)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](LICENSE)
+
 ## [Documentation](https://github.com/kamilsk/CilexServiceProviders/wiki)
 
 ## Example of usages
@@ -47,7 +50,6 @@ $ composer require kamilsk/cilex-service-providers:~4.0
 [![Build status](https://travis-ci.org/kamilsk/CilexServiceProviders.svg?branch=4.x)](https://travis-ci.org/kamilsk/CilexServiceProviders)
 [![Tests status](http://php-eye.com/badge/kamilsk/cilex-service-providers/tested.svg?branch=4.x-dev)](http://php-eye.com/package/kamilsk/cilex-service-providers)
 [![Latest stable version](https://poser.pugx.org/kamilsk/cilex-service-providers/v/stable.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
-[![License](https://poser.pugx.org/kamilsk/cilex-service-providers/license.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 
 ### Code quality
 
@@ -63,11 +65,6 @@ $ composer require kamilsk/cilex-service-providers:~4.0
 [![Daily downloads](https://poser.pugx.org/kamilsk/cilex-service-providers/d/daily.png)](https://packagist.org/packages/kamilsk/cilex-service-providers)
 [![Total references](https://www.versioneye.com/php/kamilsk:cilex-service-providers/reference_badge.svg)](https://www.versioneye.com/php/kamilsk:cilex-service-providers/references)
 
-### Feedback
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kamilsk/small-tools?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![@ikamilsk](https://img.shields.io/badge/author-%40ikamilsk-blue.svg)](https://twitter.com/ikamilsk)
-
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
@@ -76,8 +73,13 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 If you discover any security related issues, please email feedback@octolab.org instead of using the issue tracker.
 
-## License
+## Feedback
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+[![@kamilsk](https://img.shields.io/badge/author-%40kamilsk-blue.svg)](https://twitter.com/ikamilsk)
+[![@octolab](https://img.shields.io/badge/sponsor-%40octolab-blue.svg)](https://twitter.com/octolab_inc)
+
+## Notes
+
+- made with ❤️ by [OctoLab](https://www.octolab.org/)
 
 [![Analytics](https://ga-beacon.appspot.com/UA-109817251-23/unsupported/CilexServiceProviders/readme)](https://github.com/igrigorik/ga-beacon)
