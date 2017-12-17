@@ -111,13 +111,13 @@ final class PresetCommand extends Command
      * @param array $item
      * @param OutputInterface $output
      *
-     * @return \Closure
+     * @return callable
      *
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    private function getCallback(array $item, OutputInterface $output): \Closure
+    private function getCallback(array $item, OutputInterface $output): callable
     {
         return isset($item['commands'])
             ? $this->getBatchCommandsCallback($item['commands'], $output)
@@ -128,13 +128,13 @@ final class PresetCommand extends Command
      * @param array $items
      * @param OutputInterface $output
      *
-     * @return \Closure
+     * @return callable
      *
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    private function getBatchCommandsCallback(array $items, OutputInterface $output): \Closure
+    private function getBatchCommandsCallback(array $items, OutputInterface $output): callable
     {
         return function (bool $dump = false) use ($items, $output) {
             $result = [];
@@ -153,13 +153,13 @@ final class PresetCommand extends Command
      * @param array $item
      * @param OutputInterface $output
      *
-     * @return \Closure
+     * @return callable
      *
      * @throws \Symfony\Component\Console\Exception\CommandNotFoundException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    private function getSingleCommandCallback(array $item, OutputInterface $output): \Closure
+    private function getSingleCommandCallback(array $item, OutputInterface $output): callable
     {
         return function (bool $dump = false) use ($item, $output) {
             $command = $this->getApplication()->get($item['callable']);
