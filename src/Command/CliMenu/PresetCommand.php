@@ -37,7 +37,7 @@ final class PresetCommand extends Command
      */
     public function runMenuItem(string $item, InputInterface $input, OutputInterface $output): int
     {
-        return call_user_func($this->getMenuBuilder($input, $output)->getItemCallback($item));
+        return \call_user_func($this->getMenuBuilder($input, $output)->getItemCallback($item));
     }
 
     /**
@@ -53,6 +53,9 @@ final class PresetCommand extends Command
         return $this;
     }
 
+    /**
+     * @throws \InvalidArgumentException
+     */
     protected function configure()
     {
         $this
@@ -225,7 +228,7 @@ final class PresetCommand extends Command
     private function dumpCommands(MenuBuilder $builder, OutputInterface $output)
     {
         $commands = $builder->getItemCallbacks();
-        $output->writeln(sprintf('Total commands: %d', count($commands)));
+        $output->writeln(sprintf('Total commands: %d', \count($commands)));
         foreach ($commands as $command) {
             $result = $command(true);
             array_walk($result, function ($entry) use ($output) {

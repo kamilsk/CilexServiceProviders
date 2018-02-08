@@ -67,9 +67,8 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
         $config = $this->getContainer()->offsetGet('config');
         if ($path === null) {
             return $config;
-        } else {
-            return $config[$path] ?? $default;
         }
+        return $config[$path] ?? $default;
     }
 
     /**
@@ -85,9 +84,8 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     {
         if ($alias === null) {
             return $this->getContainer()->offsetGet('connection');
-        } else {
-            return $this->getContainer()->offsetGet('connections')[$alias];
         }
+        return $this->getContainer()->offsetGet('connections')[$alias];
     }
 
     /**
@@ -104,9 +102,8 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
     {
         if ($channel === null) {
             return $this->getContainer()->offsetGet('logger');
-        } else {
-            return $this->getContainer()->offsetGet('loggers')[$channel];
         }
+        return $this->getContainer()->offsetGet('loggers')[$channel];
     }
 
     /**
@@ -137,6 +134,6 @@ abstract class Command extends \Symfony\Component\Console\Command\Command
      */
     public function setUpMonologBridge(OutputInterface $output)
     {
-        call_user_func($this->getContainer()->offsetGet('monolog.bridge'), $output);
+        \call_user_func($this->getContainer()->offsetGet('monolog.bridge'), $output);
     }
 }

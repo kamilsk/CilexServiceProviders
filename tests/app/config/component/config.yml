@@ -1,5 +1,5 @@
 imports:
-  - { resource: base.yml }
+- base.yml
 
 component:
   parameter: "base component's parameter will be overwritten by component config"

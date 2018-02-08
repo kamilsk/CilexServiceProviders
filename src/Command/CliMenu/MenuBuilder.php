@@ -16,14 +16,14 @@ class MenuBuilder extends \PhpSchool\CliMenu\CliMenuBuilder
      * @param string $text
      * @param callable $itemCallable
      * @param bool $showItemExtra
+     * @param bool $disabled
      *
      * @return MenuBuilder
      *
      * @api
      */
-    public function addItem($text, callable $itemCallable, $showItemExtra = false): MenuBuilder
+    public function addItem($text, callable $itemCallable, $showItemExtra = false, $disabled = false): MenuBuilder
     {
-
         $this->callbacks[$this->resolveKey($text)] = $itemCallable;
         return parent::addItem($text, $itemCallable, $showItemExtra);
     }

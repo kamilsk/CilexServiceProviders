@@ -15,6 +15,9 @@ use Symfony\Component\Yaml\Yaml;
  */
 class DumpCommand extends Command
 {
+    /**
+     * @throws \InvalidArgumentException
+     */
     protected function configure()
     {
         $this
@@ -27,6 +30,8 @@ class DumpCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @throws \InvalidArgumentException
      *
      * @return int
      */

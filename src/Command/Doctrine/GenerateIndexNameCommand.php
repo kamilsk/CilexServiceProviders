@@ -14,6 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class GenerateIndexNameCommand extends Command
 {
+    /**
+     * @throws \InvalidArgumentException
+     */
     protected function configure()
     {
         $this
@@ -37,7 +40,7 @@ final class GenerateIndexNameCommand extends Command
     {
         $availableTypes = ['uniq', 'fk', 'idx'];
         $type = strtolower($input->getOption('type'));
-        if (!in_array($type, $availableTypes, true)) {
+        if (!\in_array($type, $availableTypes, true)) {
             throw new \InvalidArgumentException(
                 sprintf('Unknown type "%s", available types are "%s".', $type, implode('","', $availableTypes))
             );
@@ -66,6 +69,6 @@ final class GenerateIndexNameCommand extends Command
         $hash = implode('', array_map(function ($column) {
             return dechex(crc32($column));
         }, $columnNames));
-        return substr(strtoupper($prefix . '_' . $hash), 0, $maxSize);
+        return strtoupper(substr($prefix . '_' . $hash, 0, $maxSize));
     }
 }

@@ -1,19 +1,34 @@
 {
   "name": "kamilsk/cilex-service-providers",
-  "type": "library",
-  "description": "Revised set of service providers for Cilex.",
-  "keywords": ["cli", "cilex"],
-  "homepage": "https://github.com/kamilsk/CilexServiceProviders",
   "license": "MIT",
-  "authors": [
-    { "name": "Kamil Samigullin", "email": "kamil@samigullin.info", "role": "lead" }
-  ],
   "require": {
-    "php": ">=7.0",
-    "cilex/cilex": "~1.0",
-    "kamilsk/common": "3.x-dev",
-    "kamilsk/kilex": "2.x-dev"
+    "php": "^7.0",
+    "cilex/cilex": "^1.0",
+    "kamilsk/common": "^4.0",
+    "kamilsk/kilex": "^3.0"
   },
+  "autoload": {
+    "psr-4": {
+      "OctoLab\\Cilex\\": "src/"
+    }
+  },
+  "homepage": "https://github.com/kamilsk/CilexServiceProviders",
+  "autoload-dev": {
+    "psr-4": {
+      "OctoLab\\Cilex\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "role": "lead",
+      "name": "Kamil Samigullin",
+      "email": "kamil@samigullin.info"
+    }
+  ],
+  "keywords": [
+    "cli",
+    "cilex"
+  ],
   "require-dev": {
     "doctrine/migrations": "~1.0",
     "php-school/cli-menu": "~1.0",
@@ -22,30 +37,6 @@
     "symfony/monolog-bridge": "~3.0",
     "symfony/yaml": "~3.0"
   },
-  "suggest": {
-    "doctrine/dbal": "for using DoctrineServiceProvider (~2.0 is recommended)",
-    "doctrine/migrations": "optional for using OctoLab\\**\\Doctrine\\*Migration* (~1.0 is recommended)",
-    "monolog/monolog": "for using MonologServiceProvider (~1.0 is recommended)",
-    "php-school/cli-menu": "for using PresentCommand (~1.0 is recommended, PHP 5.6+ is required)",
-    "symfony/config": "for using ConfigServiceProvider (~3.0 is recommended)",
-    "symfony/event-dispatcher": "needed when using log messages in console commands (~3.0 is recommended)",
-    "symfony/monolog-bridge": "optional for MonologServiceProvider (~3.0 is recommended)",
-    "symfony/yaml": "for using ConfigServiceProvider (~3.0 is recommended)"
-  },
-  "autoload": {
-    "psr-4": { "OctoLab\\Cilex\\": "src/" }
-  },
-  "autoload-dev": {
-    "psr-4": { "OctoLab\\Cilex\\": "tests/" }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.x-dev",
-      "dev-4.x": "4.x-dev"
-    }
-  },
-  "support": {
-    "irc": "irc://irc.gitter.im/kamilsk/small-tools",
-    "issues": "https://github.com/kamilsk/CilexServiceProviders/issues"
-  }
+  "type": "library",
+  "description": "Revised set of service providers for Cilex."
 }

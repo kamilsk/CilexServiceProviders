@@ -147,7 +147,7 @@ final class CheckMigrationCommand extends AbstractCommand
      */
     private function printQueries(array $queries, OutputInterface $output)
     {
-        $counter = strlen((string)count($queries));
+        $counter = \strlen((string)\count($queries));
         foreach ($queries as $i => $query) {
             $output->writeln(
                 sprintf('<info>%s. %s</info>', str_pad((string)($i + 1), $counter, ' ', STR_PAD_LEFT), $query)

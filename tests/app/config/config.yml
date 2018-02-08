@@ -1,6 +1,6 @@
 imports:
-  - { resource: parameters.yml }
-  - component/config.yml
+- parameters.yml
+- component/config.yml
 
 app:
   placeholder_parameter: %placeholder%

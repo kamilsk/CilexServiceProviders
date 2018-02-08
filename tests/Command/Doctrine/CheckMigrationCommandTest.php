@@ -84,8 +84,7 @@ class CheckMigrationCommandTest extends TestCase
 Upgrade by migration %s contains
 1. CREATE TABLE test ( id INT, title VARCHAR(8) NOT NULL, PRIMARY KEY (id) )
 Downgrade by migration %s contains
-1. CREATE TABLE test ( id INT, title VARCHAR(8) NOT NULL, PRIMARY KEY (id) )
-2. DROP TABLE test CASCADE
+1. DROP TABLE test CASCADE
 EOF;
         self::assertContains(sprintf($needle, $migration, $migration), $output->fetch());
 

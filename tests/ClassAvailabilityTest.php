@@ -39,7 +39,7 @@ class ClassAvailabilityTest extends ClassAvailability
      */
     protected function getClasses(): \Generator
     {
-        foreach (require dirname(__DIR__) . '/vendor/composer/autoload_classmap.php' as $class => $path) {
+        foreach (require \dirname(__DIR__) . '/vendor/composer/autoload_classmap.php' as $class => $path) {
             $signal = yield $class;
             if (SIGSTOP === $signal) {
                 return;

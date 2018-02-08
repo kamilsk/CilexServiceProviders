@@ -19,7 +19,7 @@ class Application extends \Cilex\Application
      */
     public function register($provider, array $values = [])
     {
-        $key = get_class($provider);
+        $key = \get_class($provider);
         if (!isset($this->registry[$key])) {
             parent::register($provider, $values);
             $this->registry[$key] = true;
